@@ -323,6 +323,93 @@
     }
     .btn-print:hover { background-color: var(--primary); }
 
+    /* Oar Colored Stripe Tape Badges */
+    .oar-badge {
+      display: inline-flex;
+      align-items: stretch;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid #94a3b8;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
+      font-weight: 800;
+      font-size: 0.72rem;
+      line-height: 1;
+      vertical-align: middle;
+      margin: 1px 3px 1px 0;
+      letter-spacing: 0.3px;
+      background-color: #ffffff;
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+    .oar-stripe {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3px 5px;
+      min-width: 17px;
+      height: 20px;
+      text-align: center;
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+    .oar-stripe + .oar-stripe {
+      border-left: 1px solid rgba(0, 0, 0, 0.15);
+    }
+    .stripe-b {
+      background-color: #1d4ed8; /* Blue */
+      color: #ffffff;
+      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+    }
+    .stripe-g {
+      background-color: #15803d; /* Green */
+      color: #ffffff;
+      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+    }
+    .stripe-y {
+      background-color: #facc15; /* Yellow */
+      color: #1c1917; /* Dark slate for high contrast */
+      font-weight: 800;
+    }
+    .stripe-w {
+      background-color: #ffffff; /* White */
+      color: #0f172a; /* Dark text */
+      font-weight: 800;
+      box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.08);
+    }
+    .stripe-blk {
+      background-color: #0f172a; /* Black */
+      color: #ffffff;
+      padding: 3px 4px;
+      font-size: 0.65rem;
+    }
+    .oar-legend-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 0.8rem;
+      color: #4a5568;
+      margin-bottom: 20px;
+    }
+    .oar-legend-label {
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.5px;
+    }
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.78rem;
+    }
+
     @media (max-width: 768px) {
       body {
         padding: 12px 10px;
@@ -443,6 +530,16 @@
     <button type="button" class="btn-reset-search" onclick="clearSearch()">Clear search &times;</button>
   </div>
 
+    <!-- OAR STRIPE TAPE LEGEND -->
+  <div class="oar-legend-bar">
+    <span class="oar-legend-label">Oar Stripe Tape Key:</span>
+    <span class="legend-item"><span class="oar-badge"><span class="oar-stripe stripe-b">B</span></span> Blue</span>
+    <span class="legend-item"><span class="oar-badge"><span class="oar-stripe stripe-g">G</span></span> Green</span>
+    <span class="legend-item"><span class="oar-badge"><span class="oar-stripe stripe-y">Y</span></span> Yellow</span>
+    <span class="legend-item"><span class="oar-badge"><span class="oar-stripe stripe-w">W</span></span> White</span>
+    <span class="legend-item"><span class="oar-badge"><span class="oar-stripe stripe-blk">Blk</span></span> Black</span>
+  </div>
+
   <!-- SATURDAY SCHEDULE -->
   <div class="day-block" id="block-sat">
     <div class="day-header day-sat">
@@ -523,6 +620,36 @@
     return text;
   }
 
+    function formatOarAssigned(rawText) {
+    if (!rawText) return '';
+    let text = escapeHtml(rawText);
+
+    // Bold boat prefixes like Poneke:, Princess:, Moa:, Matiu:
+    text = text.replace(/(^|\n)\s*(Poneke:|Princess:|Moa:|Matiu:)/g, '$1<strong>$2</strong> ');
+
+    const colorMap = {
+      B: { name: 'Blue', cls: 'stripe-b' },
+      G: { name: 'Green', cls: 'stripe-g' },
+      Y: { name: 'Yellow', cls: 'stripe-y' },
+      W: { name: 'White', cls: 'stripe-w' },
+      Blk: { name: 'Black', cls: 'stripe-blk' }
+    };
+
+    // Match oar stripe codes like BBlkW, BYWW, BGWW, BGW, BWW, BYW, BGY
+    text = text.replace(/\bB(?:Blk|[GYW]){2,4}\b/g, (code) => {
+      const stripes = code.match(/(Blk|[BGYW])/g) || [];
+      const tooltip = stripes.map(s => colorMap[s]?.name || s).join(' • ');
+      const stripesHtml = stripes.map(s => {
+        const info = colorMap[s] || { name: s, cls: '' };
+        return `<span class="oar-stripe ${info.cls}" title="${info.name}">${s}</span>`;
+      }).join('');
+      return `<span class="oar-badge" title="${tooltip}">${stripesHtml}</span>`;
+    });
+
+    text = text.replace(/\n+/g, '<br>');
+    return text;
+  }
+
   function renderRaceRow(race) {
     const isSat = race.day.toLowerCase() === 'saturday';
     const dayClass = isSat ? 'sat-row' : 'sun-row';
@@ -547,7 +674,7 @@
         <td><span class="event-badge">${escapeHtml(race.event_number)}</span></td>
         <td><strong>${escapeHtml(race.event_class)}</strong></td>
         <td class="boat-badge">${escapeHtml(race.boat)}</td>
-        <td>${escapeHtml(race.oars_assigned || '').replace(/\n/g, '<br>')}</td>
+        <td>${formatOarAssigned(race.oars_assigned)}</td>
         <td class="crew-list">${formatCrew(race.crew)}</td>
         <td>${notesHtml}</td>
       </tr>
