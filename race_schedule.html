@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026 Masters Nationals — Race Schedule</title>
+  <style>
+    :root {
+      --primary: #1a365d;
+      --secondary: #2b6cb0;
+      --accent: #d69e2e;
+      --light-bg: #f7fafc;
+      --card-bg: #ffffff;
+      --text: #2d3748;
+      --border: #e2e8f0;
+      --danger: #c53030;
+      --danger-bg: #fff5f5;
+      --warning-bg: #fffaf0;
+      --sat-color: #2b6cb0;
+      --sun-color: #6b46c1;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background-color: var(--light-bg);
+      line-height: 1.6;
+      padding: 24px 16px;
+    }
+    .container {
+      max-width: 1250px;
+      margin: 0 auto;
+    }
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff;
+      padding: 28px 24px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.07);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    header h1 {
+      font-size: 1.85rem;
+      margin-bottom: 6px;
+    }
+    header p {
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+    .header-links a {
+      color: white;
+      background: rgba(255, 255, 255, 0.2);
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .header-links a:hover {
+      background: rgba(255, 255, 255, 0.35);
+    }
+    /* Controls and Filters */
+    .controls {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .filter-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      background: #edf2f7;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover {
+      background: #e2e8f0;
+    }
+    .filter-btn.active {
+      background: var(--secondary);
+      color: white;
+      border-color: var(--secondary);
+    }
+    .filter-btn.btn-rerig.active {
+      background: var(--danger);
+      border-color: var(--danger);
+    }
+    /* Section and Table */
+    .day-block {
+      margin-bottom: 32px;
+    }
+    .day-header {
+      padding: 12px 18px;
+      border-radius: 8px;
+      color: white;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .day-sat {
+      background: var(--sat-color);
+    }
+    .day-sun {
+      background: var(--sun-color);
+    }
+    .table-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow-x: auto;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      min-width: 950px;
+    }
+    th, td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    th {
+      background-color: #f7fafc;
+      color: var(--primary);
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.76rem;
+      letter-spacing: 0.5px;
+    }
+    tr:hover {
+      background-color: #f8fafc;
+    }
+    /* Row styling */
+    .time-cell {
+      font-weight: 700;
+      color: var(--primary);
+      white-space: nowrap;
+    }
+    .event-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.75rem;
+      background: #edf2f7;
+      color: #2d3748;
+    }
+    .boat-badge {
+      font-weight: 700;
+      color: #2c5282;
+    }
+    .crew-list {
+      font-size: 0.88rem;
+    }
+    .cox-tag {
+      display: inline-block;
+      background: #fed7d7;
+      color: #9b2c2c;
+      font-weight: 700;
+      font-size: 0.72rem;
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-right: 4px;
+    }
+    .rerig-alert {
+      background-color: var(--danger-bg);
+      border-left: 4px solid var(--danger);
+    }
+    .rerig-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background-color: var(--danger);
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+    .rerig-text {
+      color: var(--danger);
+      font-weight: 700;
+      font-size: 0.8rem;
+      display: block;
+      margin-top: 4px;
+    }
+    .btn-print {
+      background-color: var(--secondary);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-print:hover { background-color: var(--primary); }
+    @media print {
+      body { padding: 0; background: white; }
+      header, .controls, .header-links { display: none; }
+      .table-card { border: none; box-shadow: none; }
+      tr { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div>
+      <h1>2026 Masters Nationals — Race Schedule</h1>
+      <p>Master timeline of entered races, boat &amp; oar allocations, crews, and re-rigging tasks.</p>
+    </div>
+    <div class="header-links">
+      <a href="index.html">&larr; Portal Home</a>
+      <a href="regatta_load_plan.html">Trailer &amp; Load Plan &rarr;</a>
+    </div>
+  </header>
+
+  <!-- CONTROLS & FILTER BAR -->
+  <div class="controls">
+    <div class="filter-group">
+      <button class="filter-btn active" onclick="filterSchedule('all')">Show All Races (24)</button>
+      <button class="filter-btn" onclick="filterSchedule('sat')">Saturday Only (13)</button>
+      <button class="filter-btn" onclick="filterSchedule('sun')">Sunday Only (11)</button>
+      <button class="filter-btn btn-rerig" onclick="filterSchedule('rerig')">⚠️ Re-Rig Alerts Only (3)</button>
+    </div>
+    <button class="btn-print" onclick="window.print()">Print Day Sheet</button>
+  </div>
+
+  <!-- SATURDAY SCHEDULE -->
+  <div class="day-block" id="block-sat">
+    <div class="day-header day-sat">
+      <span>Saturday — Race Schedule</span>
+      <span style="font-size: 0.9rem; font-weight: 500;">Events 1 – 69</span>
+    </div>
+
+    <div class="table-card">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 70px;">Block</th>
+            <th style="width: 100px;">Time</th>
+            <th style="width: 80px;">Event</th>
+            <th style="width: 160px;">Event Class</th>
+            <th style="width: 110px;">Boat</th>
+            <th style="width: 180px;">Oars Assigned</th>
+            <th>Crew / Participants</th>
+            <th style="width: 220px;">Rigging / Special Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Race 1 -->
+          <tr class="race-row sat-row">
+            <td>1</td>
+            <td class="time-cell">8:30</td>
+            <td><span class="event-badge">1</span></td>
+            <td><strong>W Mst C 2X</strong> (Final)</td>
+            <td class="boat-badge">Matiu</td>
+            <td>BYWW (Pinks)</td>
+            <td class="crew-list">Ellie, Jacinda</td>
+            <td>Scull (2X)</td>
+          </tr>
+
+          <!-- Race 3 - Mahanga -->
+          <tr class="race-row sat-row">
+            <td>1</td>
+            <td class="time-cell">8:45</td>
+            <td><span class="event-badge">3</span></td>
+            <td><strong>W Mst F 4X-</strong> (Final)</td>
+            <td class="boat-badge">Mahanga</td>
+            <td>BGW (Yellow)</td>
+            <td class="crew-list">Jo-Anne, Liane, JoY, Maria S</td>
+            <td>Scull (4X-)</td>
+          </tr>
+
+          <!-- Race 3 - Hawkins -->
+          <tr class="race-row sat-row">
+            <td>1</td>
+            <td class="time-cell">8:45</td>
+            <td><span class="event-badge">3</span></td>
+            <td><strong>W Mst F 4X-</strong> (Final)</td>
+            <td class="boat-badge">Hawkins</td>
+            <td>BWW (Yellow x 3)<br>BYWW (Pink x 1)</td>
+            <td class="crew-list">Vivienne, Jolanda, Maria C, Lynda J</td>
+            <td>Scull (4X-)</td>
+          </tr>
+
+          <!-- Race 5 -->
+          <tr class="race-row sat-row">
+            <td>1</td>
+            <td class="time-cell">8:50 / 8:55</td>
+            <td><span class="event-badge">5</span></td>
+            <td><strong>M Mst F 2X</strong> (Heat)</td>
+            <td class="boat-badge">TBC</td>
+            <td>TBC</td>
+            <td class="crew-list">Richard, Mike</td>
+            <td>Scull (2X)</td>
+          </tr>
+
+          <!-- Race 6 -->
+          <tr class="race-row sat-row">
+            <td>1</td>
+            <td class="time-cell">9:00</td>
+            <td><span class="event-badge">6</span></td>
+            <td><strong>W Mst D 1X</strong> (Final)</td>
+            <td class="boat-badge">Tuhua</td>
+            <td>BWW (Yellow 1 set)</td>
+            <td class="crew-list">Claire</td>
+            <td>Scull (1X)</td>
+          </tr>
+
+          <!-- Race 14 -->
+          <tr class="race-row sat-row">
+            <td>1</td>
+            <td class="time-cell">9:30</td>
+            <td><span class="event-badge">14</span></td>
+            <td><strong>W Mst E 4X-</strong> (Final)</td>
+            <td class="boat-badge">Tarakena</td>
+            <td>BGWW (Yellow)<br>BYWW (Pink x 1)</td>
+            <td class="crew-list">Deb, Liane, Maria S, Vivienne</td>
+            <td>Scull (4X-)</td>
+          </tr>
+
+          <!-- Race 19 -->
+          <tr class="race-row sat-row">
+            <td>2</td>
+            <td class="time-cell">10:20</td>
+            <td><span class="event-badge">19</span></td>
+            <td><strong>W MNw 4X+</strong> (Final)</td>
+            <td class="boat-badge">Laurie-Counsell</td>
+            <td>BGW x 3<br>BWW x 1</td>
+            <td class="crew-list"><span class="cox-tag">COX: Isaac</span> JoY, Deb, Paula, Jolanda</td>
+            <td>Coxed Quad (4X+)</td>
+          </tr>
+
+          <!-- Race 26 -->
+          <tr class="race-row sat-row">
+            <td>2</td>
+            <td class="time-cell">10:50</td>
+            <td><span class="event-badge">26</span></td>
+            <td><strong>Mx G-M 2X</strong> (Final)</td>
+            <td class="boat-badge">Matiu</td>
+            <td>BWW x 2</td>
+            <td class="crew-list">Jo-Anne, Richard</td>
+            <td>Scull (2X)</td>
+          </tr>
+
+          <!-- Race 28 -->
+          <tr class="race-row sat-row">
+            <td>2</td>
+            <td class="time-cell">11:00 / 11:10</td>
+            <td><span class="event-badge">28</span></td>
+            <td><strong>Mx D-F 4X-</strong> (3 Div)</td>
+            <td class="boat-badge">Hawkins</td>
+            <td>BGWW</td>
+            <td class="crew-list">Myles, Derek, Lynda J, Deidre</td>
+            <td>Scull (4X-)</td>
+          </tr>
+
+          <!-- Race 29 -->
+          <tr class="race-row sat-row">
+            <td>2</td>
+            <td class="time-cell">11:15</td>
+            <td><span class="event-badge">29</span></td>
+            <td><strong>W A-C 8+</strong> (Final)</td>
+            <td class="boat-badge">Princess</td>
+            <td>BGY (Sweep 8)</td>
+            <td class="crew-list"><span class="cox-tag">COX: Isaac</span> Ange, Ellie, Liz, Claire, Jolanda, Jacinda, Deb, Maria S</td>
+            <td>Sweep Eight (8+)</td>
+          </tr>
+
+          <!-- Race 34 -->
+          <tr class="race-row sat-row">
+            <td>3</td>
+            <td class="time-cell">11:55 / 12:00</td>
+            <td><span class="event-badge">34</span></td>
+            <td><strong>W Mst D 2X</strong> (Heats/Final)</td>
+            <td class="boat-badge">Moa &amp; Matiu</td>
+            <td>Moa: BYWW (Pinks)<br>Matiu: BYWW x1, BWW x1</td>
+            <td class="crew-list">Heat 1: Ange, Vivienne (Moa)<br>Heat 2: Liz, Claire (Matiu)</td>
+            <td>Both crews race final at 12:30</td>
+          </tr>
+
+          <!-- Race 38 (CRITICAL RE-RIG) -->
+          <tr class="race-row sat-row rerig-row rerig-alert">
+            <td>3</td>
+            <td class="time-cell">12:15 / 12:20</td>
+            <td><span class="event-badge">38</span></td>
+            <td><strong>Mx A-C 4X-</strong> (Div 1 &amp; 2)</td>
+            <td class="boat-badge">Hawkins</td>
+            <td>BGWW</td>
+            <td class="crew-list">Mike, Ellie, Jacinda, Myles</td>
+            <td>
+              <span class="rerig-badge">⚠️ Re-Rig Required</span>
+              <span class="rerig-text">RE-RIG AS COXLESS 4 (SWEEP) FOR RACE 65!</span>
+            </td>
+          </tr>
+
+          <!-- Race 44 -->
+          <tr class="race-row sat-row">
+            <td>4</td>
+            <td class="time-cell">13:05</td>
+            <td><span class="event-badge">44</span></td>
+            <td><strong>W Mst B 1X</strong> (Final)</td>
+            <td class="boat-badge">Tuhua</td>
+            <td>BYWW</td>
+            <td class="crew-list">Ellie</td>
+            <td>Scull (1X)</td>
+          </tr>
+
+          <!-- Race 53 -->
+          <tr class="race-row sat-row">
+            <td>4</td>
+            <td class="time-cell">14:00</td>
+            <td><span class="event-badge">53</span></td>
+            <td><strong>Mx D-F 8+</strong> (Final)</td>
+            <td class="boat-badge">Poneke</td>
+            <td>BYW (Sweep 8)</td>
+            <td class="crew-list"><span class="cox-tag">COX: Isaac</span> Mike, Myles, Richard, Derek, Lynda J, Maria C, Jo-Anne, Deidre</td>
+            <td>Sweep Eight (8+)</td>
+          </tr>
+
+          <!-- Race 65 -->
+          <tr class="race-row sat-row">
+            <td>5</td>
+            <td class="time-cell">15:10</td>
+            <td><span class="event-badge">65</span></td>
+            <td><strong>Mx E-M 4-</strong> (Final)</td>
+            <td class="boat-badge">Hawkins</td>
+            <td>BWW (Sweep 4)</td>
+            <td class="crew-list">Derek, Myles, Maria C, Liz</td>
+            <td>Must have been converted to Sweep 4- after Race 38</td>
+          </tr>
+
+          <!-- Race 69 -->
+          <tr class="race-row sat-row">
+            <td>5</td>
+            <td class="time-cell">15:30</td>
+            <td><span class="event-badge">69</span></td>
+            <td><strong>M MNv 2X</strong> (Final)</td>
+            <td class="boat-badge">Avon Boat</td>
+            <td>Avon Equipment</td>
+            <td class="crew-list">Mike, Avon RC Partner</td>
+            <td>External boat (borrowed from Avon RC)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SUNDAY SCHEDULE -->
+  <div class="day-block" id="block-sun">
+    <div class="day-header day-sun">
+      <span>Sunday — Race Schedule</span>
+      <span style="font-size: 0.9rem; font-weight: 500;">Events 73 – 125</span>
+    </div>
+
+    <div class="table-card">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 70px;">Block</th>
+            <th style="width: 100px;">Time</th>
+            <th style="width: 80px;">Event</th>
+            <th style="width: 160px;">Event Class</th>
+            <th style="width: 110px;">Boat</th>
+            <th style="width: 180px;">Oars Assigned</th>
+            <th>Crew / Participants</th>
+            <th style="width: 220px;">Rigging / Special Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Race 78 (Morning Heat) -->
+          <tr class="race-row sun-row">
+            <td>6</td>
+            <td class="time-cell">8:30 / 8:36</td>
+            <td><span class="event-badge">78</span></td>
+            <td><strong>W Mst C 4X-</strong> (Heats)</td>
+            <td class="boat-badge">Hawkins</td>
+            <td>BGY (Scull)</td>
+            <td class="crew-list">Ellie, Ange, Liz, Jacinda</td>
+            <td>Re-rigged back to quad overnight; Final at 9:30</td>
+          </tr>
+
+          <!-- Race 73 (CRITICAL RE-RIG) -->
+          <tr class="race-row sun-row rerig-row rerig-alert">
+            <td>6</td>
+            <td class="time-cell">8:42 / 8:48</td>
+            <td><span class="event-badge">73</span></td>
+            <td><strong>Mx D-F 2X</strong> (Divs)</td>
+            <td class="boat-badge">Makaro</td>
+            <td>BBlkW Arrows</td>
+            <td class="crew-list">Derek, Deidre</td>
+            <td>
+              <span class="rerig-badge">⚠️ Re-Rig Required</span>
+              <span class="rerig-text">RE-RIG AS PAIR (2-) FOR RACE 90!</span>
+            </td>
+          </tr>
+
+          <!-- Race 73 - Matiu -->
+          <tr class="race-row sun-row">
+            <td>6</td>
+            <td class="time-cell">8:54 / 9:00</td>
+            <td><span class="event-badge">73</span></td>
+            <td><strong>Mx D-F 2X</strong> (Divs)</td>
+            <td class="boat-badge">Matiu</td>
+            <td>BYWW x 1<br>BGW x 1</td>
+            <td class="crew-list">Myles, Paula</td>
+            <td>Scull (2X)</td>
+          </tr>
+
+          <!-- Race 78 (Final) -->
+          <tr class="race-row sun-row">
+            <td>6</td>
+            <td class="time-cell">9:30</td>
+            <td><span class="event-badge">78</span></td>
+            <td><strong>W Mst C 4X-</strong> (Final)</td>
+            <td class="boat-badge">Hawkins</td>
+            <td>BGY (Scull)</td>
+            <td class="crew-list">Ellie, Ange, Liz, Jacinda</td>
+            <td>Scull (4X-)</td>
+          </tr>
+
+          <!-- Race 86 -->
+          <tr class="race-row sun-row">
+            <td>7</td>
+            <td class="time-cell">10:14 / 10:20</td>
+            <td><span class="event-badge">86</span></td>
+            <td><strong>W MNw 2X</strong> (Heat)</td>
+            <td class="boat-badge">Matiu</td>
+            <td>BYWW</td>
+            <td class="crew-list">Jacinda, Paula</td>
+            <td>Scull (2X); Final at 11:14</td>
+          </tr>
+
+          <!-- Race 90 (CRITICAL RE-RIG) -->
+          <tr class="race-row sun-row rerig-row rerig-alert">
+            <td>7</td>
+            <td class="time-cell">10:26</td>
+            <td><span class="event-badge">90</span></td>
+            <td><strong>W Mst D 2-</strong> (Final)</td>
+            <td class="boat-badge">Makaro &amp; Whanganui</td>
+            <td>BYW (Sweep)</td>
+            <td class="crew-list">Whanganui: Ellie, Maria C<br>Makaro: Liz, Lynda J</td>
+            <td>
+              <span class="rerig-badge">⚠️ Re-Rig Required</span>
+              <span class="rerig-text">RE-RIG MAKARO BACK TO DOUBLE (2X) FOR RACE 101!</span>
+            </td>
+          </tr>
+
+          <!-- Race 93 -->
+          <tr class="race-row sun-row">
+            <td>7</td>
+            <td class="time-cell">10:38</td>
+            <td><span class="event-badge">93</span></td>
+            <td><strong>W Mst F 2X</strong> (Final)</td>
+            <td class="boat-badge">Moa</td>
+            <td>BYWW x 1<br>BGW x 1</td>
+            <td class="crew-list">Vivienne, Liane</td>
+            <td>Scull (2X)</td>
+          </tr>
+
+          <!-- Race 86 Final -->
+          <tr class="race-row sun-row">
+            <td>7</td>
+            <td class="time-cell">11:14</td>
+            <td><span class="event-badge">86</span></td>
+            <td><strong>W MNw 2X</strong> (Final)</td>
+            <td class="boat-badge">Matiu</td>
+            <td>BYWW</td>
+            <td class="crew-list">Jacinda, Paula</td>
+            <td>Scull (2X)</td>
+          </tr>
+
+          <!-- Race 101 -->
+          <tr class="race-row sun-row">
+            <td>8</td>
+            <td class="time-cell">11:43</td>
+            <td><span class="event-badge">101</span></td>
+            <td><strong>M Mst E 2X</strong> (Final)</td>
+            <td class="boat-badge">Makaro</td>
+            <td>Arrows or BWW</td>
+            <td class="crew-list">Myles, Derek</td>
+            <td>Must have been converted back to double (2X) after Race 90</td>
+          </tr>
+
+          <!-- Race 111 (Both 8s Race Together!) -->
+          <tr class="race-row sun-row" style="background-color: #f0fdf4;">
+            <td>8</td>
+            <td class="time-cell">12:31</td>
+            <td><span class="event-badge">111</span></td>
+            <td><strong>W D-F 8+</strong> (Final)</td>
+            <td class="boat-badge">Poneke &amp; Princess</td>
+            <td>Poneke: BGY<br>Princess: BYW</td>
+            <td class="crew-list">
+              <strong>Poneke:</strong> <span class="cox-tag">COX: Isaac</span> Claire, Deidre, Jo-Anne, Liz, Jacinda, Maria C, Vivienne, Lynda J<br>
+              <strong>Princess:</strong> <span class="cox-tag">COX: Millzy</span> Paula, Deb, Liane, Maria S, JoY, Jolanda, Ellie, Ange
+            </td>
+            <td><strong>Both 8s racing head-to-head!</strong> Requires both sets of sweep oars.</td>
+          </tr>
+
+          <!-- Race 110 -->
+          <tr class="race-row sun-row">
+            <td>8</td>
+            <td class="time-cell">12:43</td>
+            <td><span class="event-badge">110</span></td>
+            <td><strong>M Mst F 4X-</strong> (Final)</td>
+            <td class="boat-badge">Tarakena</td>
+            <td>BGWW</td>
+            <td class="crew-list">Myles, Derek, Richard, Mike</td>
+            <td>Scull (4X-)</td>
+          </tr>
+
+          <!-- Race 125 -->
+          <tr class="race-row sun-row">
+            <td>10</td>
+            <td class="time-cell">13:53 / 13:59</td>
+            <td><span class="event-badge">125</span></td>
+            <td><strong>W Mst D 4X-</strong> (Heats/Final)</td>
+            <td class="boat-badge">Mahanga &amp; Hawkins</td>
+            <td>BWW x 4<br>BYWW x 4</td>
+            <td class="crew-list">
+              Heat 1: Ange, Jolanda, Jacinda, Paula (Mahanga)<br>
+              Heat 2: Liz, Deb, Deidre, Claire (Hawkins)
+            </td>
+            <td>Finals run at 14:29</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  function filterSchedule(type) {
+    const buttons = document.querySelectorAll('.filter-btn');
+    buttons.forEach(b => b.classList.remove('active'));
+
+    const rows = document.querySelectorAll('.race-row');
+    const satBlock = document.getElementById('block-sat');
+    const sunBlock = document.getElementById('block-sun');
+
+    if (type === 'all') {
+      buttons[0].classList.add('active');
+      satBlock.style.display = 'block';
+      sunBlock.style.display = 'block';
+      rows.forEach(r => r.style.display = '');
+    } else if (type === 'sat') {
+      buttons[1].classList.add('active');
+      satBlock.style.display = 'block';
+      sunBlock.style.display = 'none';
+      rows.forEach(r => r.style.display = '');
+    } else if (type === 'sun') {
+      buttons[2].classList.add('active');
+      satBlock.style.display = 'none';
+      sunBlock.style.display = 'block';
+      rows.forEach(r => r.style.display = '');
+    } else if (type === 'rerig') {
+      buttons[3].classList.add('active');
+      satBlock.style.display = 'block';
+      sunBlock.style.display = 'block';
+      rows.forEach(r => {
+        if (r.classList.contains('rerig-row')) {
+          r.style.display = '';
+        } else {
+          r.style.display = 'none';
+        }
+      });
+    }
+  }
+</script>
+
+</body>
+</html>
