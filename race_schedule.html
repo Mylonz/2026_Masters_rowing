@@ -71,12 +71,111 @@
       border: 1px solid var(--border);
       border-radius: 10px;
       padding: 16px 20px;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
       align-items: center;
       justify-content: space-between;
+    }
+    .search-box-wrapper {
+      position: relative;
+      flex: 1 1 280px;
+      max-width: 380px;
+    }
+    .search-input-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      width: 17px;
+      height: 17px;
+      color: #a0aec0;
+      pointer-events: none;
+    }
+    #rower-search {
+      width: 100%;
+      padding: 9px 34px 9px 36px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.88rem;
+      color: var(--text);
+      background-color: #fff;
+      transition: all 0.2s;
+    }
+    #rower-search:focus {
+      outline: none;
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.15);
+    }
+    .clear-search-btn {
+      position: absolute;
+      right: 8px;
+      background: none;
+      border: none;
+      color: #a0aec0;
+      font-size: 1.25rem;
+      line-height: 1;
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+    .clear-search-btn:hover {
+      color: var(--text);
+      background-color: #edf2f7;
+    }
+    .search-feedback {
+      background: #ebf8ff;
+      border: 1px solid #bee3f8;
+      border-radius: 8px;
+      padding: 10px 16px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      color: #2b6cb0;
+    }
+    .search-feedback mark {
+      background: #feebc8;
+      color: #7b341e;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+    .btn-reset-search {
+      background: var(--secondary);
+      color: white;
+      border: none;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-reset-search:hover {
+      background: var(--primary);
+    }
+    .name-highlight {
+      background-color: #fef08a;
+      color: #854d0e;
+      padding: 1px 3px;
+      border-radius: 3px;
+      font-weight: 700;
+    }
+    .no-results-row td {
+      text-align: center;
+      padding: 24px 16px;
+      color: #718096;
+      font-style: italic;
+      background: #fafafa;
     }
     .filter-group {
       display: flex;
@@ -223,11 +322,53 @@
       cursor: pointer;
     }
     .btn-print:hover { background-color: var(--primary); }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 12px 10px;
+      }
+      header {
+        padding: 20px 16px;
+        margin-bottom: 18px;
+      }
+      header h1 {
+        font-size: 1.45rem;
+      }
+      header p {
+        font-size: 0.9rem;
+      }
+      .controls {
+        padding: 12px;
+        gap: 10px;
+      }
+      .search-box-wrapper {
+        flex: 1 1 100%;
+        max-width: 100%;
+      }
+      .filter-group {
+        width: 100%;
+      }
+      .filter-btn {
+        flex: 1 1 calc(50% - 4px);
+        text-align: center;
+        padding: 8px 6px;
+        font-size: 0.78rem;
+      }
+      .btn-print {
+        width: 100%;
+      }
+      .day-header {
+        font-size: 1.15rem;
+        padding: 10px 14px;
+      }
+    }
+
     @media print {
       body { padding: 0; background: white; }
-      header, .controls, .header-links { display: none; }
+      header, .controls, .header-links, .search-feedback { display: none; }
       .table-card { border: none; box-shadow: none; }
       tr { page-break-inside: avoid; }
+      .no-results-row { display: none !important; }
     }
   </style>
 </head>
@@ -247,13 +388,59 @@
 
   <!-- CONTROLS & FILTER BAR -->
   <div class="controls">
+    <div class="search-box-wrapper">
+      <div class="search-input-container">
+        <svg class="search-icon" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+        </svg>
+        <input
+          type="search"
+          id="rower-search"
+          placeholder="Search rower name (e.g. Myles, Claire)..."
+          autocomplete="off"
+          list="rower-suggestions"
+          aria-label="Search by rower name"
+        >
+        <button type="button" id="clear-search-btn" class="clear-search-btn" title="Clear search" aria-label="Clear search">&times;</button>
+      </div>
+      <datalist id="rower-suggestions">
+        <option value="Ange">
+        <option value="Claire">
+        <option value="Deb">
+        <option value="Deidre">
+        <option value="Derek">
+        <option value="Ellie">
+        <option value="Isaac">
+        <option value="Jacinda">
+        <option value="Jo-Anne">
+        <option value="JoY">
+        <option value="Jolanda">
+        <option value="Liane">
+        <option value="Liz">
+        <option value="Lynda J">
+        <option value="Maria C">
+        <option value="Maria S">
+        <option value="Mike">
+        <option value="Millzy">
+        <option value="Myles">
+        <option value="Paula">
+        <option value="Richard">
+        <option value="Vivienne">
+      </datalist>
+    </div>
+
     <div class="filter-group">
-      <button class="filter-btn active" onclick="filterSchedule('all')">Show All Races (24)</button>
-      <button class="filter-btn" onclick="filterSchedule('sat')">Saturday Only (13)</button>
-      <button class="filter-btn" onclick="filterSchedule('sun')">Sunday Only (11)</button>
-      <button class="filter-btn btn-rerig" onclick="filterSchedule('rerig')">⚠️ Re-Rig Alerts Only (3)</button>
+      <button class="filter-btn active" data-filter="all" onclick="filterSchedule('all')">Show All Races (24)</button>
+      <button class="filter-btn" data-filter="sat" onclick="filterSchedule('sat')">Saturday Only (13)</button>
+      <button class="filter-btn" data-filter="sun" onclick="filterSchedule('sun')">Sunday Only (11)</button>
+      <button class="filter-btn btn-rerig" data-filter="rerig" onclick="filterSchedule('rerig')">⚠️ Re-Rig Alerts Only (3)</button>
     </div>
     <button class="btn-print" onclick="window.print()">Print Day Sheet</button>
+  </div>
+
+  <div id="search-feedback" class="search-feedback" style="display: none;">
+    <span>Showing <strong id="match-count">0</strong> race(s) matching <mark id="match-term"></mark></span>
+    <button type="button" class="btn-reset-search" onclick="clearSearch()">Clear search &times;</button>
   </div>
 
   <!-- SATURDAY SCHEDULE -->
@@ -472,6 +659,10 @@
             <td class="crew-list">Mike, Avon RC Partner</td>
             <td>External boat (borrowed from Avon RC)</td>
           </tr>
+
+          <tr id="sat-no-results" class="no-results-row" style="display: none;">
+            <td colspan="8">No matching races found for Saturday.</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -654,6 +845,10 @@
             </td>
             <td>Finals run at 14:29</td>
           </tr>
+
+          <tr id="sun-no-results" class="no-results-row" style="display: none;">
+            <td colspan="8">No matching races found for Sunday.</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -661,41 +856,136 @@
 </div>
 
 <script>
+  let activeDay = 'all';
+  let searchTerm = '';
+
+  const raceRows = document.querySelectorAll('.race-row');
+  raceRows.forEach(row => {
+    const crewCell = row.querySelector('.crew-list');
+    if (crewCell) {
+      row.dataset.originalCrew = crewCell.innerHTML;
+    }
+    // Searchable across rower names, boat names, event classes, and notes
+    row.dataset.searchFull = row.textContent.toLowerCase();
+  });
+
+  const searchInput = document.getElementById('rower-search');
+  const clearBtn = document.getElementById('clear-search-btn');
+  const searchFeedback = document.getElementById('search-feedback');
+  const matchCount = document.getElementById('match-count');
+  const matchTerm = document.getElementById('match-term');
+  const satBlock = document.getElementById('block-sat');
+  const sunBlock = document.getElementById('block-sun');
+  const satNoResults = document.getElementById('sat-no-results');
+  const sunNoResults = document.getElementById('sun-no-results');
+
   function filterSchedule(type) {
+    activeDay = type;
     const buttons = document.querySelectorAll('.filter-btn');
-    buttons.forEach(b => b.classList.remove('active'));
+    buttons.forEach(b => {
+      b.classList.toggle('active', b.dataset.filter === type);
+    });
+    applyFilters();
+  }
 
-    const rows = document.querySelectorAll('.race-row');
-    const satBlock = document.getElementById('block-sat');
-    const sunBlock = document.getElementById('block-sun');
+  function applyFilters() {
+    const query = searchTerm.trim().toLowerCase();
+    let totalVisible = 0;
+    let satVisible = 0;
+    let sunVisible = 0;
 
-    if (type === 'all') {
-      buttons[0].classList.add('active');
-      satBlock.style.display = 'block';
-      sunBlock.style.display = 'block';
-      rows.forEach(r => r.style.display = '');
-    } else if (type === 'sat') {
-      buttons[1].classList.add('active');
+    if (activeDay === 'sat') {
       satBlock.style.display = 'block';
       sunBlock.style.display = 'none';
-      rows.forEach(r => r.style.display = '');
-    } else if (type === 'sun') {
-      buttons[2].classList.add('active');
+    } else if (activeDay === 'sun') {
       satBlock.style.display = 'none';
       sunBlock.style.display = 'block';
-      rows.forEach(r => r.style.display = '');
-    } else if (type === 'rerig') {
-      buttons[3].classList.add('active');
+    } else {
       satBlock.style.display = 'block';
       sunBlock.style.display = 'block';
-      rows.forEach(r => {
-        if (r.classList.contains('rerig-row')) {
-          r.style.display = '';
-        } else {
-          r.style.display = 'none';
-        }
-      });
     }
+
+    raceRows.forEach(row => {
+      const isSat = row.classList.contains('sat-row');
+      const isSun = row.classList.contains('sun-row');
+      const isRerig = row.classList.contains('rerig-row');
+
+      let matchesDay = false;
+      if (activeDay === 'all') matchesDay = true;
+      else if (activeDay === 'sat') matchesDay = isSat;
+      else if (activeDay === 'sun') matchesDay = isSun;
+      else if (activeDay === 'rerig') matchesDay = isRerig;
+
+      let matchesSearch = true;
+      if (query) {
+        matchesSearch = row.dataset.searchFull.includes(query);
+      }
+
+      const crewCell = row.querySelector('.crew-list');
+
+      if (matchesDay && matchesSearch) {
+        row.style.display = '';
+        totalVisible++;
+        if (isSat) satVisible++;
+        if (isSun) sunVisible++;
+
+        if (crewCell) {
+          if (query) {
+            const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const regex = new RegExp(`(?![^<]*>)(${escaped})`, 'gi');
+            crewCell.innerHTML = row.dataset.originalCrew.replace(regex, '<mark class="name-highlight">$1</mark>');
+          } else {
+            crewCell.innerHTML = row.dataset.originalCrew;
+          }
+        }
+      } else {
+        row.style.display = 'none';
+        if (crewCell) {
+          crewCell.innerHTML = row.dataset.originalCrew;
+        }
+      }
+    });
+
+    if (satNoResults) {
+      satNoResults.style.display = (activeDay !== 'sun' && satVisible === 0) ? '' : 'none';
+    }
+    if (sunNoResults) {
+      sunNoResults.style.display = (activeDay !== 'sat' && sunVisible === 0) ? '' : 'none';
+    }
+
+    if (query) {
+      clearBtn.style.display = 'flex';
+      searchFeedback.style.display = 'flex';
+      matchCount.textContent = totalVisible;
+      matchTerm.textContent = searchTerm.trim();
+    } else {
+      clearBtn.style.display = 'none';
+      searchFeedback.style.display = 'none';
+    }
+  }
+
+  function clearSearch() {
+    searchInput.value = '';
+    searchTerm = '';
+    searchInput.focus();
+    applyFilters();
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      searchTerm = e.target.value;
+      applyFilters();
+    });
+
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        clearSearch();
+      }
+    });
+  }
+
+  if (clearBtn) {
+    clearBtn.addEventListener('click', clearSearch);
   }
 </script>
 
