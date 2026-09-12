@@ -129,6 +129,18 @@
       border-radius: 8px;
       border: 2px dashed #cbd5e0;
     }
+    .trailer-header-bar {
+      display: grid;
+      grid-template-columns: 140px repeat(4, 1fr);
+      gap: 10px;
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 0 4px;
+    }
     .trailer-tier {
       display: grid;
       grid-template-columns: 140px repeat(4, 1fr);
@@ -155,20 +167,38 @@
       justify-content: center;
       box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
+    .bay-tag {
+      display: none;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #718096;
+      margin-bottom: 3px;
+      letter-spacing: 0.4px;
+    }
     .trailer-bay.empty {
       background: #edf2f7;
       color: #a0aec0;
       border-style: dashed;
+    }
+    .trailer-bay.empty .bay-tag {
+      color: #a0aec0;
     }
     .trailer-bay.special {
       background: #feebc8;
       border-color: #dd6b20;
       color: #7b341e;
     }
+    .trailer-bay.special .bay-tag {
+      color: #9c4221;
+    }
     .trailer-bay.guest {
       background: #e6fffa;
       border-color: #319795;
       color: #234e52;
+    }
+    .trailer-bay.guest .bay-tag {
+      color: #285e61;
     }
     .trailer-sub {
       font-size: 0.72rem;
@@ -239,10 +269,113 @@
     .btn-print:hover {
       background-color: var(--primary);
     }
+    @media (max-width: 768px) {
+      body {
+        padding: 12px 10px;
+      }
+      header {
+        padding: 20px 16px;
+        margin-bottom: 18px;
+      }
+      header h1 {
+        font-size: 1.45rem;
+      }
+      header p {
+        font-size: 0.92rem;
+      }
+      section {
+        padding: 16px 12px;
+        margin-bottom: 18px;
+      }
+      h2 {
+        font-size: 1.18rem;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .table-container th,
+      .table-container td {
+        padding: 8px 10px;
+        font-size: 0.84rem;
+      }
+
+      /* Responsive Trailer Grid (2x2 cards per tier) */
+      .trailer-grid {
+        padding: 10px;
+        gap: 14px;
+      }
+      .trailer-header-bar {
+        display: none;
+      }
+      .trailer-tier {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        background: #ffffff;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #cbd5e0;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      }
+      .tier-label {
+        grid-column: 1 / -1;
+        font-size: 0.88rem;
+        color: #ffffff;
+        background: var(--primary);
+        padding: 6px 10px;
+        border-radius: 5px;
+        text-align: center;
+        letter-spacing: 0.5px;
+      }
+      .bay-tag {
+        display: block;
+      }
+      .trailer-bay {
+        min-height: 64px;
+        padding: 8px 6px;
+        font-size: 0.82rem;
+      }
+      .trailer-sub {
+        font-size: 0.70rem;
+        line-height: 1.25;
+        margin-top: 3px;
+      }
+      .trailer-footer {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 10px;
+        background: #ffffff;
+        border-radius: 8px;
+        border: 1px solid #cbd5e0;
+        text-align: center;
+      }
+    }
+
     @media print {
       body { background: white; padding: 0; }
       .btn-print { display: none; }
       section { box-shadow: none; border: 1px solid #ccc; page-break-inside: avoid; }
+      .trailer-header-bar { display: grid !important; }
+      .bay-tag { display: none !important; }
+      .trailer-tier {
+        grid-template-columns: 140px repeat(4, 1fr) !important;
+        background: transparent !important;
+        padding: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+      }
+      .tier-label {
+        background: transparent !important;
+        color: var(--primary) !important;
+        padding: 0 !important;
+        text-align: left !important;
+      }
+      .trailer-footer {
+        display: grid !important;
+        grid-template-columns: 140px 1fr 1fr !important;
+        background: transparent !important;
+        border: none !important;
+        border-top: 1px solid #cbd5e0 !important;
+      }
     }
   </style>
 </head>
@@ -264,22 +397,35 @@
     <p>Configured across 4 levels. Includes the 2 guest club boats (<strong>STAR Single</strong> &amp; <strong>STAR Double</strong>) and accounts for the <strong>New Quad</strong> returning on the Sunday trip.</p>
 
     <div class="trailer-grid">
+      <!-- DESKTOP COLUMN HEADERS -->
+      <div class="trailer-header-bar">
+        <div></div>
+        <div>Bay 1 · Port</div>
+        <div>Bay 2 · Port</div>
+        <div>Bay 3 · Stbd</div>
+        <div>Bay 4 · Stbd</div>
+      </div>
+
       <!-- TIER 4 -->
       <div class="trailer-tier">
         <div class="tier-label">Tier 4 (Top)</div>
         <div class="trailer-bay special">
+          <span class="bay-tag">Bay 1 · Port</span>
           new quad?*
           <span class="trailer-sub">Return trip only (Row 154)</span>
         </div>
         <div class="trailer-bay">
+          <span class="bay-tag">Bay 2 · Port</span>
           Hawkins
           <span class="trailer-sub">4X- / 4-</span>
         </div>
         <div class="trailer-bay">
+          <span class="bay-tag">Bay 3 · Stbd</span>
           Tarakena
           <span class="trailer-sub">4X-</span>
         </div>
         <div class="trailer-bay empty">
+          <span class="bay-tag">Bay 4 · Stbd</span>
           (Empty)
           <span class="trailer-sub">Clearance / Spare</span>
         </div>
@@ -289,18 +435,22 @@
       <div class="trailer-tier">
         <div class="tier-label">Tier 3</div>
         <div class="trailer-bay">
+          <span class="bay-tag">Bay 1 · Port</span>
           Whanganui
           <span class="trailer-sub">2- (Sweep)</span>
         </div>
         <div class="trailer-bay">
+          <span class="bay-tag">Bay 2 · Port</span>
           Poneke
           <span class="trailer-sub">8+ Hull</span>
         </div>
         <div class="trailer-bay">
+          <span class="bay-tag">Bay 3 · Stbd</span>
           Princess
           <span class="trailer-sub">8+ Hull</span>
         </div>
         <div class="trailer-bay">
+          <span class="bay-tag">Bay 4 · Stbd</span>
           Matiu
           <span class="trailer-sub">2X (Scull)</span>
         </div>
@@ -310,18 +460,22 @@
       <div class="trailer-tier">
         <div class="tier-label">Tier 2</div>
         <div class="trailer-bay">
+          <span class="bay-tag">Bay 1 · Port</span>
           Makaro
           <span class="trailer-sub">2X / 2-</span>
         </div>
         <div class="trailer-bay">
+          <span class="bay-tag">Bay 2 · Port</span>
           Laurie
           <span class="trailer-sub">4X+ (Short four)</span>
         </div>
         <div class="trailer-bay">
+          <span class="bay-tag">Bay 3 · Stbd</span>
           Mahunga
           <span class="trailer-sub">4X- (Short four)</span>
         </div>
         <div class="trailer-bay">
+          <span class="bay-tag">Bay 4 · Stbd</span>
           Moa
           <span class="trailer-sub">2X (Scull)</span>
         </div>
@@ -331,18 +485,22 @@
       <div class="trailer-tier">
         <div class="tier-label">Tier 1 (Bottom)</div>
         <div class="trailer-bay guest">
+          <span class="bay-tag">Bay 1 · Port</span>
           STAR single
           <span class="trailer-sub">Guest Club Boat</span>
         </div>
         <div class="trailer-bay">
+          <span class="bay-tag">Bay 2 · Port</span>
           End / End
           <span class="trailer-sub">8-Bow/Stern Sections</span>
         </div>
         <div class="trailer-bay guest">
+          <span class="bay-tag">Bay 3 · Stbd</span>
           STAR double
           <span class="trailer-sub">Guest Club Boat</span>
         </div>
         <div class="trailer-bay">
+          <span class="bay-tag">Bay 4 · Stbd</span>
           Tuhua
           <span class="trailer-sub">1X (Single Scull)</span>
         </div>
