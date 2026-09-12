@@ -179,7 +179,7 @@
     <h3>Regatta Summary</h3>
     <div class="stats-grid">
       <div class="stat-item">
-        <div class="stat-number">11</div>
+        <div class="stat-number" id="stat-club-boats">11</div>
         <div class="stat-label">Club Boats Travelling</div>
       </div>
       <div class="stat-item">
@@ -187,7 +187,7 @@
         <div class="stat-label">Guest Star Boats</div>
       </div>
       <div class="stat-item">
-        <div class="stat-number">24</div>
+        <div class="stat-number" id="stat-entered-races">24</div>
         <div class="stat-label">Entered Races</div>
       </div>
       <div class="stat-item">
@@ -195,7 +195,7 @@
         <div class="stat-label">Total Oars Packed</div>
       </div>
       <div class="stat-item">
-        <div class="stat-number" style="color: var(--danger);">3</div>
+        <div class="stat-number" id="stat-rerigs" style="color: var(--danger);">3</div>
         <div class="stat-label">Critical Re-Rigs</div>
       </div>
     </div>
@@ -241,5 +241,37 @@
   </footer>
 </div>
 
+
+  <script>
+  async function updatePortalStats() {
+    try {
+      const [schedRes, planRes] = await Promise.all([
+        fetch('./race_schedule.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).catch(() => null),
+        fetch('./regatta_load_plan.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).catch(() => null)
+      ]);
+
+      if (schedRes && schedRes.races) {
+        const enteredRaces = new Set(schedRes.races.map(r => r.event_number)).size;
+        const rerigs = schedRes.races.filter(r => r.rerig_required).length;
+        const elRaces = document.getElementById('stat-entered-races');
+        const elRerigs = document.getElementById('stat-rerigs');
+        if (elRaces) elRaces.textContent = enteredRaces;
+        if (elRerigs) elRerigs.textContent = rerigs;
+      }
+
+      if (planRes && planRes.fleet_specifications) {
+        const elBoats = document.getElementById('stat-club-boats');
+        if (elBoats) elBoats.textContent = planRes.fleet_specifications.length;
+      }
+    } catch (e) {
+      console.warn('Could not update portal stats dynamically:', e);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', updatePortalStats);
+  if (document.readyState === 'interactive' || document.readyState === 'complete') {
+    updatePortalStats();
+  }
+  </script>
 </body>
 </html>
