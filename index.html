@@ -47,15 +47,25 @@
       margin: 0 auto 14px;
     }
     .badge {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       background-color: var(--accent);
       color: #1a202c;
       font-weight: 700;
-      font-size: 0.8rem;
-      padding: 5px 14px;
+      font-size: 0.85rem;
+      padding: 6px 16px;
       border-radius: 9999px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.3px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .badge:hover {
+      background-color: #ecc94b;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      color: #000;
     }
     .nav-grid {
       display: grid;
@@ -171,7 +181,9 @@
   <header>
     <h1>2026 Masters Nationals Portal</h1>
     <p>Regatta operations dashboard, chronological event schedule, trailer pack plan, and fleet maintenance guides.</p>
-    <span class="badge">Official Team Hub</span>
+    <a href="https://docs.google.com/spreadsheets/d/1Vt7A1fwQDqtUF1455LZgacA4fy5tr2AUYojgEgrrlEM/edit?gid=1295452530#gid=1295452530" target="_blank" rel="noopener noreferrer" class="badge">
+      📊 WRC 2026 Nats Spreadsheet (Official Source of Truth) &nearr;
+    </a>
   </header>
 
   <!-- QUICK STATS -->
@@ -218,7 +230,7 @@
       </div>
       <a href="regatta_load_plan.html" class="btn">View Trailer &amp; Gear Check Plan &rarr;</a>
     </div>
-  </div>
+
     <!-- TILE 2: RACE SCHEDULE -->
     <div class="card">
       <div>
@@ -234,6 +246,7 @@
       </div>
       <a href="race_schedule.html" class="btn">View Race Schedule &rarr;</a>
     </div>
+  </div>
 
 
   <footer>
