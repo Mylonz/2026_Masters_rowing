@@ -53,7 +53,7 @@
             "bay_number": 1,
             "side": "Port",
             "position": "Port Outer",
-            "boat_name": "Whanganui",
+            "boat_name": "Island Bay",
             "details": "2- (Sweep)",
             "slot_type": "standard"
           },
@@ -200,7 +200,7 @@
       "requires_re_rig": true
     },
     {
-      "boat_name": "Whanganui",
+      "boat_name": "Island Bay",
       "seats": 2,
       "riggers_required": "Sweep",
       "notes": "Races in 2- (Race 90). Club inventory notes sweep only.",
@@ -256,7 +256,7 @@
         {
           "oar_set": "BYW (Sweep)",
           "quantity": "8",
-          "assignments": "Race 53 (Poneke 8+), Race 90 (Whanganui 2- & Makaro 2-), Race 111 (Princess 8+)"
+          "assignments": "Race 53 (Poneke 8+), Race 90 (Island Bay 2- & Makaro 2-), Race 111 (Princess 8+)"
         },
         {
           "oar_set": "BGY (Sweep)",
@@ -361,8 +361,8 @@
         "tasks": "Pack & inspect both scull riggers and sweep riggers; check shoes & steering fin."
       },
       {
-        "id": "t-whanganui",
-        "item": "Whanganui (2-)",
+        "id": "t-Island Bay",
+        "item": "Island Bay (2-)",
         "tasks": "Pair sweep riggers, pins, slides, and foot stretchers."
       },
       {
