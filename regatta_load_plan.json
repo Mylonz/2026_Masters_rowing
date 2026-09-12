@@ -400,10 +400,6 @@
   "safety_and_spares": {
     "safety_mandates": [
       {
-        "rule": "Heel Ties",
-        "details": "Maximum 70 mm (7 cm) lift on all boat shoes (Rowing NZ safety rule)."
-      },
-      {
         "rule": "Overhang",
         "details": "Maximum 7.0 m overhang from rear axle. Fluorescent red/yellow/orange flag (min 400x300mm) affixed to the longest hull."
       },
@@ -423,7 +419,7 @@
       },
       {
         "id": "sp-pins",
-        "item": "Top nuts, gate pitch bushings (0\u00b0, 1\u00b0, 4\u00b0), and height washers"
+        "item": "Top nuts, gate pitch bushings (0\u00b0, 1\u00b0, 4\u00b0), and height washers and clips"
       },
       {
         "id": "sp-wheels",

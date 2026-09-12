@@ -62,15 +62,25 @@
       background: rgba(255, 255, 255, 0.35);
     }
     .badge {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       background-color: var(--accent);
       color: #1a202c;
       font-weight: 700;
-      font-size: 0.75rem;
-      padding: 4px 10px;
+      font-size: 0.8rem;
+      padding: 5px 14px;
       border-radius: 9999px;
-      text-transform: uppercase;
       margin-top: 10px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .badge:hover {
+      background-color: #ecc94b;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      color: #000;
     }
     section {
       background: var(--card-bg);
@@ -485,7 +495,9 @@
   <header>
     <h1>2026 Masters Nationals — Logistics & Load Plan</h1>
     <p>Complete trailer loading layout, fleet rigging requirements, oar assignments, and pre-regatta gear check checklists.</p>
-    <span class="badge">Active Regatta Plan</span>
+    <a href="https://docs.google.com/document/d/1F-18_-__f7mKfiN9aMyWKLdeoD18rSWkz0WzPqcheCw/edit?tab=t.0" target="_blank" rel="noopener noreferrer" class="badge">
+          📋 WRC Loadmaster Responsibilities &nearr;
+    </a>
     <div class="header-links">
       <a href="index.html">&larr; Portal Home</a>
       <a href="race_schedule.html">Race Schedule &rarr;</a>
@@ -606,7 +618,7 @@
 
   <!-- SECTION 5: SAFETY COMPLIANCE & TRAVEL CHECKLIST -->
   <section>
-    <h2>Trailer Road Safety &amp; Spares Box</h2>
+    <h2>Trailer Road Safety &amp; Crash kit spares </h2>
     
     <div class="safety-alert">
       <strong>Road Safety Mandates:</strong>
@@ -615,7 +627,7 @@
       </ul>
     </div>
 
-    <h3>Regatta Spares Box Checklist</h3>
+    <h3>Regatta Spares Checklist</h3>
     <div id="spares-box-list">
       <!-- Dynamically rendered from regatta_load_plan.json -->
     </div>
