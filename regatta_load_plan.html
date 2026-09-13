@@ -379,6 +379,94 @@
       font-size: 0.78rem;
     }
 
+    /* Section 6: Additional Regatta Gear Grid */
+    .gear-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .gear-card {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      transition: all 0.15s ease;
+    }
+    .gear-card:hover {
+      background: #ffffff;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+      border-color: #cbd5e1;
+    }
+    .gear-card.packed {
+      background: #f0fdf4;
+      border-color: #86efac;
+    }
+    .gear-card.packed .gear-title {
+      text-decoration: line-through;
+      color: #64748b;
+    }
+    .gear-checkbox {
+      margin-top: 3px;
+      width: 18px;
+      height: 18px;
+      accent-color: var(--secondary);
+      cursor: pointer;
+    }
+    .gear-info {
+      flex: 1;
+    }
+    .gear-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+    }
+    .gear-title {
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 0.95rem;
+    }
+    .gear-qty-badge {
+      background: var(--primary);
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 12px;
+    }
+    .gear-category {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #475569;
+      background: #e2e8f0;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .gear-notes {
+      font-size: 0.82rem;
+      color: #64748b;
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+    .gear-count-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: #e2e8f0;
+      color: #334155;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+
     @media (max-width: 768px) {
       body {
         padding: 12px 10px;
@@ -630,6 +718,19 @@
     <h3>Regatta Spares Checklist</h3>
     <div id="spares-box-list">
       <!-- Dynamically rendered from regatta_load_plan.json -->
+    </div>
+  </section>
+
+  <!-- SECTION 6: ADDITIONAL REGATTA & TEAM CAMP GEAR -->
+  <section id="additional-gear-section">
+    <h2>
+      Additional Regatta &amp; Team Camp Gear
+      <span class="gear-count-badge" id="gear-count-badge">0 items</span>
+    </h2>
+    <p>Essential team camp, warm-up, safety, and administrative equipment to pack in the trailer body or tow vehicles.</p>
+    
+    <div id="additional-gear-container" class="gear-grid">
+      <!-- Dynamically rendered from additional_gear.json -->
     </div>
   </section>
 </div>
@@ -899,6 +1000,51 @@
     setupChecklistPersistence();
   }
 
+  function renderAdditionalGear(items) {
+    const container = document.getElementById('additional-gear-container');
+    const badge = document.getElementById('gear-count-badge');
+    if (!container || !Array.isArray(items)) return;
+
+    if (badge) {
+      badge.textContent = `${items.length} item${items.length === 1 ? '' : 's'}`;
+    }
+
+    container.innerHTML = items.map((g, idx) => {
+      const id = g.id || `gear_item_${idx}`;
+      const isPacked = localStorage.getItem('checklist_' + id) === 'true';
+      return `
+        <div class="gear-card${isPacked ? ' packed' : ''}" id="card_${id}">
+          <input type="checkbox" id="${id}" class="gear-checkbox"${isPacked ? ' checked' : ''}>
+          <div class="gear-info">
+            <div class="gear-header-row">
+              <span class="gear-title">${escapeHtml(g.item)}</span>
+              ${g.quantity ? `<span class="gear-qty-badge">Qty: ${escapeHtml(g.quantity)}</span>` : ''}
+            </div>
+            ${g.category ? `<span class="gear-category">${escapeHtml(g.category)}</span>` : ''}
+            ${g.notes ? `<div class="gear-notes">${escapeHtml(g.notes)}</div>` : ''}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    // Setup interactive checkbox listeners for gear cards
+    items.forEach((g, idx) => {
+      const id = g.id || `gear_item_${idx}`;
+      const cb = document.getElementById(id);
+      const card = document.getElementById(`card_${id}`);
+      if (cb && card) {
+        cb.addEventListener('change', () => {
+          localStorage.setItem('checklist_' + id, cb.checked);
+          if (cb.checked) {
+            card.classList.add('packed');
+          } else {
+            card.classList.remove('packed');
+          }
+        });
+      }
+    });
+  }
+
   function setupChecklistPersistence() {
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
     checkboxes.forEach(cb => {
@@ -914,12 +1060,21 @@
 
   async function init() {
     try {
-      const res = await fetch('./regatta_load_plan.json', { cache: 'no-store' });
-      if (!res.ok) {
-        throw new Error('HTTP ' + res.status + ': ' + res.statusText);
+      const [planRes, gearRes] = await Promise.all([
+        fetch('./regatta_load_plan.json', { cache: 'no-store' }),
+        fetch('./additional_gear.json', { cache: 'no-store' }).catch(() => null)
+      ]);
+
+      if (!planRes.ok) {
+        throw new Error('HTTP ' + planRes.status + ': ' + planRes.statusText);
       }
-      const data = await res.json();
+      const data = await planRes.json();
       renderLoadPlan(data);
+
+      if (gearRes && gearRes.ok) {
+        const gearData = await gearRes.json();
+        renderAdditionalGear(gearData);
+      }
     } catch (err) {
       console.error('Error loading regatta_load_plan.json:', err);
       const container = document.querySelector('.container');

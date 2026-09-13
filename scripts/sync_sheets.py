@@ -260,6 +260,60 @@ Input CSV Data:
     boat_count = len(result.get("fleet_specifications", []))
     print(f"✅ Updated regatta_load_plan.json ({tier_count} trailer tiers, {boat_count} fleet specs)")
 
+def sync_additional_gear(api_key, root_dir):
+    gear_path = os.path.join(root_dir, "additional_gear.json")
+
+    # 1. Check if an 'Additional Gear', 'Regatta Gear', or 'Gear' tab exists in the spreadsheet
+    try:
+        url = f"https://docs.google.com/spreadsheets/d/{SPREADSHEET_ID}/edit"
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        html = urllib.request.urlopen(req).read().decode("utf-8", errors="ignore")
+
+        gear_gid = None
+        for candidate in ["Additional Gear", "Regatta Gear", "Gear", "Equipment"]:
+            idx = html.find(f"0,0,\\\"{candidate}\\\"")
+            if idx != -1:
+                chunk = html[max(0, idx - 100):idx]
+                m = re.findall(r"\\\"(\d{8,12})\\\"", chunk)
+                if m:
+                    gear_gid = m[-1]
+                    print(f"📋 Found '{candidate}' tab in spreadsheet (gid: {gear_gid})")
+                    break
+
+        if not gear_gid:
+            print("ℹ️  No 'Additional Gear' tab in spreadsheet yet; preserving local additional_gear.json.")
+            return
+
+        print("📥 Downloading Additional Gear CSV from Google Sheets...")
+        csv_data = fetch_sheet_csv(gear_gid)
+
+        prompt = f"""You are an expert equipment inventory extraction engine.
+Extract all additional regatta equipment and team camp gear from the following CSV into a JSON array of objects.
+
+Target Schema:
+[
+  {{
+    "id": "gear-1",
+    "item": "Rowing Ergs",
+    "quantity": "2",
+    "category": "Warm-up / Training",
+    "notes": "Concept2 ergs; verify monitor batteries and check slide rails",
+    "assigned_to": null
+  }}
+]
+
+CSV Data:
+{csv_data}
+"""
+        result = call_gemini(api_key, prompt)
+        if isinstance(result, list) and len(result) > 0:
+            with open(gear_path, "w", encoding="utf-8") as f:
+                json.dump(result, f, indent=2)
+            print(f"✅ Updated additional_gear.json ({len(result)} items from spreadsheet)")
+
+    except Exception as e:
+        print(f"⚠️ Note on Additional Gear sync: {e}")
+
 def main():
     key = get_api_key()
     if not key:
@@ -272,7 +326,8 @@ def main():
     try:
         sync_schedule(key, root_dir)
         sync_load_plan(key, root_dir)
-        print("\n🎉 Sync complete! All JSON files updated from Google Sheets.")
+        sync_additional_gear(key, root_dir)
+        print("\n🎉 Sync complete! All JSON files updated.")
     except Exception as e:
         print(f"\n❌ Error during sync: {e}")
         sys.exit(1)

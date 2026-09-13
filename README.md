@@ -24,8 +24,11 @@ The website architecture is completely decoupled from hardcoded data. Webpages d
 ```
 Google Spreadsheet (Source of Truth)
    ├── Tab 'v2' (Schedule & Crews) ───────► race_schedule.json ───► race_schedule.html
-   └── Tab 'Load Plan' (Trailer & Fleet) ──► regatta_load_plan.json ─► regatta_load_plan.html
+   ├── Tab 'Load Plan' (Trailer & Fleet) ──► regatta_load_plan.json ─► regatta_load_plan.html
+   └── Optional Tab 'Additional Gear' ────► additional_gear.json ──► regatta_load_plan.html
 ```
+
+*Note: If an `Additional Gear` tab has not yet been added to Google Sheets, `additional_gear.json` maintains its local configuration without being overwritten.*
 
 ### Official Google Spreadsheet
 * **Link:** [WRC 2026 Nats Spreadsheet (Official Source of Truth)](https://docs.google.com/spreadsheets/d/1Vt7A1fwQDqtUF1455LZgacA4fy5tr2AUYojgEgrrlEM/edit?gid=1295452530#gid=1295452530)
