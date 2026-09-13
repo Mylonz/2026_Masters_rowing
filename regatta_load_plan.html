@@ -684,10 +684,14 @@
   }
 
   function renderLoadPlan(data) {
+    if (!data) return;
+
     // 1. Trailer Grid
     const cfg = data.trailer_load_configuration;
     const gridContainer = document.getElementById('trailer-grid-container');
-    if (gridContainer && cfg) {
+    const tiers = (cfg && Array.isArray(cfg.tiers)) ? cfg.tiers : (Array.isArray(cfg) ? cfg : []);
+
+    if (gridContainer && tiers.length > 0) {
       let gridHtml = `
         <div class="trailer-header-bar">
           <div></div>
@@ -697,17 +701,36 @@
           <div>Bay 4 · Stbd</div>
         </div>
       `;
-      cfg.tiers.forEach(t => {
+      tiers.forEach((t, tIdx) => {
+        const tierLabel = t.tier_label || t.tier || `Tier ${4 - tIdx}`;
+        // Support either bays array or bay_1, bay_2, bay_3, bay_4 flat fields
+        let bays = t.bays;
+        if (!bays || !Array.isArray(bays)) {
+          bays = [1, 2, 3, 4].map(num => {
+            const val = t[`bay_${num}`] || '';
+            const side = num <= 2 ? 'Port' : 'Starboard';
+            const pos = num === 1 ? 'Port Outer' : (num === 2 ? 'Port Inner' : (num === 3 ? 'Starboard Inner' : 'Starboard Outer'));
+            return {
+              bay_number: num,
+              side: side,
+              position: pos,
+              boat_name: val || '(Empty)',
+              details: '',
+              slot_type: val ? 'standard' : 'empty'
+            };
+          });
+        }
+
         gridHtml += `
           <div class="trailer-tier">
-            <div class="tier-label">${escapeHtml(t.tier_label)}</div>
-            ${t.bays.map(b => {
-              const typeClass = b.slot_type !== 'standard' ? ` ${b.slot_type}` : '';
+            <div class="tier-label">${escapeHtml(tierLabel)}</div>
+            ${bays.map(b => {
+              const typeClass = b.slot_type && b.slot_type !== 'standard' ? ` ${b.slot_type}` : '';
               const sideShort = b.side === 'Port' ? 'Port' : 'Stbd';
               return `
                 <div class="trailer-bay${typeClass}">
                   <span class="bay-tag">Bay ${b.bay_number} · ${sideShort}</span>
-                  ${escapeHtml(b.boat_name)}
+                  ${escapeHtml(b.boat_name || '(Empty)')}
                   ${b.details ? `<span class="trailer-sub">${escapeHtml(b.details)}</span>` : ''}
                 </div>
               `;
@@ -715,11 +738,14 @@
           </div>
         `;
       });
+
+      const portSide = (cfg && cfg.oar_racks && cfg.oar_racks.port_side) ? cfg.oar_racks.port_side : 'SWEEPS';
+      const stbdSide = (cfg && cfg.oar_racks && cfg.oar_racks.starboard_side) ? cfg.oar_racks.starboard_side : 'SCULLS';
       gridHtml += `
         <div class="trailer-footer">
           <div>Oar Racks:</div>
-          <div>Port Side: <strong>${escapeHtml(cfg.oar_racks.port_side)}</strong></div>
-          <div>Starboard Side: <strong>${escapeHtml(cfg.oar_racks.starboard_side)}</strong></div>
+          <div>Port Side: <strong>${escapeHtml(portSide)}</strong></div>
+          <div>Starboard Side: <strong>${escapeHtml(stbdSide)}</strong></div>
         </div>
       `;
       gridContainer.innerHTML = gridHtml;
@@ -727,7 +753,7 @@
 
     // Loading notes
     const notesList = document.getElementById('loading-notes-list');
-    if (notesList && cfg && cfg.loading_notes) {
+    if (notesList && cfg && Array.isArray(cfg.loading_notes)) {
       notesList.innerHTML = cfg.loading_notes.map(n => {
         const parts = n.split(':');
         if (parts.length > 1) {
@@ -739,102 +765,133 @@
 
     // 2. Fleet Specifications
     const fleetTbody = document.getElementById('fleet-specs-tbody');
-    if (fleetTbody && data.fleet_specifications) {
-      fleetTbody.innerHTML = data.fleet_specifications.map(b => `
-        <tr class="${b.requires_re_rig ? 'highlight-re-rig' : ''}">
-          <td><strong>${escapeHtml(b.boat_name)}</strong></td>
-          <td>${escapeHtml(b.seats)}</td>
-          <td>${b.requires_re_rig ? `<strong>${escapeHtml(b.riggers_required)}</strong>` : escapeHtml(b.riggers_required)}</td>
-          <td>${formatNotes(b.notes)}</td>
-        </tr>
-      `).join('');
+    if (fleetTbody && Array.isArray(data.fleet_specifications)) {
+      fleetTbody.innerHTML = data.fleet_specifications.map(b => {
+        const boatName = b.boat_name || b.boat || '';
+        const seats = b.seats || b.boat_type || '';
+        const riggers = b.riggers_required || b.riggers || '';
+        const notes = b.notes || (b.shed_location ? `Shed: ${b.shed_location}` : '');
+        const isRerig = Boolean(b.requires_re_rig || (b.sweep && b.scull));
+        return `
+          <tr class="${isRerig ? 'highlight-re-rig' : ''}">
+            <td><strong>${escapeHtml(boatName)}</strong></td>
+            <td>${escapeHtml(seats)}</td>
+            <td>${isRerig ? `<strong>${escapeHtml(riggers)}</strong>` : escapeHtml(riggers)}</td>
+            <td>${formatNotes(notes)}</td>
+          </tr>
+        `;
+      }).join('');
     }
 
     // 3. Oar Allocations
     if (data.oar_loading_plan) {
       const sweep = data.oar_loading_plan.sweep_oars;
       if (sweep) {
+        const sweepList = Array.isArray(sweep) ? sweep : (sweep.allocations || []);
         const sweepTitle = document.getElementById('sweep-oars-title');
         if (sweepTitle && sweep.total_summary) {
           sweepTitle.textContent = `Sweep Oars (Total to Load: ${sweep.total_summary})`;
         }
         const sweepTbody = document.getElementById('sweep-oars-tbody');
-        if (sweepTbody && sweep.allocations) {
-          sweepTbody.innerHTML = sweep.allocations.map(o => `
+        if (sweepTbody) {
+          sweepTbody.innerHTML = sweepList.map(o => `
             <tr>
-              <td><strong>${formatOarAssigned(o.oar_set)}</strong></td>
-              <td>${escapeHtml(o.quantity)}</td>
-              <td>${escapeHtml(o.assignments)}</td>
+              <td><strong>${formatOarAssigned(o.oar_set || o.set)}</strong></td>
+              <td>${escapeHtml(o.quantity || (o.count ? `${o.count} (${o.location || ''})` : ''))}</td>
+              <td>${escapeHtml(o.assignments || o.location || '')}</td>
             </tr>
           `).join('');
         }
       }
 
-      const scull = data.oar_loading_plan.sculling_oars;
+      const scull = data.oar_loading_plan.sculling_oars || data.oar_loading_plan.scull_oars;
       if (scull) {
+        const scullList = Array.isArray(scull) ? scull : (scull.allocations || []);
         const scullTitle = document.getElementById('scull-oars-title');
         if (scullTitle && scull.total_summary) {
           scullTitle.textContent = `Sculling Oars (Total to Load: ${scull.total_summary})`;
         }
         const scullTbody = document.getElementById('scull-oars-tbody');
-        if (scullTbody && scull.allocations) {
-          scullTbody.innerHTML = scull.allocations.map(o => `
+        if (scullTbody) {
+          scullTbody.innerHTML = scullList.map(o => `
             <tr>
-              <td><strong>${formatOarAssigned(o.oar_set)}</strong></td>
-              <td>${escapeHtml(o.quantity)}</td>
-              <td>${escapeHtml(o.assignments)}</td>
+              <td><strong>${formatOarAssigned(o.oar_set || o.set)}</strong></td>
+              <td>${escapeHtml(o.quantity || (o.count ? `${o.count} (${o.location || ''})` : ''))}</td>
+              <td>${escapeHtml(o.assignments || o.location || '')}</td>
             </tr>
           `).join('');
         }
       }
     }
 
-    // 4. Gear Cehck  Checklists
+    // 4. Gear Check Checklists
     if (data.pre_regatta_maintenance_checklists) {
+      const renderItems = (items, prefix) => {
+        return (items || []).map((item, idx) => {
+          if (typeof item === 'string') {
+            const id = `${prefix}_${idx}`;
+            return `
+              <div class="check-item">
+                <input type="checkbox" id="${id}">
+                <label class="check-label" for="${id}">${formatOarAssigned(item)}</label>
+              </div>
+            `;
+          }
+          const id = item.id || `${prefix}_${idx}`;
+          return `
+            <div class="check-item">
+              <input type="checkbox" id="${id}">
+              <label class="check-label" for="${id}">
+                <strong>${formatOarAssigned(item.item)}:</strong> ${escapeHtml(item.tasks || '')}
+              </label>
+            </div>
+          `;
+        }).join('');
+      };
+
       const wDiv = document.getElementById('waimarino-checklist');
-      const wItems = data.pre_regatta_maintenance_checklists.waimarino_shed || [];
       if (wDiv) {
-        wDiv.innerHTML = wItems.map(item => `
-          <div class="check-item">
-            <input type="checkbox" id="${item.id}">
-            <label class="check-label" for="${item.id}">
-              <strong>${formatOarAssigned(item.item)}:</strong> ${escapeHtml(item.tasks)}
-            </label>
-          </div>
-        `).join('');
+        wDiv.innerHTML = renderItems(data.pre_regatta_maintenance_checklists.waimarino_shed, 'w');
       }
 
       const tDiv = document.getElementById('town-checklist');
-      const tItems = data.pre_regatta_maintenance_checklists.town_shed || [];
       if (tDiv) {
-        tDiv.innerHTML = tItems.map(item => `
-          <div class="check-item">
-            <input type="checkbox" id="${item.id}">
-            <label class="check-label" for="${item.id}">
-              <strong>${formatOarAssigned(item.item)}:</strong> ${escapeHtml(item.tasks)}
-            </label>
-          </div>
-        `).join('');
+        tDiv.innerHTML = renderItems(data.pre_regatta_maintenance_checklists.town_shed, 't');
       }
     }
 
     // 5. Safety & Spares
     if (data.safety_and_spares) {
+      const mandates = data.safety_and_spares.safety_mandates || data.safety_and_spares.road_safety_mandates || [];
       const mandatesList = document.getElementById('safety-mandates-list');
-      if (mandatesList && data.safety_and_spares.safety_mandates) {
-        mandatesList.innerHTML = data.safety_and_spares.safety_mandates.map(m => `
-          <li><strong>${escapeHtml(m.rule)}:</strong> ${escapeHtml(m.details)}</li>
-        `).join('');
+      if (mandatesList) {
+        mandatesList.innerHTML = mandates.map(m => {
+          if (typeof m === 'string') return `<li>${escapeHtml(m)}</li>`;
+          return `<li><strong>${escapeHtml(m.rule)}:</strong> ${escapeHtml(m.details)}</li>`;
+        }).join('');
       }
 
+      const spares = data.safety_and_spares.spares_box_checklist || data.safety_and_spares.spares_box || [];
       const sparesDiv = document.getElementById('spares-box-list');
-      if (sparesDiv && data.safety_and_spares.spares_box_checklist) {
-        sparesDiv.innerHTML = data.safety_and_spares.spares_box_checklist.map(s => `
-          <div class="check-item">
-            <input type="checkbox" id="${s.id}">
-            <label class="check-label" for="${s.id}">${escapeHtml(s.item)}</label>
-          </div>
-        `).join('');
+      if (sparesDiv) {
+        sparesDiv.innerHTML = spares.map((s, idx) => {
+          if (typeof s === 'string') {
+            const id = `sp_${idx}`;
+            return `
+              <div class="check-item">
+                <input type="checkbox" id="${id}">
+                <label class="check-label" for="${id}">${escapeHtml(s)}</label>
+              </div>
+            `;
+          }
+          const id = s.id || `sp_${idx}`;
+          return `
+            <div class="check-item">
+              <input type="checkbox" id="${id}">
+              <label class="check-label" for="${id}">${escapeHtml(s.item || '')}</label>
+            </div>
+          `;
+        }).join('');
       }
     }
 

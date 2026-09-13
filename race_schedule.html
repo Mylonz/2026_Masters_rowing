@@ -279,13 +279,16 @@
     }
     .cox-tag {
       display: inline-block;
-      background: #fed7d7;
-      color: #9b2c2c;
-      font-weight: 700;
+      background: #fee2e2;
+      color: #991b1b;
+      font-weight: 800;
       font-size: 0.72rem;
-      padding: 1px 6px;
+      padding: 2px 6px;
       border-radius: 4px;
       margin-right: 4px;
+      border: 1px solid #fca5a5;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
     }
     .rerig-alert {
       background-color: var(--danger-bg);
@@ -611,11 +614,21 @@
       .replace(/"/g, '&quot;');
   }
 
-  function formatCrew(crewText) {
+  function formatCrew(crewText, coxName) {
     if (!crewText) return '';
     let text = escapeHtml(crewText);
-    text = text.replace(/COX:\s*([A-Za-z]+)/g, '<span class="cox-tag">COX: $1</span>');
-    text = text.replace(/(^|\n)\s*(Poneke:|Princess:|Heat \d+:|Whanganui:|Makaro:)/g, '$1<strong>$2</strong>');
+
+    if (coxName && !/COX:/i.test(text)) {
+      const escapedCox = escapeHtml(coxName);
+      const coxPrefixRegex = new RegExp('^\\s*' + escapedCox + '\\s*[,\\s]*', 'i');
+      if (coxPrefixRegex.test(text)) {
+        text = text.replace(coxPrefixRegex, '');
+      }
+      text = `COX: ${escapedCox}, ` + text;
+    }
+
+    text = text.replace(/COX:\s*([A-Za-z0-9_-]+)/gi, '<span class="cox-tag">COX: $1</span>');
+    text = text.replace(/(^|\n)\s*(Poneke:|Princess:|Heat \d+:|Whanganui:|Island Bay:|Makaro:)/g, '$1<strong>$2</strong>');
     text = text.replace(/\n+/g, '<br>');
     return text;
   }
@@ -656,11 +669,15 @@
     const rerigClass = race.rerig_required ? ' rerig-row rerig-alert' : '';
     const specialStyle = (race.event_number === 111 || (race.boat && race.boat.includes('Princess') && race.boat.includes('Poneke'))) ? ' style="background-color: #f0fdf4;"' : '';
 
+    const eventClass = race.event_class || race.event_name || '';
+    const crewText = race.crew || race.crew_summary || (Array.isArray(race.crew_roster) ? race.crew_roster.join(', ') : '');
+    const rerigNote = race.rerig_note || race.rerig_notes || '';
+
     let notesHtml = '';
     if (race.rerig_required) {
       notesHtml = `
         <span class="rerig-badge">⚠️ Re-Rig Required</span>
-        ${race.rerig_note ? `<span class="rerig-text">${escapeHtml(race.rerig_note)}</span>` : ''}
+        ${rerigNote ? `<span class="rerig-text">${escapeHtml(rerigNote)}</span>` : ''}
         ${race.notes ? `<span>${escapeHtml(race.notes).replace(/\n/g, '<br>')}</span>` : ''}
       `;
     } else {
@@ -672,10 +689,10 @@
         <td>${escapeHtml(race.block)}</td>
         <td class="time-cell">${escapeHtml(race.time)}</td>
         <td><span class="event-badge">${escapeHtml(race.event_number)}</span></td>
-        <td><strong>${escapeHtml(race.event_class)}</strong></td>
+        <td><strong>${escapeHtml(eventClass)}</strong></td>
         <td class="boat-badge">${escapeHtml(race.boat)}</td>
         <td>${formatOarAssigned(race.oars_assigned)}</td>
-        <td class="crew-list">${formatCrew(race.crew)}</td>
+        <td class="crew-list">${formatCrew(crewText, race.cox)}</td>
         <td>${notesHtml}</td>
       </tr>
     `;
