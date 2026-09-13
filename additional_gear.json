@@ -1,0 +1,34 @@
+[
+  {
+    "id": "gear-ergs",
+    "item": "Rowing Ergs",
+    "quantity": "2",
+    "category": "Warm-up / Training",
+    "notes": "Concept2 ergs; verify monitor batteries and check slide rails",
+    "assigned_to": null
+  },
+  {
+    "id": "gear-table",
+    "item": "Folding Table",
+    "quantity": "1",
+    "category": "Team Camp",
+    "notes": "Heavy-duty folding trestle table for the team tent base",
+    "assigned_to": null
+  },
+  {
+    "id": "gear-whiteboard",
+    "item": "Whiteboard & Markers",
+    "quantity": "1 set",
+    "category": "Team Camp / Admin",
+    "notes": "Large portable whiteboard, dry-erase markers & eraser for race schedule briefings",
+    "assigned_to": null
+  },
+  {
+    "id": "gear-crash-kit",
+    "item": "Crash Kit & First Aid",
+    "quantity": "1",
+    "category": "Safety",
+    "notes": "Complete regatta emergency medical/trauma kit; keep accessible in lead vehicle",
+    "assigned_to": null
+  }
+]
