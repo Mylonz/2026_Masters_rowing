@@ -56,7 +56,15 @@ or ask:
 #### Method 2: From the Terminal (One-Liner)
 Run the convenience wrapper script from your terminal:
 ```bash
-./sync-sheets.sh
+# Preview changes without modifying files:
+./sync-sheets.sh --check        # Fast check if spreadsheet changed
+./sync-sheets.sh --dry-run      # Full extraction and diff preview (no file changes)
+
+# Interactive review (preview diff and prompt to apply):
+./sync-sheets.sh --interactive  # Shows diff and asks before updating files
+
+# Direct sync:
+./sync-sheets.sh                # Syncs and updates JSON files directly
 ```
 
 #### Method 3: Non-Interactive Pi CLI

@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 """
 Sync regatta data from Google Sheets into race_schedule.json and regatta_load_plan.json.
-Uses Google Gemini via ~/.pi/agent/auth.json or GEMINI_API_KEY.
+Supports --dry-run / --check / -n to preview changes before applying them,
+and --interactive / -i to prompt for confirmation before updating.
 """
 
 import os
 import sys
 import json
 import re
+import hashlib
 import urllib.request
 import urllib.error
 
@@ -16,12 +18,10 @@ GID_SCHEDULE = "1295452530"   # 'v2' tab
 GID_LOAD_PLAN = "1504778411"  # 'Load Plan' tab
 
 def get_api_key():
-    # 1. Environment variable
     key = os.environ.get("GEMINI_API_KEY")
     if key:
         return key
 
-    # 2. Pi agent auth store
     auth_file = os.path.expanduser("~/.pi/agent/auth.json")
     if os.path.exists(auth_file):
         try:
@@ -125,13 +125,61 @@ def compute_rerigs(races):
                 curr_race["rerig_required"] = True
                 curr_race["rerig_note"] = note
                 rerig_count += 1
-                print(f"   ⚡ [{boat}] {note}")
 
     return rerig_count
 
-def sync_schedule(api_key, root_dir):
+def diff_schedule(old_data, new_data):
+    def race_key(r):
+        return (r.get("day"), r.get("event_number"), r.get("boat") or r.get("time"))
+
+    old_races = {race_key(r): r for r in old_data.get("races", [])}
+    new_races = {race_key(r): r for r in new_data.get("races", [])}
+
+    diffs = []
+    for k, nr in new_races.items():
+        if k not in old_races:
+            diffs.append(f"➕ [NEW RACE] Event {nr.get('event_number')} ({nr.get('day')} {nr.get('time')}): {nr.get('event_class')} in {nr.get('boat')}")
+        else:
+            orace = old_races[k]
+            f_diffs = []
+            for f in ["time", "crew", "oars_assigned", "rerig_required", "rerig_note", "notes"]:
+                if orace.get(f) != nr.get(f):
+                    f_diffs.append(f"{f}: '{orace.get(f)}' -> '{nr.get(f)}'")
+            if f_diffs:
+                diffs.append(f"✏️  [MODIFIED] Event {nr.get('event_number')} ({nr.get('day')} {nr.get('boat')}): " + "; ".join(f_diffs))
+
+    for k, orace in old_races.items():
+        if k not in new_races:
+            diffs.append(f"❌ [REMOVED RACE] Event {orace.get('event_number')} ({orace.get('day')} {orace.get('time')}): {orace.get('boat')}")
+
+    return diffs
+
+def diff_load_plan(old_data, new_data):
+    diffs = []
+    old_cfg = old_data.get("trailer_load_configuration", {})
+    new_cfg = new_data.get("trailer_load_configuration", {})
+    old_tiers = old_cfg.get("tiers", []) if isinstance(old_cfg, dict) else old_cfg
+    new_tiers = new_cfg.get("tiers", []) if isinstance(new_cfg, dict) else new_cfg
+
+    for idx in range(min(len(old_tiers), len(new_tiers))):
+        ot = old_tiers[idx]
+        nt = new_tiers[idx]
+        tlabel = ot.get("tier_label") or ot.get("tier") or f"Tier {4 - idx}"
+        obays = ot.get("bays", [])
+        nbays = nt.get("bays", [])
+        for b_idx in range(min(len(obays), len(nbays))):
+            ob = obays[b_idx]
+            nb = nbays[b_idx]
+            ob_name = ob.get("boat_name") if isinstance(ob, dict) else str(ob)
+            nb_name = nb.get("boat_name") if isinstance(nb, dict) else str(nb)
+            if ob_name != nb_name:
+                diffs.append(f"🚛 [{tlabel} Bay {b_idx + 1}] '{ob_name}' -> '{nb_name}'")
+    return diffs
+
+def sync_schedule(api_key, root_dir, dry_run=False):
     print("📥 Downloading Schedule CSV from Google Sheets (tab: v2)...")
     csv_data = fetch_sheet_csv(GID_SCHEDULE)
+    csv_hash = hashlib.sha256(csv_data.encode("utf-8")).hexdigest()
 
     sched_path = os.path.join(root_dir, "race_schedule.json")
     current_data = {}
@@ -191,38 +239,28 @@ SPECIAL REGATTA HEATS & PROGRESSIONS HANDLING:
 - Event 78 (Sunday W Mst C 4X-):
   * Include Heat at 8:30 (Hawkins) and Final at 9:30 (Hawkins).
 
-CORRECTIONS FOR KNOWN SPREADSHEET RE-RIG ERRORS (Makaro & Hawkins):
-- Makaro Re-rig Sequence (Sunday):
-  * Event 73 (08:42/08:48, 2X Double Scull): rerig_required: true, rerig_note: "RE-RIG AS PAIR (2- SWEEP) FOR EVENT 90" (Spreadsheet says race 93 by mistake).
-  * Event 90 (10:26, 2- Pair): rerig_required: true, rerig_note: "RE-RIG BACK TO DOUBLE (2X SCULL) FOR EVENT 101" (Spreadsheet incorrectly says after race 78 / for race 102).
-  * Event 101 (11:43, 2X Double Scull): rerig_required: false, rerig_note: null, notes: "Double Scull (2X) - Must have been re-rigged back to double following Event 90".
-
-- Hawkins Re-rig Sequence (Saturday to Sunday):
-  * Event 38 (Saturday 12:15/12:20, 4X- Quad): rerig_required: true, rerig_note: "RE-RIG AS COXLESS 4 (SWEEP) FOR EVENT 65".
-  * Event 65 (Saturday 15:10, 4- Four): rerig_required: true, rerig_note: "OVERNIGHT RE-RIG: Re-rig back to Quad (4X- scull) for Sunday Event 78 (08:30)" (Spreadsheet incorrectly says after race 51).
-  * Event 78 (Sunday 08:30, 4X- Quad): rerig_required: false, rerig_note: null, notes: "Scull (4X-) - Re-rigged back to quad overnight following Event 65; Final at 09:30".
-
 Input CSV Data:
 {csv_data}
 """
 
     result = call_gemini(api_key, prompt)
 
-    print("🧠 Running deterministic re-rig algorithm across boat timelines...")
     rerigs = compute_rerigs(result.get("races", []))
     if "metadata" in result:
         result["metadata"]["total_rerigs"] = rerigs
 
-    with open(sched_path, "w", encoding="utf-8") as f:
-        json.dump(result, f, indent=2)
+    diffs = diff_schedule(current_data, result)
 
-    race_count = len(result.get("races", []))
-    rower_count = len(result.get("rowers", []))
-    print(f"✅ Updated race_schedule.json ({race_count} races, {rower_count} rowers)")
+    if not dry_run:
+        with open(sched_path, "w", encoding="utf-8") as f:
+            json.dump(result, f, indent=2)
 
-def sync_load_plan(api_key, root_dir):
+    return diffs, len(result.get("races", [])), len(result.get("rowers", [])), csv_hash
+
+def sync_load_plan(api_key, root_dir, dry_run=False):
     print("📥 Downloading Load Plan CSV from Google Sheets (tab: Load Plan)...")
     csv_data = fetch_sheet_csv(GID_LOAD_PLAN)
+    csv_hash = hashlib.sha256(csv_data.encode("utf-8")).hexdigest()
 
     plan_path = os.path.join(root_dir, "regatta_load_plan.json")
     current_data = {}
@@ -246,6 +284,7 @@ Rules:
 6. pre_regatta_maintenance_checklists must contain 'waimarino_shed' and 'town_shed' arrays of objects with id, item, tasks.
 7. safety_and_spares must contain 'safety_mandates' and 'spares_box_checklist'.
 8. Use Island Bay for the 2- (not Whanganui).
+9. Island Bay takes Both (Sweep & Scull) riggers (pack scull riggers as backup spares for other doubles). Ensure town_shed checklist includes scull riggers for Island Bay.
 
 Input CSV Data:
 {csv_data}
@@ -253,17 +292,19 @@ Input CSV Data:
 
     result = call_gemini(api_key, prompt)
 
-    with open(plan_path, "w", encoding="utf-8") as f:
-        json.dump(result, f, indent=2)
+    diffs = diff_load_plan(current_data, result)
 
-    tier_count = len(result.get("trailer_load_configuration", []))
+    if not dry_run:
+        with open(plan_path, "w", encoding="utf-8") as f:
+            json.dump(result, f, indent=2)
+
+    tier_count = len(result.get("trailer_load_configuration", {}).get("tiers", [])) if isinstance(result.get("trailer_load_configuration"), dict) else len(result.get("trailer_load_configuration", []))
     boat_count = len(result.get("fleet_specifications", []))
-    print(f"✅ Updated regatta_load_plan.json ({tier_count} trailer tiers, {boat_count} fleet specs)")
+    return diffs, tier_count, boat_count, csv_hash
 
-def sync_additional_gear(api_key, root_dir):
+def sync_additional_gear(api_key, root_dir, dry_run=False):
     gear_path = os.path.join(root_dir, "additional_gear.json")
 
-    # 1. Check if an 'Additional Gear', 'Regatta Gear', or 'Gear' tab exists in the spreadsheet
     try:
         url = f"https://docs.google.com/spreadsheets/d/{SPREADSHEET_ID}/edit"
         req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
@@ -282,7 +323,7 @@ def sync_additional_gear(api_key, root_dir):
 
         if not gear_gid:
             print("ℹ️  No 'Additional Gear' tab in spreadsheet yet; preserving local additional_gear.json.")
-            return
+            return [], 0
 
         print("📥 Downloading Additional Gear CSV from Google Sheets...")
         csv_data = fetch_sheet_csv(gear_gid)
@@ -306,15 +347,63 @@ CSV Data:
 {csv_data}
 """
         result = call_gemini(api_key, prompt)
-        if isinstance(result, list) and len(result) > 0:
+        if isinstance(result, list) and len(result) > 0 and not dry_run:
             with open(gear_path, "w", encoding="utf-8") as f:
                 json.dump(result, f, indent=2)
-            print(f"✅ Updated additional_gear.json ({len(result)} items from spreadsheet)")
+            print(f"✅ Updated additional_gear.json ({len(result)} items)")
+        return [], len(result) if isinstance(result, list) else 0
 
     except Exception as e:
         print(f"⚠️ Note on Additional Gear sync: {e}")
+        return [], 0
+
+def check_csv_hashes(cache_file):
+    if not os.path.exists(cache_file):
+        return False, None, None
+
+    try:
+        with open(cache_file, "r", encoding="utf-8") as f:
+            cache = json.load(f)
+        
+        # Download and compare hashes
+        sched_csv = fetch_sheet_csv(GID_SCHEDULE)
+        plan_csv = fetch_sheet_csv(GID_LOAD_PLAN)
+        
+        h_sched = hashlib.sha256(sched_csv.encode("utf-8")).hexdigest()
+        h_plan = hashlib.sha256(plan_csv.encode("utf-8")).hexdigest()
+
+        is_same = (h_sched == cache.get("schedule_hash") and h_plan == cache.get("load_plan_hash"))
+        return is_same, h_sched, h_plan
+    except Exception:
+        return False, None, None
+
+def print_diff_report(sched_diffs, plan_diffs):
+    print("\n" + "=" * 60)
+    print("📋 GOOGLE SHEETS CHANGE REVIEW REPORT")
+    print("=" * 60)
+
+    total_changes = len(sched_diffs) + len(plan_diffs)
+    if total_changes == 0:
+        print("✨ No changes detected! Local files match the Google Spreadsheet.")
+    else:
+        if sched_diffs:
+            print(f"\n⏱️  Schedule Changes ({len(sched_diffs)}):")
+            for d in sched_diffs:
+                print(f"   {d}")
+        if plan_diffs:
+            print(f"\n🚛 Trailer Load Plan Changes ({len(plan_diffs)}):")
+            for d in plan_diffs:
+                print(f"   {d}")
+
+    print("=" * 60 + "\n")
+    return total_changes
 
 def main():
+    args = sys.argv[1:]
+    dry_run = any(arg in args for arg in ["--dry-run", "--check", "-n"])
+    interactive = any(arg in args for arg in ["--interactive", "-i"])
+    force = any(arg in args for arg in ["--force", "-f"])
+
     key = get_api_key()
     if not key:
         print("❌ Error: No Gemini API key found.")
@@ -322,12 +411,57 @@ def main():
         sys.exit(1)
 
     root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    cache_file = os.path.join(root_dir, "scripts", ".sheet_cache.json")
+
+    # Fast hash check if just checking and not forcing
+    if (dry_run or interactive) and not force:
+        print("🔍 Checking Google Sheets for changes...")
+        is_same, h1, h2 = check_csv_hashes(cache_file)
+        if is_same:
+            print("✨ Google Sheets has NOT changed since the last sync.")
+            print("   (CSV content is identical. Pass --force to run full re-extraction anyway.)")
+            return
+
+    mode_label = "DRY RUN PREVIEW" if dry_run else ("INTERACTIVE REVIEW" if interactive else "FULL SYNC")
+    print(f"🚀 Starting {mode_label}...")
 
     try:
-        sync_schedule(key, root_dir)
-        sync_load_plan(key, root_dir)
-        sync_additional_gear(key, root_dir)
-        print("\n🎉 Sync complete! All JSON files updated.")
+        # Run in dry_run mode first if reviewing
+        is_review = dry_run or interactive
+        sched_diffs, races_cnt, rowers_cnt, sched_hash = sync_schedule(key, root_dir, dry_run=is_review)
+        plan_diffs, tiers_cnt, boats_cnt, plan_hash = sync_load_plan(key, root_dir, dry_run=is_review)
+        sync_additional_gear(key, root_dir, dry_run=is_review)
+
+        total_changes = print_diff_report(sched_diffs, plan_diffs)
+
+        if dry_run:
+            print("ℹ️  Dry run preview complete. No files were modified.")
+            print("   To apply changes, run: ./sync-sheets.sh")
+            return
+
+        if interactive:
+            if total_changes == 0:
+                print("No changes to apply.")
+                return
+            response = input("👉 Do you want to apply these changes to the files? [y/N]: ").strip().lower()
+            if response not in ["y", "yes"]:
+                print("❌ Sync aborted by user. Files left unchanged.")
+                return
+            # Apply changes
+            print("💾 Applying changes to JSON files...")
+            sync_schedule(key, root_dir, dry_run=False)
+            sync_load_plan(key, root_dir, dry_run=False)
+            sync_additional_gear(key, root_dir, dry_run=False)
+
+        # Save cache hashes
+        try:
+            with open(cache_file, "w", encoding="utf-8") as f:
+                json.dump({"schedule_hash": sched_hash, "load_plan_hash": plan_hash}, f)
+        except Exception:
+            pass
+
+        print("🎉 Sync complete! All JSON files updated.")
+
     except Exception as e:
         print(f"\n❌ Error during sync: {e}")
         sys.exit(1)

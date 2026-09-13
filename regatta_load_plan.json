@@ -202,8 +202,8 @@
     {
       "boat_name": "Island Bay",
       "seats": 2,
-      "riggers_required": "Sweep",
-      "notes": "Races in 2- (Race 90). Club inventory notes sweep only.",
+      "riggers_required": "Both (Sweep & Scull)",
+      "notes": "Races in 2- (Race 90). Pack scull riggers as backup spares in case of issues with other doubles.",
       "requires_re_rig": false
     },
     {
@@ -362,8 +362,8 @@
       },
       {
         "id": "t-Island Bay",
-        "item": "Island Bay (2-)",
-        "tasks": "Pair sweep riggers, pins, slides, and foot stretchers."
+        "item": "Island Bay (2- / 2X)",
+        "tasks": "Pair sweep riggers AND pack scull riggers (backup spares for doubles); check pins, slides, and foot stretchers."
       },
       {
         "id": "t-matiu",

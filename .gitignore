@@ -1,0 +1,4 @@
+scripts/.sheet_cache.json
+__pycache__/
+*.py[cod]
+.DS_Store
