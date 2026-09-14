@@ -4,7 +4,7 @@
     "item": "Rowing Ergs",
     "quantity": "2",
     "category": "Warm-up / Training",
-    "notes": "Concept2 ergs; verify monitor batteries and check slide rails",
+    "notes": "Concept2 ergs; ",
     "assigned_to": null
   },
   {
@@ -12,7 +12,7 @@
     "item": "Folding Table",
     "quantity": "1",
     "category": "Team Camp",
-    "notes": "Heavy-duty folding trestle table for the team tent base",
+    "notes": "Table for the team tent base",
     "assigned_to": null
   },
   {
@@ -24,11 +24,19 @@
     "assigned_to": null
   },
   {
+    "id": "marquee",
+    "item": "Marquee",
+    "quantity": "1",
+    "category": "Team Camp",
+    "notes": "Team base",
+    "assigned_to": null
+  },
+  {
     "id": "gear-crash-kit",
     "item": "Crash Kit & First Aid",
     "quantity": "1",
-    "category": "Safety",
-    "notes": "Complete regatta emergency medical/trauma kit; keep accessible in lead vehicle",
+    "category": "Repairs & Safety",
+    "notes": "Boat spares and repairs plus first aid kit",
     "assigned_to": null
   }
 ]
