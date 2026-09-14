@@ -47,7 +47,7 @@ def call_gemini(api_key, prompt):
         "contents": [{"parts": [{"text": prompt}]}],
         "generationConfig": {
             "response_mime_type": "application/json",
-            "temperature": 0.1
+            "temperature": 0.0
         }
     }
     req = urllib.request.Request(
@@ -215,6 +215,9 @@ Rules:
    - In 'crew', for any coxed race (like 4X+ or 8+ in events 19, 29, 53, 111), always prefix the crew string with 'COX: <Name>, ' (e.g. 'COX: Isaac, JoY, Deb, Paula, Jolanda').
    - Also set the 'cox' field to the coxswain's name (e.g. "Isaac" or "Millzy").
 5. Preserve existing re-rig warnings and notes where applicable.
+6. If the 'Oars' column is blank or empty in the CSV, set 'oars_assigned' to 'TBC' unless explicitly specified in the special rules below. Do not assume or invent oar allocations (e.g., do not invent 'Avon RC oars').
+7. STABILITY: Do NOT rephrase or cosmetically edit 'notes', 'event_class', or other fields for races already present in the reference JSON unless there is a genuine, material change in the CSV source data. Keep existing phrasing intact.
+8. If a race has entered crew members but the boat column is blank, set boat to 'TBC' (e.g. Saturday Event 5 at 8:50 M Mst F 2X for Richard, Mike). Do not omit the race.
 
 SPECIAL REGATTA HEATS & PROGRESSIONS HANDLING:
 - Event 34 (Saturday W Mst D 2X):
@@ -231,7 +234,13 @@ SPECIAL REGATTA HEATS & PROGRESSIONS HANDLING:
 - Event 125 (Sunday W Mst D 4X-):
   * Heat 1 (13:53): Mahanga, oars BWW x 4; BYWW x 4 (Ange, Jolanda, Jacinda, Paula).
   * Heat 2 (13:59): Hawkins, oars BWW x 4; BYWW x 4 (Liz, Deb, Deidre, Claire).
-  * Final (14:29): Include the Final at 14:29 for qualifying crew(s).
+  * Final (14:29): In the sheet, boat/oar columns are left blank because either or both crews may qualify. Include the Final at 14:29:
+    - day: "Sunday", block: 8, time: "14:29", event_number: 125, event_class: "W Mst D 4X- (Final)"
+    - boat: "Mahanga & Hawkins"
+    - oars_assigned: "Mahanga: BWW x 4, BYWW x 4\\nHawkins: BWW x 4, BYWW x 4"
+    - crew: "Heat 1: Ange, Jolanda, Jacinda, Paula (Mahanga)\\nHeat 2: Liz, Deb, Deidre, Claire (Hawkins)"
+    - notes: "Final: Either or both crews race subject to qualification from 13:53/13:59 heats"
+    - rerig_required: false, rerig_note: null
 
 - Event 86 (Sunday W MNw 2X):
   * Include Heat at 10:14 / 10:20 (Matiu) and Final at 11:14 (Matiu).
@@ -244,6 +253,20 @@ Input CSV Data:
 """
 
     result = call_gemini(api_key, prompt)
+
+    # Reconcile with current_data to eliminate cosmetic LLM paraphrasing
+    current_by_key = {
+        (r.get("day"), r.get("event_number"), r.get("boat") or r.get("time")): r
+        for r in current_data.get("races", [])
+    }
+    for r in result.get("races", []):
+        k = (r.get("day"), r.get("event_number"), r.get("boat") or r.get("time"))
+        if k in current_by_key:
+            old = current_by_key[k]
+            # If crew, boat, and time are unchanged, preserve canonical notes and event_class
+            if old.get("crew") == r.get("crew") and old.get("time") == r.get("time"):
+                r["notes"] = old.get("notes")
+                r["event_class"] = old.get("event_class")
 
     rerigs = compute_rerigs(result.get("races", []))
     if "metadata" in result:
@@ -413,8 +436,8 @@ def main():
     root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     cache_file = os.path.join(root_dir, "scripts", ".sheet_cache.json")
 
-    # Fast hash check if just checking and not forcing
-    if (dry_run or interactive) and not force:
+    # Fast hash check unless forcing
+    if not force:
         print("🔍 Checking Google Sheets for changes...")
         is_same, h1, h2 = check_csv_hashes(cache_file)
         if is_same:
