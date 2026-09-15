@@ -227,7 +227,7 @@ SPECIAL REGATTA HEATS & PROGRESSIONS HANDLING:
     - day: "Saturday", block: 3, time: "12:30", event_number: 34, event_class: "W Mst D 2X (Final)"
     - boat: "Moa & Matiu"
     - oars_assigned: "Moa: BYWW (Pinks)\\nMatiu: BYWW x 1, BWW x 1"
-    - crew: "Heat 1: Ange, Vivienne (Moa)\\nHeat 2: Liz, Claire (Matiu)"
+    - crew: "Moa: Ange, Vivienne\\nMatiu: Liz, Claire"
     - notes: "Final: Either or both crews race subject to qualification from 11:55/12:00 heats"
     - rerig_required: false, rerig_note: null
 
@@ -238,7 +238,7 @@ SPECIAL REGATTA HEATS & PROGRESSIONS HANDLING:
     - day: "Sunday", block: 8, time: "14:29", event_number: 125, event_class: "W Mst D 4X- (Final)"
     - boat: "Mahanga & Hawkins"
     - oars_assigned: "Mahanga: BWW x 4, BYWW x 4\\nHawkins: BWW x 4, BYWW x 4"
-    - crew: "Heat 1: Ange, Jolanda, Jacinda, Paula (Mahanga)\\nHeat 2: Liz, Deb, Deidre, Claire (Hawkins)"
+    - crew: "Mahanga: Ange, Jolanda, Jacinda, Paula\\nHawkins: Liz, Deb, Deidre, Claire"
     - notes: "Final: Either or both crews race subject to qualification from 13:53/13:59 heats"
     - rerig_required: false, rerig_note: null
 

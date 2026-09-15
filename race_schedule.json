@@ -229,7 +229,7 @@
       "boat": "Moa & Matiu",
       "oars_assigned": "Moa: BYWW (Pinks)\nMatiu: BYWW x 1, BWW x 1",
       "cox": null,
-      "crew": "Heat 1: Ange, Vivienne (Moa)\nHeat 2: Liz, Claire (Matiu)",
+      "crew": "Moa: Ange, Vivienne\nMatiu: Liz, Claire",
       "notes": "Final: Either or both crews race subject to qualification from 11:55/12:00 heats",
       "rerig_required": false,
       "rerig_note": null
@@ -509,7 +509,7 @@
       "boat": "Mahanga & Hawkins",
       "oars_assigned": "Mahanga: BWW x 4, BYWW x 4\nHawkins: BWW x 4, BYWW x 4",
       "cox": null,
-      "crew": "Heat 1: Ange, Jolanda, Jacinda, Paula (Mahanga)\nHeat 2: Liz, Deb, Deidre, Claire (Hawkins)",
+      "crew": "Mahanga: Ange, Jolanda, Jacinda, Paula\nHawkins: Liz, Deb, Deidre, Claire",
       "notes": "Final: Either or both crews race subject to qualification from 13:53/13:59 heats",
       "rerig_required": false,
       "rerig_note": null
