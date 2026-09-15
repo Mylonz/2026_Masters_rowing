@@ -314,6 +314,42 @@
       display: block;
       margin-top: 4px;
     }
+    .turnaround-alert {
+      border-left: 4px solid #d97706 !important;
+      background-color: #fffbeb !important;
+    }
+    .turnaround-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background-color: #d97706;
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 7px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      margin-top: 4px;
+      margin-bottom: 3px;
+      letter-spacing: 0.3px;
+    }
+    .turnaround-box {
+      margin-top: 6px;
+      padding: 6px 9px;
+      background: #fef3c7;
+      border: 1px solid #fde68a;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      color: #78350f;
+      line-height: 1.4;
+    }
+    .turnaround-box strong {
+      color: #92400e;
+    }
+    .filter-btn.btn-turnaround.active {
+      background: #d97706;
+      border-color: #d97706;
+    }
     .btn-print {
       background-color: var(--secondary);
       color: white;
@@ -524,6 +560,7 @@
       <button class="filter-btn" data-filter="sat" onclick="filterSchedule('sat')">Saturday Only (13)</button>
       <button class="filter-btn" data-filter="sun" onclick="filterSchedule('sun')">Sunday Only (11)</button>
       <button class="filter-btn btn-rerig" data-filter="rerig" onclick="filterSchedule('rerig')">⚠️ Re-Rig Alerts Only (3)</button>
+      <button class="filter-btn btn-turnaround" data-filter="turnaround" onclick="filterSchedule('turnaround')">⏱️ Shore Support Only</button>
     </div>
     <button class="btn-print" onclick="window.print()">Print Day Sheet</button>
   </div>
@@ -673,6 +710,9 @@
     const crewText = race.crew || race.crew_summary || (Array.isArray(race.crew_roster) ? race.crew_roster.join(', ') : '');
     const rerigNote = race.rerig_note || race.rerig_notes || '';
 
+    const isTurnaround = race.notes && (race.notes.includes('SHORE CATCH') || race.notes.includes('TIMED LAUNCH') || race.notes.includes('⏱️'));
+    const turnaroundClass = isTurnaround && !race.rerig_required ? ' turnaround-row turnaround-alert' : (isTurnaround ? ' turnaround-row' : '');
+
     let notesHtml = '';
     if (race.rerig_required) {
       notesHtml = `
@@ -680,12 +720,23 @@
         ${rerigNote ? `<span class="rerig-text">${escapeHtml(rerigNote)}</span>` : ''}
         ${race.notes ? `<span>${escapeHtml(race.notes).replace(/\n/g, '<br>')}</span>` : ''}
       `;
+    } else if (isTurnaround) {
+      const parts = (race.notes || '').split('\n');
+      const baseNote = parts[0] || '';
+      const actionNotes = parts.slice(1).join('<br>');
+      notesHtml = `
+        <span>${escapeHtml(baseNote)}</span>
+        <div class="turnaround-box">
+          <span class="turnaround-badge">⏱️ Shore Support Protocol</span><br>
+          ${actionNotes.replace(/⏱️\s*/g, '<strong>⏱️ </strong>')}
+        </div>
+      `;
     } else {
       notesHtml = escapeHtml(race.notes || '').replace(/\n/g, '<br>');
     }
 
     return `
-      <tr class="race-row ${dayClass}${rerigClass}"${specialStyle}>
+      <tr class="race-row ${dayClass}${rerigClass}${turnaroundClass}"${specialStyle}>
         <td>${escapeHtml(race.block)}</td>
         <td class="time-cell">${escapeHtml(race.time)}</td>
         <td><span class="event-badge">${escapeHtml(race.event_number)}</span></td>
@@ -716,11 +767,15 @@
     const btnSat = document.querySelector('[data-filter="sat"]');
     const btnSun = document.querySelector('[data-filter="sun"]');
     const btnRerig = document.querySelector('[data-filter="rerig"]');
+    const btnTurnaround = document.querySelector('[data-filter="turnaround"]');
+
+    const turnaroundCount = data.races.filter(r => r.notes && (r.notes.includes('SHORE CATCH') || r.notes.includes('TIMED LAUNCH') || r.notes.includes('⏱️'))).length;
 
     if (btnAll) btnAll.textContent = `Show All Races (${data.races.length})`;
     if (btnSat) btnSat.textContent = `Saturday Only (${satRaces.length})`;
     if (btnSun) btnSun.textContent = `Sunday Only (${sunRaces.length})`;
     if (btnRerig) btnRerig.textContent = `⚠️ Re-Rig Alerts Only (${rerigCount})`;
+    if (btnTurnaround) btnTurnaround.textContent = `⏱️ Shore Support Only (${turnaroundCount})`;
 
     satBody.innerHTML = satRaces.map(renderRaceRow).join('') +
       '<tr id="sat-no-results" class="no-results-row" style="display: none;"><td colspan="8">No matching races found for Saturday.</td></tr>';
@@ -781,12 +836,14 @@
       const isSat = row.classList.contains('sat-row');
       const isSun = row.classList.contains('sun-row');
       const isRerig = row.classList.contains('rerig-row');
+      const isTurnaroundRow = row.classList.contains('turnaround-row');
 
       let matchesDay = false;
       if (activeDay === 'all') matchesDay = true;
       else if (activeDay === 'sat') matchesDay = isSat;
       else if (activeDay === 'sun') matchesDay = isSun;
       else if (activeDay === 'rerig') matchesDay = isRerig;
+      else if (activeDay === 'turnaround') matchesDay = isTurnaroundRow;
 
       let matchesSearch = true;
       if (query) {
