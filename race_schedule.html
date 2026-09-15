@@ -278,17 +278,20 @@
       font-size: 0.88rem;
     }
     .cox-tag {
-      display: inline-block;
-      background: #fee2e2;
-      color: #991b1b;
+      display: inline-flex;
+      align-items: center;
+      background: #ccfbf1;
+      color: #0f766e;
       font-weight: 800;
-      font-size: 0.72rem;
-      padding: 2px 6px;
+      font-size: 0.70rem;
+      padding: 1px 5px;
       border-radius: 4px;
-      margin-right: 4px;
-      border: 1px solid #fca5a5;
+      margin-right: 3px;
+      border: 1px solid #99f6e4;
       text-transform: uppercase;
-      letter-spacing: 0.3px;
+      letter-spacing: 0.4px;
+      line-height: 1.35;
+      vertical-align: baseline;
     }
     .rerig-alert {
       background-color: var(--danger-bg);
@@ -365,81 +368,107 @@
     /* Clickable Rower Names */
     .rower-btn {
       background: none;
-      border: none;
-      padding: 1px 4px;
-      margin: -1px 0;
+      border: 1px solid transparent;
+      padding: 0 1px;
+      margin: 0;
       font: inherit;
       color: var(--text);
       cursor: pointer;
-      border-radius: 4px;
+      border-radius: 3px;
       text-decoration: underline decoration-color transparent;
       transition: all 0.15s ease-in-out;
       display: inline;
       font-weight: 500;
     }
-    .rower-btn:hover {
+    .rower-btn:not(.turnaround-pill):hover {
       color: var(--secondary);
       background-color: #ebf8ff;
       text-decoration-color: var(--secondary);
     }
     .cox-rower-btn {
-      color: #991b1b !important;
-      font-weight: 800 !important;
-      padding: 0 !important;
+      color: #0f766e !important;
+      font-weight: 700 !important;
     }
     .cox-rower-btn:hover {
-      background-color: transparent !important;
-      text-decoration: underline !important;
-      text-decoration-color: #991b1b !important;
+      color: #115e59 !important;
+      background-color: #f0fdfa !important;
+      text-decoration-color: #0f766e !important;
     }
 
-    /* Option A: Inline Tight Turnaround Badges */
+    /* Combined Rower Name + Tight Turnaround Pill */
     .turnaround-pill {
       display: inline-flex;
-      align-items: center;
+      align-items: baseline;
       gap: 3px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      padding: 1px 6px;
-      border-radius: 10px;
-      line-height: 1.35;
-      margin-left: 4px;
-      margin-right: 2px;
+      font-size: 0.81rem;
+      font-weight: 600;
+      padding: 1px 6px 2px 7px;
+      border-radius: 9999px;
+      line-height: 1.3;
+      margin: 1px 1px;
       cursor: pointer;
       white-space: nowrap;
-      vertical-align: middle;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      vertical-align: baseline;
+      text-decoration: none !important;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
       user-select: none;
       -webkit-user-select: none;
     }
-    .turnaround-pill:hover, .turnaround-pill:focus {
-      transform: scale(1.06);
-      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    .turnaround-pill:hover, .turnaround-pill:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
       outline: none;
     }
+    .turnaround-pill:active {
+      transform: translateY(0);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+    }
+    .turnaround-pill .rower-name {
+      font-weight: 600;
+    }
+    .turnaround-pill .turnaround-sep {
+      opacity: 0.5;
+      font-size: 0.76rem;
+      font-weight: 400;
+      user-select: none;
+      margin: 0 1px;
+    }
+    .turnaround-pill .turnaround-time {
+      font-weight: 700;
+      font-size: 0.76rem;
+      letter-spacing: -0.2px;
+    }
+
+    /* Amber severity (40-59m turnaround) */
     .turnaround-pill-amber {
       background-color: #fef3c7;
       color: #92400e;
       border: 1px solid #f59e0b;
     }
-    .turnaround-pill-amber:hover {
+    .turnaround-pill-amber:hover, .turnaround-pill-amber:focus-visible {
       background-color: #fde68a;
+      border-color: #d97706;
+      color: #78350f;
     }
+
+    /* Critical severity (<40m turnaround) */
     .turnaround-pill-critical {
       background-color: #fee2e2;
       color: #991b1b;
       border: 1px solid #ef4444;
-      animation: pulse-border 2s infinite ease-in-out;
+      animation: pulse-pill-border 2.2s infinite ease-in-out;
     }
-    .turnaround-pill-critical:hover {
+    .turnaround-pill-critical:hover, .turnaround-pill-critical:focus-visible {
       background-color: #fecaca;
+      border-color: #dc2626;
+      color: #7f1d1d;
     }
-    @keyframes pulse-border {
+    @keyframes pulse-pill-border {
       0%, 100% {
         box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
       }
       50% {
-        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0);
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.08);
       }
     }
 
@@ -1078,12 +1107,17 @@
       .table-card { border: none; box-shadow: none; }
       tr { page-break-inside: avoid; }
       .no-results-row { display: none !important; }
-      .rower-btn { color: inherit !important; text-decoration: none !important; pointer-events: none; }
+      .rower-btn:not(.turnaround-pill) { color: inherit !important; text-decoration: none !important; pointer-events: none; }
       .turnaround-pill {
         print-color-adjust: exact;
         -webkit-print-color-adjust: exact;
         box-shadow: none !important;
         animation: none !important;
+        pointer-events: none;
+      }
+      .cox-tag {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
       }
     }
   </style>
@@ -1430,30 +1464,44 @@
     const namesPattern = knownNames.map(n => n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
 
     // Single pass match for (COX:\s*)?(name)
-    const combinedRegex = new RegExp(`(COX:\\s*)?(?<![A-Za-z0-9])(${namesPattern})(?![A-Za-z0-9])`, 'g');
+    const combinedRegex = new RegExp(`([Cc][Oo][Xx]:\\s*)?(?<![A-Za-z0-9])(${namesPattern})(?![A-Za-z0-9])`, 'g');
 
     text = text.replace(combinedRegex, (match, coxPrefix, name) => {
       const tt = rowerTurnarounds ? rowerTurnarounds[name] : null;
-      let pillHtml = '';
+
+      let btnHtml;
       if (tt && tt.isTight) {
         const sevClass = tt.isCritical ? 'turnaround-pill-critical' : 'turnaround-pill-amber';
-        const icon = tt.isCritical ? '🚨' : '⏱️';
-        const ariaLabel = `Tight turnaround: ${tt.gapMinutes} mins to next race`;
-        pillHtml = `<span class="turnaround-pill ${sevClass}" ` +
+        const ariaLabel = `${escapeHtml(name)}: tight turnaround, ${tt.gapMinutes} mins to Event ${escapeHtml(tt.nextRace.event_number)}`;
+        const pillTitle = `${escapeHtml(name)} — ${tt.gapMinutes}m turnaround to Event ${escapeHtml(tt.nextRace.event_number)} (${escapeHtml(tt.nextRace.time)}). Click to view day timeline.`;
+
+        btnHtml = `<button type="button" class="rower-btn turnaround-pill ${sevClass}" ` +
           `data-turnaround="${tt.gapMinutes}" ` +
           `data-critical="${tt.isCritical}" ` +
           `data-rower="${escapeHtml(name)}" ` +
+          `data-day="${escapeHtml(day)}" ` +
           `data-next-time="${escapeHtml(tt.nextRace.time)}" ` +
           `data-next-event="${escapeHtml(tt.nextRace.event_number)}" ` +
           `data-next-class="${escapeHtml(tt.nextRace.event_class)}" ` +
           `data-next-boat="${escapeHtml(tt.nextRace.boat)}" ` +
-          `tabindex="0" role="button" aria-label="${ariaLabel}">${icon} ${tt.gapMinutes}m</span>`;
+          `title="${pillTitle}" ` +
+          `aria-label="${ariaLabel}">` +
+          `<span class="rower-name">${escapeHtml(name)}</span>` +
+          `<span class="turnaround-sep">&middot;</span>` +
+          `<span class="turnaround-time">${tt.gapMinutes}m</span>` +
+          `</button>`;
+      } else {
+        const coxClass = coxPrefix ? ' cox-rower-btn' : '';
+        btnHtml = `<button type="button" class="rower-btn${coxClass}" ` +
+          `data-rower="${escapeHtml(name)}" ` +
+          `data-day="${escapeHtml(day)}" ` +
+          `title="View ${escapeHtml(name)}'s race schedule">${escapeHtml(name)}</button>`;
       }
 
       if (coxPrefix) {
-        return `<span class="cox-tag">COX: <button type="button" class="rower-btn cox-rower-btn" data-rower="${escapeHtml(name)}" data-day="${escapeHtml(day)}" title="View ${escapeHtml(name)}'s race schedule">${escapeHtml(name)}</button></span>${pillHtml}`;
+        return `<span class="cox-tag">COX</span> ${btnHtml}`;
       } else {
-        return `<button type="button" class="rower-btn" data-rower="${escapeHtml(name)}" data-day="${escapeHtml(day)}" title="View ${escapeHtml(name)}'s race schedule">${escapeHtml(name)}</button>${pillHtml}`;
+        return btnHtml;
       }
     });
 
@@ -1989,6 +2037,7 @@
     const rowerBtn = e.target.closest('.rower-btn');
     if (rowerBtn) {
       e.stopPropagation();
+      hideTurnaroundPopover();
       const rower = rowerBtn.dataset.rower;
       const day = rowerBtn.dataset.day || 'Saturday';
       openRowerTimelineModal(rower, day);
@@ -2003,6 +2052,16 @@
       } else {
         showTurnaroundPopover(pill);
       }
+      return;
+    }
+
+    const popoverHint = e.target.closest('#popover-rower-hint, .popover-footer');
+    if (popoverHint && currentPopoverTarget) {
+      e.stopPropagation();
+      const rower = currentPopoverTarget.dataset.rower;
+      const day = currentPopoverTarget.dataset.day || 'Saturday';
+      hideTurnaroundPopover();
+      openRowerTimelineModal(rower, day);
       return;
     }
 
@@ -2021,6 +2080,15 @@
   document.addEventListener('mouseout', (e) => {
     const pill = e.target.closest('.turnaround-pill');
     if (pill) {
+      const related = e.relatedTarget;
+      if (!related || (!related.closest('.turnaround-pill') && !related.closest('#turnaround-popover'))) {
+        hideTurnaroundPopover();
+      }
+      return;
+    }
+
+    const popover = e.target.closest('#turnaround-popover');
+    if (popover) {
       const related = e.relatedTarget;
       if (!related || (!related.closest('.turnaround-pill') && !related.closest('#turnaround-popover'))) {
         hideTurnaroundPopover();

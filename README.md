@@ -93,7 +93,7 @@ For events where progression is conditional on heat results (such as **Event 34*
 
 ### 3. Coxswain Detection & Badging
 * Explicitly extracts coxswains from the spreadsheet's `Cox` column (e.g. `Isaac`, `Millzy`).
-* Formats crew lists and highlights coxswains with an accessible, high-visibility rose badge (`<span class="cox-tag">COX: Isaac</span>`).
+* Formats crew lists and highlights coxswains with an accessible, authoritative nautical teal badge (`<span class="cox-tag">COX</span>`).
 * Integrates seamlessly with the search filter so searching a coxswain's name displays all races they are steering.
 
 ### 4. Segmented Oar Stripe Ribbons
