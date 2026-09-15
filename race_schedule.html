@@ -350,6 +350,518 @@
       background: #d97706;
       border-color: #d97706;
     }
+    .filter-btn.btn-tight.active {
+      background: #ea580c;
+      border-color: #ea580c;
+    }
+    /* Subtle accent for rows with tight turnaround */
+    tr.tight-row:not(.rerig-row):not(.turnaround-row) {
+      border-left: 4px solid #f59e0b;
+    }
+    tr.tight-row.has-critical:not(.rerig-row):not(.turnaround-row) {
+      border-left: 4px solid #ef4444;
+    }
+
+    /* Clickable Rower Names */
+    .rower-btn {
+      background: none;
+      border: none;
+      padding: 1px 4px;
+      margin: -1px 0;
+      font: inherit;
+      color: var(--text);
+      cursor: pointer;
+      border-radius: 4px;
+      text-decoration: underline decoration-color transparent;
+      transition: all 0.15s ease-in-out;
+      display: inline;
+      font-weight: 500;
+    }
+    .rower-btn:hover {
+      color: var(--secondary);
+      background-color: #ebf8ff;
+      text-decoration-color: var(--secondary);
+    }
+    .cox-rower-btn {
+      color: #991b1b !important;
+      font-weight: 800 !important;
+      padding: 0 !important;
+    }
+    .cox-rower-btn:hover {
+      background-color: transparent !important;
+      text-decoration: underline !important;
+      text-decoration-color: #991b1b !important;
+    }
+
+    /* Option A: Inline Tight Turnaround Badges */
+    .turnaround-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 10px;
+      line-height: 1.35;
+      margin-left: 4px;
+      margin-right: 2px;
+      cursor: pointer;
+      white-space: nowrap;
+      vertical-align: middle;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .turnaround-pill:hover, .turnaround-pill:focus {
+      transform: scale(1.06);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+      outline: none;
+    }
+    .turnaround-pill-amber {
+      background-color: #fef3c7;
+      color: #92400e;
+      border: 1px solid #f59e0b;
+    }
+    .turnaround-pill-amber:hover {
+      background-color: #fde68a;
+    }
+    .turnaround-pill-critical {
+      background-color: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #ef4444;
+      animation: pulse-border 2s infinite ease-in-out;
+    }
+    .turnaround-pill-critical:hover {
+      background-color: #fecaca;
+    }
+    @keyframes pulse-border {
+      0%, 100% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+      }
+      50% {
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0);
+      }
+    }
+
+    /* Popover Tooltip (Option A) */
+    .turnaround-popover {
+      position: absolute;
+      z-index: 10000;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 9px;
+      box-shadow: 0 12px 28px -4px rgba(0,0,0,0.18), 0 6px 10px -4px rgba(0,0,0,0.1);
+      width: 330px;
+      max-width: calc(100vw - 24px);
+      padding: 0;
+      font-size: 0.84rem;
+      line-height: 1.45;
+      pointer-events: auto;
+      transition: opacity 0.15s ease;
+    }
+    .popover-arrow {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      transform: rotate(45deg);
+      bottom: -7px;
+      border-top: none;
+      border-left: none;
+    }
+    .turnaround-popover.placed-below .popover-arrow {
+      top: -7px;
+      bottom: auto;
+      border-top: 1px solid #cbd5e1;
+      border-left: 1px solid #cbd5e1;
+      border-bottom: none;
+      border-right: none;
+    }
+    .popover-inner {
+      overflow: hidden;
+      border-radius: 8px;
+    }
+    .popover-header {
+      padding: 9px 13px;
+      background: #fffbeb;
+      border-bottom: 1px solid #fde68a;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .popover-header.header-critical {
+      background: #fef2f2;
+      border-bottom-color: #fecaca;
+    }
+    .popover-badge {
+      font-weight: 800;
+      font-size: 0.82rem;
+      color: #92400e;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .popover-badge.badge-critical {
+      color: #991b1b;
+    }
+    .popover-body {
+      padding: 12px 14px;
+      color: #334155;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background: #ffffff;
+    }
+    .popover-line {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .popover-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #64748b;
+      letter-spacing: 0.4px;
+    }
+    .popover-val {
+      font-size: 0.84rem;
+      color: #0f172a;
+    }
+    .popover-action {
+      padding: 8px 14px;
+      background: #f8fafc;
+      border-top: 1px solid #f1f5f9;
+      font-size: 0.77rem;
+      color: var(--secondary);
+      font-weight: 600;
+    }
+
+    /* Option D: Rower Day Timeline Modal */
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 11000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      animation: modalFadeIn 0.2s ease-out;
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .modal-container {
+      background: #ffffff;
+      border-radius: 12px;
+      max-width: 680px;
+      width: 100%;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      animation: modalSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes modalSlideUp {
+      from { transform: translateY(16px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .modal-header {
+      padding: 16px 20px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-header h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin: 0;
+    }
+    .modal-subtitle {
+      font-size: 0.8rem;
+      opacity: 0.9;
+      display: block;
+      margin-top: 2px;
+    }
+    .modal-close-btn {
+      background: rgba(255, 255, 255, 0.18);
+      border: none;
+      color: white;
+      font-size: 1.4rem;
+      line-height: 1;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .modal-close-btn:hover {
+      background: rgba(255, 255, 255, 0.35);
+    }
+    .modal-day-tabs {
+      display: flex;
+      background: #edf2f7;
+      padding: 6px 12px;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .modal-tab {
+      flex: 1;
+      padding: 8px 12px;
+      background: transparent;
+      border: none;
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: #4a5568;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    .modal-tab:hover {
+      background: rgba(255, 255, 255, 0.6);
+      color: var(--primary);
+    }
+    .modal-tab.active {
+      background: white;
+      color: var(--secondary);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .modal-body {
+      padding: 18px 20px;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .modal-empty-state {
+      text-align: center;
+      padding: 36px 16px;
+      color: #64748b;
+    }
+    .btn-switch-day {
+      margin-top: 12px;
+      background: var(--secondary);
+      color: white;
+      border: none;
+      padding: 7px 14px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-switch-day:hover {
+      background: var(--primary);
+    }
+    .modal-stats-banner {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .stat-pill {
+      font-size: 0.77rem;
+      padding: 4px 9px;
+      border-radius: 6px;
+      background: #edf2f7;
+      color: #334155;
+      font-weight: 600;
+    }
+    .stat-pill strong {
+      color: #0f172a;
+    }
+    .stat-pill-amber {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fde68a;
+    }
+    .stat-pill-amber strong {
+      color: #78350f;
+    }
+    .stat-pill-critical {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+    .stat-pill-critical strong {
+      color: #7f1d1d;
+    }
+    .stat-pill-neutral {
+      background: #f1f5f9;
+      color: #475569;
+    }
+    .timeline-summary-chips {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      padding: 10px 14px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+    .summary-label {
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      letter-spacing: 0.4px;
+      margin-right: 2px;
+    }
+    .chip-race {
+      background: #e2e8f0;
+      color: var(--primary);
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .chip-gap {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.75rem;
+      white-space: nowrap;
+    }
+    .chip-gap-critical {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #ef4444;
+    }
+    .chip-gap-amber {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #f59e0b;
+    }
+    .chip-gap-normal {
+      background: #e2e8f0;
+      color: #475569;
+    }
+
+    /* Detailed Vertical Timeline */
+    .timeline-track {
+      position: relative;
+      padding-left: 22px;
+      margin-top: 8px;
+    }
+    .timeline-track::before {
+      content: '';
+      position: absolute;
+      top: 16px;
+      bottom: 28px;
+      left: 8px;
+      width: 2px;
+      background: #cbd5e1;
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 12px;
+    }
+    .timeline-dot {
+      position: absolute;
+      left: -22px;
+      top: 14px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: white;
+      border: 3px solid var(--secondary);
+      box-shadow: 0 0 0 2px white;
+    }
+    .timeline-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .timeline-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .timeline-time {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    .timeline-block-badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #64748b;
+      background: #f1f5f9;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-left: 6px;
+    }
+    .timeline-event-title {
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: #1e293b;
+      margin-bottom: 4px;
+    }
+    .timeline-details {
+      font-size: 0.81rem;
+      color: #475569;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .timeline-race-notes {
+      margin-top: 4px;
+      padding: 4px 8px;
+      background: #f8fafc;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      color: #64748b;
+    }
+    .timeline-interval {
+      position: relative;
+      margin: 10px 0 10px 4px;
+      padding: 7px 11px;
+      border-radius: 6px;
+      font-size: 0.81rem;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-weight: 600;
+    }
+    .timeline-interval-critical {
+      background: #fef2f2;
+      border: 1px solid #fca5a5;
+      color: #991b1b;
+    }
+    .timeline-interval-warning {
+      background: #fffbeb;
+      border: 1px solid #fcd34d;
+      color: #92400e;
+    }
+    .timeline-interval-normal {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      color: #475569;
+    }
     /* Shore Roster Card (Option 3) */
     .shore-roster-card {
       background: #fffbeb;
@@ -562,10 +1074,17 @@
 
     @media print {
       body { padding: 0; background: white; }
-      header, .controls, .header-links, .search-feedback { display: none; }
+      header, .controls, .header-links, .search-feedback, .modal-backdrop, .turnaround-popover { display: none !important; }
       .table-card { border: none; box-shadow: none; }
       tr { page-break-inside: avoid; }
       .no-results-row { display: none !important; }
+      .rower-btn { color: inherit !important; text-decoration: none !important; pointer-events: none; }
+      .turnaround-pill {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+        box-shadow: none !important;
+        animation: none !important;
+      }
     }
   </style>
 </head>
@@ -632,6 +1151,7 @@
       <button class="filter-btn" data-filter="sun" onclick="filterSchedule('sun')">Sunday Only (11)</button>
       <button class="filter-btn btn-rerig" data-filter="rerig" onclick="filterSchedule('rerig')">⚠️ Re-Rig Alerts Only (3)</button>
       <button class="filter-btn btn-turnaround" data-filter="turnaround" onclick="filterSchedule('turnaround')">⏱️ Shore Support Only</button>
+      <button class="filter-btn btn-tight" data-filter="tight" onclick="filterSchedule('tight')">⏱️ Tight Turnarounds (&lt;60m)</button>
     </div>
     <button class="btn-print" onclick="window.print()">Print Day Sheet</button>
   </div>
@@ -745,10 +1265,56 @@
   </div>
 </div>
 
+<!-- Tight Turnaround Popover Tooltip (Option A) -->
+<div id="turnaround-popover" class="turnaround-popover" role="tooltip" style="display: none;" aria-hidden="true">
+  <div class="popover-arrow"></div>
+  <div class="popover-inner">
+    <div class="popover-header" id="popover-header">
+      <span class="popover-badge" id="popover-badge">⏱️ Tight Turnaround: 45 mins</span>
+    </div>
+    <div class="popover-body">
+      <div class="popover-line">
+        <span class="popover-label">Next race:</span>
+        <span class="popover-val" id="popover-next-race">—</span>
+      </div>
+      <div class="popover-line">
+        <span class="popover-label">Gap:</span>
+        <span class="popover-val" id="popover-gap">—</span>
+      </div>
+    </div>
+    <div class="popover-action">
+      <span id="popover-rower-hint">Click rower to view full day timeline &rarr;</span>
+    </div>
+  </div>
+</div>
+
+<!-- Interactive Rower Day Timeline Modal (Option D) -->
+<div id="rower-modal-backdrop" class="modal-backdrop" style="display: none;" aria-hidden="true">
+  <div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="modal-rower-name">
+    <div class="modal-header">
+      <div>
+        <h2 id="modal-rower-name">Rower Timeline</h2>
+        <span class="modal-subtitle">Full Day Race Timeline &amp; Turnaround Rest Intervals</span>
+      </div>
+      <button type="button" class="modal-close-btn" aria-label="Close modal" onclick="closeRowerModal()">&times;</button>
+    </div>
+    <div class="modal-day-tabs">
+      <button type="button" class="modal-tab" id="modal-tab-sat" onclick="switchModalDay('Saturday')">Saturday</button>
+      <button type="button" class="modal-tab" id="modal-tab-sun" onclick="switchModalDay('Sunday')">Sunday</button>
+    </div>
+    <div class="modal-body" id="modal-timeline-body">
+      <!-- Dynamically populated -->
+    </div>
+  </div>
+</div>
+
   <script>
   let activeDay = 'all';
   let searchTerm = '';
   let raceData = null;
+  let currentPopoverTarget = null;
+  let currentModalRower = null;
+  let currentModalDay = 'Saturday';
 
   function escapeHtml(str) {
     if (str == null) return '';
@@ -759,9 +1325,89 @@
       .replace(/"/g, '&quot;');
   }
 
-  function formatCrew(crewText, coxName) {
-    if (!crewText) return '';
-    let text = escapeHtml(crewText);
+  function parseTimeToMinutes(timeStr) {
+    if (!timeStr) return 0;
+    const parts = String(timeStr).trim().split(':');
+    return parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
+  }
+
+  function extractRowersFromRace(race, rowerNames) {
+    const text = (race.crew || '') + ' ' + (race.cox || '');
+    const sortedNames = [...rowerNames].sort((a, b) => b.length - a.length);
+    const matched = [];
+    for (const name of sortedNames) {
+      const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(`(?<![A-Za-z0-9])${escaped}(?![A-Za-z0-9])`);
+      if (regex.test(text)) {
+        matched.push(name);
+      }
+    }
+    return matched;
+  }
+
+  function computeTurnarounds(races, rowerNames) {
+    ['Saturday', 'Sunday'].forEach(day => {
+      const dayRaces = races
+        .filter(r => r.day && r.day.toLowerCase() === day.toLowerCase())
+        .sort((a, b) => parseTimeToMinutes(a.time) - parseTimeToMinutes(b.time));
+
+      const rowerRaces = {};
+      rowerNames.forEach(name => {
+        rowerRaces[name] = [];
+      });
+
+      dayRaces.forEach(race => {
+        race.rower_turnarounds = {};
+        race.has_tight_turnaround = false;
+        race.has_critical_turnaround = false;
+        const participants = extractRowersFromRace(race, rowerNames);
+        participants.forEach(p => {
+          if (rowerRaces[p]) {
+            rowerRaces[p].push(race);
+          }
+        });
+      });
+
+      rowerNames.forEach(name => {
+        const schedule = rowerRaces[name];
+        for (let i = 0; i < schedule.length; i++) {
+          const currentRace = schedule[i];
+          if (i < schedule.length - 1) {
+            const nextRace = schedule[i + 1];
+            const currMins = parseTimeToMinutes(currentRace.time);
+            const nextMins = parseTimeToMinutes(nextRace.time);
+            const gap = nextMins - currMins;
+
+            const isTight = gap < 60;
+            const isCritical = gap < 40;
+
+            currentRace.rower_turnarounds[name] = {
+              gapMinutes: gap,
+              isTight: isTight,
+              isCritical: isCritical,
+              nextRace: {
+                time: nextRace.time,
+                event_number: nextRace.event_number,
+                event_class: nextRace.event_class || nextRace.event_name || '',
+                boat: nextRace.boat || ''
+              }
+            };
+
+            if (isTight) {
+              currentRace.has_tight_turnaround = true;
+              if (isCritical) {
+                currentRace.has_critical_turnaround = true;
+              }
+            }
+          }
+        }
+      });
+    });
+  }
+
+  function formatCrew(crewText, coxName, rowerTurnarounds = {}, day = 'Saturday') {
+    if (!crewText && !coxName) return '';
+    let text = escapeHtml(crewText || '');
 
     if (coxName && !/COX:/i.test(text)) {
       const escapedCox = escapeHtml(coxName);
@@ -772,13 +1418,51 @@
       text = `COX: ${escapedCox}, ` + text;
     }
 
-    text = text.replace(/COX:\s*([A-Za-z0-9_-]+)/gi, '<span class="cox-tag">COX: $1</span>');
+    const knownNames = (raceData && raceData.rowers && raceData.rowers.length)
+      ? [...raceData.rowers]
+      : [
+          'Ange', 'Claire', 'Deb', 'Deidre', 'Derek', 'Ellie',
+          'Isaac', 'Jacinda', 'Jo-Anne', 'JoY', 'Jolanda', 'Liane',
+          'Liz', 'Lynda J', 'Maria C', 'Maria S', 'Mike', 'Millzy',
+          'Myles', 'Paula', 'Richard', 'Vivienne'
+        ];
+    knownNames.sort((a, b) => b.length - a.length);
+    const namesPattern = knownNames.map(n => n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
+
+    // Single pass match for (COX:\s*)?(name)
+    const combinedRegex = new RegExp(`(COX:\\s*)?(?<![A-Za-z0-9])(${namesPattern})(?![A-Za-z0-9])`, 'g');
+
+    text = text.replace(combinedRegex, (match, coxPrefix, name) => {
+      const tt = rowerTurnarounds ? rowerTurnarounds[name] : null;
+      let pillHtml = '';
+      if (tt && tt.isTight) {
+        const sevClass = tt.isCritical ? 'turnaround-pill-critical' : 'turnaround-pill-amber';
+        const icon = tt.isCritical ? '🚨' : '⏱️';
+        const ariaLabel = `Tight turnaround: ${tt.gapMinutes} mins to next race`;
+        pillHtml = `<span class="turnaround-pill ${sevClass}" ` +
+          `data-turnaround="${tt.gapMinutes}" ` +
+          `data-critical="${tt.isCritical}" ` +
+          `data-rower="${escapeHtml(name)}" ` +
+          `data-next-time="${escapeHtml(tt.nextRace.time)}" ` +
+          `data-next-event="${escapeHtml(tt.nextRace.event_number)}" ` +
+          `data-next-class="${escapeHtml(tt.nextRace.event_class)}" ` +
+          `data-next-boat="${escapeHtml(tt.nextRace.boat)}" ` +
+          `tabindex="0" role="button" aria-label="${ariaLabel}">${icon} ${tt.gapMinutes}m</span>`;
+      }
+
+      if (coxPrefix) {
+        return `<span class="cox-tag">COX: <button type="button" class="rower-btn cox-rower-btn" data-rower="${escapeHtml(name)}" data-day="${escapeHtml(day)}" title="View ${escapeHtml(name)}'s race schedule">${escapeHtml(name)}</button></span>${pillHtml}`;
+      } else {
+        return `<button type="button" class="rower-btn" data-rower="${escapeHtml(name)}" data-day="${escapeHtml(day)}" title="View ${escapeHtml(name)}'s race schedule">${escapeHtml(name)}</button>${pillHtml}`;
+      }
+    });
+
     text = text.replace(/(^|\n)\s*(Poneke:|Princess:|Heat \d+:|Whanganui:|Island Bay:|Makaro:)/g, '$1<strong>$2</strong>');
     text = text.replace(/\n+/g, '<br>');
     return text;
   }
 
-    function formatOarAssigned(rawText) {
+  function formatOarAssigned(rawText) {
     if (!rawText) return '';
     let text = escapeHtml(rawText);
 
@@ -812,6 +1496,8 @@
     const isSat = race.day.toLowerCase() === 'saturday';
     const dayClass = isSat ? 'sat-row' : 'sun-row';
     const rerigClass = race.rerig_required ? ' rerig-row rerig-alert' : '';
+    const tightClass = race.has_tight_turnaround ? ' tight-row' : '';
+    const criticalClass = race.has_critical_turnaround ? ' has-critical' : '';
     const specialStyle = (race.event_number === 111 || (race.boat && race.boat.includes('Princess') && race.boat.includes('Poneke'))) ? ' style="background-color: #f0fdf4;"' : '';
 
     const eventClass = race.event_class || race.event_name || '';
@@ -844,14 +1530,14 @@
     }
 
     return `
-      <tr class="race-row ${dayClass}${rerigClass}${turnaroundClass}"${specialStyle}>
+      <tr class="race-row ${dayClass}${rerigClass}${turnaroundClass}${tightClass}${criticalClass}"${specialStyle}>
         <td>${escapeHtml(race.block)}</td>
         <td class="time-cell">${escapeHtml(race.time)}</td>
         <td><span class="event-badge">${escapeHtml(race.event_number)}</span></td>
         <td><strong>${escapeHtml(eventClass)}</strong></td>
         <td class="boat-badge">${escapeHtml(race.boat)}</td>
         <td>${formatOarAssigned(race.oars_assigned)}</td>
-        <td class="crew-list">${formatCrew(crewText, race.cox)}</td>
+        <td class="crew-list">${formatCrew(crewText, race.cox, race.rower_turnarounds, race.day)}</td>
         <td>${notesHtml}</td>
       </tr>
     `;
@@ -859,6 +1545,10 @@
 
   function populateUI(data) {
     raceData = data;
+
+    // Run dynamic turnaround calculations across all races
+    computeTurnarounds(data.races, data.rowers || []);
+
     const satBody = document.getElementById('sat-table-body');
     const sunBody = document.getElementById('sun-table-body');
     const datalist = document.getElementById('rower-suggestions');
@@ -870,20 +1560,22 @@
     const satRaces = data.races.filter(r => r.day.toLowerCase() === 'saturday');
     const sunRaces = data.races.filter(r => r.day.toLowerCase() === 'sunday');
     const rerigCount = data.races.filter(r => r.rerig_required).length;
+    const turnaroundCount = data.races.filter(r => r.notes && (r.notes.includes('SHORE CATCH') || r.notes.includes('TIMED LAUNCH') || r.notes.includes('⏱️'))).length;
+    const tightCount = data.races.filter(r => r.has_tight_turnaround).length;
 
     const btnAll = document.querySelector('[data-filter="all"]');
     const btnSat = document.querySelector('[data-filter="sat"]');
     const btnSun = document.querySelector('[data-filter="sun"]');
     const btnRerig = document.querySelector('[data-filter="rerig"]');
     const btnTurnaround = document.querySelector('[data-filter="turnaround"]');
-
-    const turnaroundCount = data.races.filter(r => r.notes && (r.notes.includes('SHORE CATCH') || r.notes.includes('TIMED LAUNCH') || r.notes.includes('⏱️'))).length;
+    const btnTight = document.querySelector('[data-filter="tight"]');
 
     if (btnAll) btnAll.textContent = `Show All Races (${data.races.length})`;
     if (btnSat) btnSat.textContent = `Saturday Only (${satRaces.length})`;
     if (btnSun) btnSun.textContent = `Sunday Only (${sunRaces.length})`;
     if (btnRerig) btnRerig.textContent = `⚠️ Re-Rig Alerts Only (${rerigCount})`;
     if (btnTurnaround) btnTurnaround.textContent = `⏱️ Shore Support Only (${turnaroundCount})`;
+    if (btnTight) btnTight.textContent = `⏱️ Tight Turnarounds (<60m) (${tightCount})`;
 
     satBody.innerHTML = satRaces.map(renderRaceRow).join('') +
       '<tr id="sat-no-results" class="no-results-row" style="display: none;"><td colspan="8">No matching races found for Saturday.</td></tr>';
@@ -945,6 +1637,7 @@
       const isSun = row.classList.contains('sun-row');
       const isRerig = row.classList.contains('rerig-row');
       const isTurnaroundRow = row.classList.contains('turnaround-row');
+      const isTightRow = row.classList.contains('tight-row');
 
       let matchesDay = false;
       if (activeDay === 'all') matchesDay = true;
@@ -952,6 +1645,7 @@
       else if (activeDay === 'sun') matchesDay = isSun;
       else if (activeDay === 'rerig') matchesDay = isRerig;
       else if (activeDay === 'turnaround') matchesDay = isTurnaroundRow;
+      else if (activeDay === 'tight') matchesDay = isTightRow;
 
       let matchesSearch = true;
       if (query) {
@@ -1011,9 +1705,364 @@
     applyFilters();
   }
 
+  // --- Option A: Popover Tooltip Positioning & Handling ---
+  function showTurnaroundPopover(targetEl) {
+    const popover = document.getElementById('turnaround-popover');
+    if (!popover || !targetEl) return;
+    currentPopoverTarget = targetEl;
+
+    const gap = targetEl.dataset.turnaround;
+    const isCritical = targetEl.dataset.critical === 'true';
+    const nextTime = targetEl.dataset.nextTime;
+    const nextEvent = targetEl.dataset.nextEvent;
+    const nextClass = targetEl.dataset.nextClass;
+    const nextBoat = targetEl.dataset.nextBoat;
+    const rower = targetEl.dataset.rower;
+
+    const header = document.getElementById('popover-header');
+    const badge = document.getElementById('popover-badge');
+    const nextRaceEl = document.getElementById('popover-next-race');
+    const gapEl = document.getElementById('popover-gap');
+    const hintEl = document.getElementById('popover-rower-hint');
+
+    if (header) {
+      header.className = 'popover-header ' + (isCritical ? 'header-critical' : '');
+    }
+    if (badge) {
+      badge.className = 'popover-badge ' + (isCritical ? 'badge-critical' : '');
+      badge.innerHTML = isCritical
+        ? `🚨 Tight Turnaround: ${escapeHtml(gap)} mins (CRITICAL)`
+        : `⏱️ Tight Turnaround: ${escapeHtml(gap)} mins`;
+    }
+    if (nextRaceEl) {
+      nextRaceEl.textContent = `${nextTime} — Event ${nextEvent} (${nextClass}) in ${nextBoat}`;
+    }
+    if (gapEl) {
+      gapEl.innerHTML = `<strong>${escapeHtml(gap)} mins rest</strong> until next race`;
+    }
+    if (hintEl) {
+      hintEl.textContent = `💡 Click ${rower} to view full day timeline →`;
+    }
+
+    popover.style.display = 'block';
+    popover.style.visibility = 'hidden';
+
+    const rect = targetEl.getBoundingClientRect();
+    const popRect = popover.getBoundingClientRect();
+    const margin = 8;
+
+    let left = rect.left + (rect.width / 2) - (popRect.width / 2);
+    const minLeft = 10;
+    const maxLeft = window.innerWidth - popRect.width - 10;
+    left = Math.max(minLeft, Math.min(left, maxLeft));
+
+    const arrowEl = popover.querySelector('.popover-arrow');
+    const arrowLeft = (rect.left + rect.width / 2) - left;
+    if (arrowEl) {
+      arrowEl.style.left = `${Math.max(12, Math.min(arrowLeft, popRect.width - 12))}px`;
+    }
+
+    let top = rect.top - popRect.height - margin;
+    let placedBelow = false;
+    if (top < 10) {
+      top = rect.bottom + margin;
+      placedBelow = true;
+    }
+
+    popover.classList.toggle('placed-below', placedBelow);
+    popover.style.left = `${left + window.scrollX}px`;
+    popover.style.top = `${top + window.scrollY}px`;
+    popover.style.visibility = 'visible';
+    popover.setAttribute('aria-hidden', 'false');
+  }
+
+  function hideTurnaroundPopover() {
+    const popover = document.getElementById('turnaround-popover');
+    if (popover) {
+      popover.style.display = 'none';
+      popover.setAttribute('aria-hidden', 'true');
+      currentPopoverTarget = null;
+    }
+  }
+
+  // --- Option D: Interactive Rower Day Timeline Modal ---
+  function openRowerTimelineModal(rowerName, defaultDay) {
+    if (!raceData || !raceData.races) return;
+    currentModalRower = rowerName;
+    if (defaultDay) {
+      currentModalDay = defaultDay;
+    }
+
+    const backdrop = document.getElementById('rower-modal-backdrop');
+    if (!backdrop) return;
+
+    hideTurnaroundPopover();
+    renderModalContent();
+    backdrop.style.display = 'flex';
+    backdrop.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeRowerModal() {
+    const backdrop = document.getElementById('rower-modal-backdrop');
+    if (backdrop) {
+      backdrop.style.display = 'none';
+      backdrop.setAttribute('aria-hidden', 'true');
+    }
+    document.body.style.overflow = '';
+    currentModalRower = null;
+  }
+
+  function switchModalDay(day) {
+    currentModalDay = day;
+    renderModalContent();
+  }
+
+  function getRowerDayRaces(rowerName, day) {
+    if (!raceData || !raceData.races) return [];
+    const dayRaces = raceData.races.filter(r => r.day && r.day.toLowerCase() === day.toLowerCase());
+    dayRaces.sort((a, b) => parseTimeToMinutes(a.time) - parseTimeToMinutes(b.time));
+
+    const escaped = rowerName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const pat = new RegExp(`(?<![A-Za-z0-9])${escaped}(?![A-Za-z0-9])`);
+
+    return dayRaces.filter(r => {
+      const text = (r.crew || '') + ' ' + (r.cox || '');
+      return pat.test(text);
+    });
+  }
+
+  function formatIntervalCompact(mins) {
+    if (mins < 60) return `${mins}m`;
+    const h = Math.floor(mins / 60);
+    const m = mins % 60;
+    return `${h}h${m > 0 ? ` ${m}m` : ''}`;
+  }
+
+  function formatIntervalFull(mins) {
+    if (mins < 60) return `${mins} mins`;
+    const h = Math.floor(mins / 60);
+    const m = mins % 60;
+    return `${h} hr${h > 1 ? 's' : ''}${m > 0 ? ` ${m} min${m > 1 ? 's' : ''}` : ''} (${mins} mins)`;
+  }
+
+  function renderModalContent() {
+    const rower = currentModalRower;
+    if (!rower || !raceData) return;
+
+    const rowerNameEl = document.getElementById('modal-rower-name');
+    if (rowerNameEl) rowerNameEl.textContent = `${rower} — Race Day Timeline`;
+
+    const satRaces = getRowerDayRaces(rower, 'Saturday');
+    const sunRaces = getRowerDayRaces(rower, 'Sunday');
+
+    const tabSat = document.getElementById('modal-tab-sat');
+    const tabSun = document.getElementById('modal-tab-sun');
+    if (tabSat) {
+      tabSat.textContent = `Saturday (${satRaces.length})`;
+      tabSat.classList.toggle('active', currentModalDay.toLowerCase() === 'saturday');
+    }
+    if (tabSun) {
+      tabSun.textContent = `Sunday (${sunRaces.length})`;
+      tabSun.classList.toggle('active', currentModalDay.toLowerCase() === 'sunday');
+    }
+
+    const activeRaces = currentModalDay.toLowerCase() === 'saturday' ? satRaces : sunRaces;
+    const container = document.getElementById('modal-timeline-body');
+    if (!container) return;
+
+    if (activeRaces.length === 0) {
+      const otherDay = currentModalDay.toLowerCase() === 'saturday' ? 'Sunday' : 'Saturday';
+      const otherCount = currentModalDay.toLowerCase() === 'saturday' ? sunRaces.length : satRaces.length;
+      container.innerHTML = `
+        <div class="modal-empty-state">
+          <div style="font-size: 2.2rem; margin-bottom: 8px;">🚣</div>
+          <p>No races scheduled for <strong>${escapeHtml(rower)}</strong> on ${escapeHtml(currentModalDay)}.</p>
+          ${otherCount > 0 ? `<button type="button" class="btn-switch-day" onclick="switchModalDay('${otherDay}')">Switch to ${otherDay} (${otherCount} race${otherCount > 1 ? 's' : ''}) &rarr;</button>` : ''}
+        </div>
+      `;
+      return;
+    }
+
+    let tightCount = 0;
+    let criticalCount = 0;
+    const raceIntervals = [];
+
+    for (let i = 0; i < activeRaces.length; i++) {
+      if (i < activeRaces.length - 1) {
+        const gap = parseTimeToMinutes(activeRaces[i + 1].time) - parseTimeToMinutes(activeRaces[i].time);
+        if (gap < 40) {
+          criticalCount++;
+          tightCount++;
+        } else if (gap < 60) {
+          tightCount++;
+        }
+        raceIntervals.push(gap);
+      }
+    }
+
+    // Horizontal Chip Sequence
+    let chipsHtml = `<div class="timeline-summary-chips"><span class="summary-label">Sequence:</span>`;
+    for (let i = 0; i < activeRaces.length; i++) {
+      const r = activeRaces[i];
+      chipsHtml += `<span class="chip-race">${escapeHtml(r.time)} Ev ${escapeHtml(r.event_number)}</span>`;
+      if (i < raceIntervals.length) {
+        const gap = raceIntervals[i];
+        let gapCls = 'chip-gap-normal';
+        let icon = '☕';
+        if (gap < 40) { gapCls = 'chip-gap-critical'; icon = '🚨'; }
+        else if (gap < 60) { gapCls = 'chip-gap-amber'; icon = '⏱️'; }
+        chipsHtml += ` &rarr; <span class="chip-gap ${gapCls}">${icon} ${gap < 60 ? `${gap}m` : formatIntervalCompact(gap)} rest</span> &rarr; `;
+      }
+    }
+    chipsHtml += `</div>`;
+
+    // Overview stats banner
+    const statsBanner = `
+      <div class="modal-stats-banner">
+        <div class="stat-pill"><strong>${activeRaces.length}</strong> Race${activeRaces.length > 1 ? 's' : ''}</div>
+        ${tightCount > 0 ? `<div class="stat-pill stat-pill-amber"><strong>${tightCount}</strong> Tight Turnaround${tightCount > 1 ? 's' : ''} (&lt;60m)</div>` : ''}
+        ${criticalCount > 0 ? `<div class="stat-pill stat-pill-critical"><strong>${criticalCount}</strong> Critical (&lt;40m)</div>` : ''}
+        <div class="stat-pill stat-pill-neutral">First: <strong>${escapeHtml(activeRaces[0].time)}</strong> • Last: <strong>${escapeHtml(activeRaces[activeRaces.length - 1].time)}</strong></div>
+      </div>
+    `;
+
+    // Vertical detailed timeline
+    let trackHtml = `<div class="timeline-track">`;
+    for (let i = 0; i < activeRaces.length; i++) {
+      const r = activeRaces[i];
+      const isCox = r.cox && r.cox.toLowerCase().includes(rower.toLowerCase());
+      const eventClass = r.event_class || r.event_name || '';
+
+      trackHtml += `
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="timeline-card-header">
+              <div>
+                <span class="timeline-time">${escapeHtml(r.time)}</span>
+                <span class="event-badge" style="margin-left: 6px;">Event ${escapeHtml(r.event_number)}</span>
+                <span class="timeline-block-badge">Block ${escapeHtml(r.block)}</span>
+              </div>
+              ${isCox ? '<span class="cox-tag">COX</span>' : ''}
+            </div>
+            <div class="timeline-event-title">${escapeHtml(eventClass)}</div>
+            <div class="timeline-details">
+              <div><strong>Boat:</strong> <span class="boat-badge">${escapeHtml(r.boat)}</span> • <strong>Oars:</strong> ${formatOarAssigned(r.oars_assigned)}</div>
+              <div><strong>Crew:</strong> ${escapeHtml(r.crew || '')}</div>
+              ${r.notes ? `<div class="timeline-race-notes"><em>${escapeHtml(r.notes).replace(/\n/g, '<br>')}</em></div>` : ''}
+            </div>
+          </div>
+        </div>
+      `;
+
+      if (i < raceIntervals.length) {
+        const gap = raceIntervals[i];
+        let intervalClass = 'timeline-interval-normal';
+        let icon = '☕';
+        let textDesc = `${formatIntervalFull(gap)} rest until Event ${escapeHtml(activeRaces[i + 1].event_number)} (${escapeHtml(activeRaces[i + 1].time)})`;
+        if (gap < 40) {
+          intervalClass = 'timeline-interval-critical';
+          icon = '🚨';
+          textDesc = `<strong>CRITICAL TURNAROUND:</strong> ${gap} mins rest until Event ${escapeHtml(activeRaces[i + 1].event_number)} (${escapeHtml(activeRaces[i + 1].time)})`;
+        } else if (gap < 60) {
+          intervalClass = 'timeline-interval-warning';
+          icon = '⏱️';
+          textDesc = `<strong>TIGHT TURNAROUND:</strong> ${gap} mins rest until Event ${escapeHtml(activeRaces[i + 1].event_number)} (${escapeHtml(activeRaces[i + 1].time)})`;
+        }
+
+        trackHtml += `
+          <div class="timeline-interval ${intervalClass}">
+            <span class="interval-icon">${icon}</span>
+            <span>${textDesc}</span>
+          </div>
+        `;
+      }
+    }
+    trackHtml += `</div>`;
+
+    container.innerHTML = statsBanner + chipsHtml + trackHtml;
+  }
+
+  // Global Event Delegation
+  document.addEventListener('click', (e) => {
+    const rowerBtn = e.target.closest('.rower-btn');
+    if (rowerBtn) {
+      e.stopPropagation();
+      const rower = rowerBtn.dataset.rower;
+      const day = rowerBtn.dataset.day || 'Saturday';
+      openRowerTimelineModal(rower, day);
+      return;
+    }
+
+    const pill = e.target.closest('.turnaround-pill');
+    if (pill) {
+      e.stopPropagation();
+      if (currentPopoverTarget === pill) {
+        hideTurnaroundPopover();
+      } else {
+        showTurnaroundPopover(pill);
+      }
+      return;
+    }
+
+    if (!e.target.closest('#turnaround-popover')) {
+      hideTurnaroundPopover();
+    }
+  });
+
+  document.addEventListener('mouseover', (e) => {
+    const pill = e.target.closest('.turnaround-pill');
+    if (pill) {
+      showTurnaroundPopover(pill);
+    }
+  });
+
+  document.addEventListener('mouseout', (e) => {
+    const pill = e.target.closest('.turnaround-pill');
+    if (pill) {
+      const related = e.relatedTarget;
+      if (!related || (!related.closest('.turnaround-pill') && !related.closest('#turnaround-popover'))) {
+        hideTurnaroundPopover();
+      }
+    }
+  });
+
+  document.addEventListener('focusin', (e) => {
+    const pill = e.target.closest('.turnaround-pill');
+    if (pill) {
+      showTurnaroundPopover(pill);
+    }
+  });
+
+  document.addEventListener('focusout', (e) => {
+    const pill = e.target.closest('.turnaround-pill');
+    if (pill) {
+      hideTurnaroundPopover();
+    }
+  });
+
+  window.addEventListener('resize', hideTurnaroundPopover);
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeRowerModal();
+      hideTurnaroundPopover();
+    }
+  });
+
   async function init() {
     const searchInput = document.getElementById('rower-search');
     const clearBtn = document.getElementById('clear-search-btn');
+    const modalBackdrop = document.getElementById('rower-modal-backdrop');
+
+    if (modalBackdrop) {
+      modalBackdrop.addEventListener('click', (e) => {
+        if (e.target === modalBackdrop) {
+          closeRowerModal();
+        }
+      });
+    }
 
     if (searchInput) {
       searchInput.addEventListener('input', (e) => {
