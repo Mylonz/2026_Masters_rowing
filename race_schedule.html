@@ -350,6 +350,77 @@
       background: #d97706;
       border-color: #d97706;
     }
+    /* Shore Roster Card (Option 3) */
+    .shore-roster-card {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-left: 5px solid #d97706;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .shore-roster-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .shore-roster-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #92400e;
+    }
+    .shore-roster-badge {
+      background: #d97706;
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .shore-roster-intro {
+      font-size: 0.84rem;
+      color: #78350f;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+    .shore-steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+    }
+    .shore-step {
+      background: #ffffff;
+      border: 1px solid #fcd34d;
+      border-radius: 6px;
+      padding: 9px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .shore-step-time {
+      font-weight: 800;
+      font-size: 0.84rem;
+      color: #b45309;
+    }
+    .shore-step-content {
+      font-size: 0.79rem;
+      color: #374151;
+      line-height: 1.35;
+    }
+    .shore-step-content strong {
+      color: #1f2937;
+    }
+    .shore-step-content em {
+      color: #b45309;
+      font-style: normal;
+      font-weight: 600;
+    }
     .btn-print {
       background-color: var(--secondary);
       color: white;
@@ -585,6 +656,43 @@
     <div class="day-header day-sat">
       <span>Saturday — Race Schedule</span>
       <span style="font-size: 0.9rem; font-weight: 500;">Events 1 – 69</span>
+    </div>
+
+    <!-- SHORE SUPPORT & BOAT TRANSITION ROSTER -->
+    <div class="shore-roster-card">
+      <div class="shore-roster-header">
+        <span class="shore-roster-title">⏱️ Saturday Morning Shore Support &amp; Boat Transition Protocol (08:50 – 09:35)</span>
+        <span class="shore-roster-badge">Crew Recovery Priority</span>
+      </div>
+      <p class="shore-roster-intro">
+        <strong>Goal:</strong> Guarantee <strong>15 minutes seated recovery</strong> at camp for Vivienne, Liane &amp; Maria S between Event 3 (08:45) and Event 14 (09:30), and protect Deb for Event 19 (10:20).
+      </p>
+      <div class="shore-steps-grid">
+        <div class="shore-step">
+          <div class="shore-step-time">08:50 — Muster</div>
+          <div class="shore-step-content">
+            <strong>Assemble Shore Team:</strong> Myles, Derek, Deidre, Liz (non-racing until 11:00+) assemble near recovery pontoon.
+          </div>
+        </div>
+        <div class="shore-step">
+          <div class="shore-step-time">08:55 — Catch Boats</div>
+          <div class="shore-step-content">
+            <strong>Catch Hawkins &amp; Mahanga:</strong> Meet boats at recovery pontoon. Carry both up to racks. <em>Vivienne, Liane &amp; Maria S walk straight to camp chairs for 15m rest.</em>
+          </div>
+        </div>
+        <div class="shore-step">
+          <div class="shore-step-time">09:10 — Timed Launch</div>
+          <div class="shore-step-content">
+            <strong>Launch Tarakena:</strong> Shore Team + Deb carry Tarakena down to launch pontoon. Vivienne, Liane &amp; Maria S walk down empty-handed to push off at 09:13.
+          </div>
+        </div>
+        <div class="shore-step">
+          <div class="shore-step-time">09:35 — Catch &amp; Prep</div>
+          <div class="shore-step-content">
+            <strong>Catch Tarakena:</strong> Shore Team + post-race crew meet Tarakena and carry to racks. Deb goes straight to camp to prep for Event 19 (10:20).
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="table-card">
