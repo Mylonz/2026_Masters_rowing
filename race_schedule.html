@@ -395,6 +395,27 @@
       text-decoration-color: #0f766e !important;
     }
 
+    /* Clickable Boat Names */
+    .boat-btn {
+      background: none;
+      border: 1px solid transparent;
+      padding: 0 1px;
+      margin: 0;
+      font: inherit;
+      color: #2c5282;
+      cursor: pointer;
+      border-radius: 3px;
+      text-decoration: underline decoration-color transparent;
+      transition: all 0.15s ease-in-out;
+      display: inline;
+      font-weight: 700;
+    }
+    .boat-btn:hover {
+      color: var(--secondary);
+      background-color: #ebf8ff;
+      text-decoration-color: var(--secondary);
+    }
+
     /* Combined Rower Name + Tight Turnaround Pill */
     .turnaround-pill {
       display: inline-flex;
@@ -1330,7 +1351,7 @@
         <h2 id="modal-rower-name">Rower Timeline</h2>
         <span class="modal-subtitle">Full Day Race Timeline &amp; Turnaround Rest Intervals</span>
       </div>
-      <button type="button" class="modal-close-btn" aria-label="Close modal" onclick="closeRowerModal()">&times;</button>
+      <button type="button" class="modal-close-btn" aria-label="Close modal" onclick="closeModal()">&times;</button>
     </div>
     <div class="modal-day-tabs">
       <button type="button" class="modal-tab" id="modal-tab-sat" onclick="switchModalDay('Saturday')">Saturday</button>
@@ -1349,6 +1370,8 @@
   let currentPopoverTarget = null;
   let currentModalRower = null;
   let currentModalDay = 'Saturday';
+  let currentModalBoat = null;
+  let currentModalBoatDay = 'Saturday';
 
   function escapeHtml(str) {
     if (str == null) return '';
@@ -1583,7 +1606,7 @@
         <td class="time-cell">${escapeHtml(race.time)}</td>
         <td><span class="event-badge">${escapeHtml(race.event_number)}</span></td>
         <td><strong>${escapeHtml(eventClass)}</strong></td>
-        <td class="boat-badge">${escapeHtml(race.boat)}</td>
+        <td class="boat-badge"><button type="button" class="boat-btn" data-boat="${escapeHtml(race.boat)}" title="View ${escapeHtml(race.boat)}'s race schedule">${escapeHtml(race.boat)}</button></td>
         <td>${formatOarAssigned(race.oars_assigned)}</td>
         <td class="crew-list">${formatCrew(crewText, race.cox, race.rower_turnarounds, race.day)}</td>
         <td>${notesHtml}</td>
@@ -1861,9 +1884,34 @@
     currentModalRower = null;
   }
 
+  function closeBoatModal() {
+    const backdrop = document.getElementById('rower-modal-backdrop');
+    if (backdrop) {
+      backdrop.style.display = 'none';
+      backdrop.setAttribute('aria-hidden', 'true');
+    }
+    document.body.style.overflow = '';
+    currentModalBoat = null;
+  }
+
+  function closeModal() {
+    // Close whichever modal is currently open
+    if (currentModalRower !== null) {
+      closeRowerModal();
+    } else if (currentModalBoat !== null) {
+      closeBoatModal();
+    }
+  }
+
   function switchModalDay(day) {
-    currentModalDay = day;
-    renderModalContent();
+    // Determine which modal is currently open and switch accordingly
+    if (currentModalRower !== null) {
+      currentModalDay = day;
+      renderModalContent();
+    } else if (currentModalBoat !== null) {
+      currentModalBoatDay = day;
+      renderBoatModalContent();
+    }
   }
 
   function getRowerDayRaces(rowerName, day) {
@@ -2032,6 +2080,228 @@
     container.innerHTML = statsBanner + chipsHtml + trackHtml;
   }
 
+  // --- Option E: Interactive Boat Timeline Modal ---
+  function getBoatDayRaces(boatName, day) {
+    if (!raceData || !raceData.races) return [];
+    const dayRaces = raceData.races.filter(r => r.day && r.day.toLowerCase() === day.toLowerCase());
+    dayRaces.sort((a, b) => parseTimeToMinutes(a.time) - parseTimeToMinutes(b.time));
+
+    // Handle special cases where boat names might contain multiple boats
+    return dayRaces.filter(r => {
+      if (!r.boat) return false;
+      const boatField = r.boat.toLowerCase();
+      const searchBoat = boatName.toLowerCase();
+      
+      // Exact match
+      if (boatField === searchBoat) return true;
+      
+      // Handle special cases like "Mahanga & Hawkins"
+      if (boatField.includes('&') && boatField.includes(searchBoat)) return true;
+      
+      // Handle "TBC" cases
+      if (boatField === 'tbc' && searchBoat === 'tbc') return true;
+      
+      return false;
+    });
+  }
+
+  function detectRigChange(currentRace, nextRace) {
+    // Detect if there's a rig change between races
+    if (!currentRace || !nextRace) return false;
+    
+    // Simple check: if discipline appears in notes, compare them
+    const getCurrentDiscipline = (race) => {
+      if (race.notes && race.notes.toLowerCase().includes('scull')) return 'scull';
+      if (race.notes && race.notes.toLowerCase().includes('sweep')) return 'sweep';
+      // Try to infer from event class
+      const eventClass = (race.event_class || race.event_name || '').toLowerCase();
+      if (eventClass.includes('x')) return 'scull';
+      if (eventClass.includes('-') || eventClass.includes('+') || eventClass.includes('8')) return 'sweep';
+      return 'unknown';
+    };
+    
+    const currentDiscipline = getCurrentDiscipline(currentRace);
+    const nextDiscipline = getCurrentDiscipline(nextRace);
+    
+    return currentDiscipline !== nextDiscipline && currentDiscipline !== 'unknown' && nextDiscipline !== 'unknown';
+  }
+
+  function openBoatTimelineModal(boatName) {
+    if (!raceData || !raceData.races) return;
+    currentModalBoat = boatName;
+    currentModalBoatDay = 'Saturday'; // Default to Saturday
+
+    const backdrop = document.getElementById('rower-modal-backdrop');
+    if (!backdrop) return;
+
+    renderBoatModalContent();
+    backdrop.style.display = 'flex';
+    backdrop.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeBoatModal() {
+    const backdrop = document.getElementById('rower-modal-backdrop');
+    if (backdrop) {
+      backdrop.style.display = 'none';
+      backdrop.setAttribute('aria-hidden', 'true');
+    }
+    document.body.style.overflow = '';
+    currentModalBoat = null;
+  }
+
+  function switchBoatModalDay(day) {
+    currentModalBoatDay = day;
+    renderBoatModalContent();
+  }
+
+  function renderBoatModalContent() {
+    const boat = currentModalBoat;
+    if (!boat || !raceData) return;
+
+    // Update the modal header to show boat name instead of rower name
+    const modalHeader = document.querySelector('.modal-header h2');
+    if (modalHeader) modalHeader.textContent = `${boat} — Race Schedule`;
+    
+    // Update subtitle
+    const modalSubtitle = document.querySelector('.modal-subtitle');
+    if (modalSubtitle) modalSubtitle.textContent = 'Full Race Schedule & Rigging Requirements';
+
+    const satRaces = getBoatDayRaces(boat, 'Saturday');
+    const sunRaces = getBoatDayRaces(boat, 'Sunday');
+
+    const tabSat = document.getElementById('modal-tab-sat');
+    const tabSun = document.getElementById('modal-tab-sun');
+    if (tabSat) {
+      tabSat.textContent = `Saturday (${satRaces.length})`;
+      tabSat.classList.toggle('active', currentModalBoatDay.toLowerCase() === 'saturday');
+    }
+    if (tabSun) {
+      tabSun.textContent = `Sunday (${sunRaces.length})`;
+      tabSun.classList.toggle('active', currentModalBoatDay.toLowerCase() === 'sunday');
+    }
+
+    const activeRaces = currentModalBoatDay.toLowerCase() === 'saturday' ? satRaces : sunRaces;
+    const container = document.getElementById('modal-timeline-body');
+    if (!container) return;
+
+    if (activeRaces.length === 0) {
+      const otherDay = currentModalBoatDay.toLowerCase() === 'saturday' ? 'Sunday' : 'Saturday';
+      const otherCount = currentModalBoatDay.toLowerCase() === 'saturday' ? sunRaces.length : satRaces.length;
+      container.innerHTML = `
+        <div class="modal-empty-state">
+          <div style="font-size: 2.2rem; margin-bottom: 8px;">⛵</div>
+          <p>No races scheduled for <strong>${escapeHtml(boat)}</strong> on ${escapeHtml(currentModalBoatDay)}.</p>
+          ${otherCount > 0 ? `<button type="button" class="btn-switch-day" onclick="switchBoatModalDay('${otherDay}')">Switch to ${otherDay} (${otherCount} race${otherCount > 1 ? 's' : ''}) &rarr;</button>` : ''}
+        </div>
+      `;
+      return;
+    }
+
+    let rigChangeCount = 0;
+    const raceIntervals = [];
+
+    for (let i = 0; i < activeRaces.length; i++) {
+      if (i < activeRaces.length - 1) {
+        const gap = parseTimeToMinutes(activeRaces[i + 1].time) - parseTimeToMinutes(activeRaces[i].time);
+        raceIntervals.push(gap);
+        
+        // Check for rig changes
+        if (detectRigChange(activeRaces[i], activeRaces[i + 1])) {
+          rigChangeCount++;
+        }
+      }
+    }
+
+    // Horizontal Chip Sequence
+    let chipsHtml = `<div class="timeline-summary-chips"><span class="summary-label">Schedule:</span>`;
+    for (let i = 0; i < activeRaces.length; i++) {
+      const r = activeRaces[i];
+      chipsHtml += `<span class="chip-race">${escapeHtml(r.time)} Ev ${escapeHtml(r.event_number)}</span>`;
+      if (i < raceIntervals.length) {
+        const gap = raceIntervals[i];
+        let gapCls = 'chip-gap-normal';
+        let icon = '⏱️';
+        if (gap < 30) { gapCls = 'chip-gap-critical'; icon = '🚨'; }
+        else if (gap < 60) { gapCls = 'chip-gap-amber'; icon = '⏱️'; }
+        chipsHtml += ` &rarr; <span class="chip-gap ${gapCls}">${icon} ${gap < 60 ? `${gap}m` : formatIntervalCompact(gap)}</span> &rarr; `;
+      }
+    }
+    chipsHtml += `</div>`;
+
+    // Overview stats banner
+    const statsBanner = `
+      <div class="modal-stats-banner">
+        <div class="stat-pill"><strong>${activeRaces.length}</strong> Race${activeRaces.length > 1 ? 's' : ''}</div>
+        ${rigChangeCount > 0 ? `<div class="stat-pill stat-pill-amber"><strong>${rigChangeCount}</strong> Rig Change${rigChangeCount > 1 ? 's' : ''}</div>` : ''}
+        <div class="stat-pill stat-pill-neutral">First: <strong>${escapeHtml(activeRaces[0].time)}</strong> • Last: <strong>${escapeHtml(activeRaces[activeRaces.length - 1].time)}</strong></div>
+      </div>
+    `;
+
+    // Vertical detailed timeline
+    let trackHtml = `<div class="timeline-track">`;
+    for (let i = 0; i < activeRaces.length; i++) {
+      const r = activeRaces[i];
+      const eventClass = r.event_class || r.event_name || '';
+
+      trackHtml += `
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="timeline-card-header">
+              <div>
+                <span class="timeline-time">${escapeHtml(r.time)}</span>
+                <span class="event-badge" style="margin-left: 6px;">Event ${escapeHtml(r.event_number)}</span>
+                <span class="timeline-block-badge">Block ${escapeHtml(r.block)}</span>
+              </div>
+            </div>
+            <div class="timeline-event-title">${escapeHtml(eventClass)}</div>
+            <div class="timeline-details">
+              <div><strong>Crew:</strong> ${formatCrew(r.crew || '', r.cox, r.rower_turnarounds, r.day)}</div>
+              <div><strong>Oars:</strong> ${formatOarAssigned(r.oars_assigned)}</div>
+              ${r.notes ? `<div class="timeline-race-notes"><em>${escapeHtml(r.notes).replace(/\n/g, '<br>')}</em></div>` : ''}
+            </div>
+          </div>
+        </div>
+      `;
+
+      if (i < raceIntervals.length) {
+        const gap = raceIntervals[i];
+        let intervalClass = 'timeline-interval-normal';
+        let icon = '⏱️';
+        let textDesc = `${formatIntervalFull(gap)} until Event ${escapeHtml(activeRaces[i + 1].event_number)} (${escapeHtml(activeRaces[i + 1].time)})`;
+        
+        // Check for rig change
+        const hasRigChange = detectRigChange(activeRaces[i], activeRaces[i + 1]);
+        
+        if (gap < 30) {
+          intervalClass = 'timeline-interval-critical';
+          icon = '🚨';
+          textDesc = `<strong>CRITICAL TURNAROUND:</strong> ${gap} mins until Event ${escapeHtml(activeRaces[i + 1].event_number)} (${escapeHtml(activeRaces[i + 1].time)})`;
+        } else if (gap < 60) {
+          intervalClass = 'timeline-interval-warning';
+          icon = '⏱️';
+          textDesc = `<strong>TIGHT TURNAROUND:</strong> ${gap} mins until Event ${escapeHtml(activeRaces[i + 1].event_number)} (${escapeHtml(activeRaces[i + 1].time)})`;
+        }
+        
+        // Add rig change warning if applicable
+        if (hasRigChange) {
+          textDesc += ` • <strong>⚠️ RIG CHANGE REQUIRED</strong>`;
+        }
+
+        trackHtml += `
+          <div class="timeline-interval ${intervalClass}">
+            <span class="interval-icon">${icon}</span>
+            <span>${textDesc}</span>
+          </div>
+        `;
+      }
+    }
+    trackHtml += `</div>`;
+
+    container.innerHTML = statsBanner + chipsHtml + trackHtml;
+  }
+
   // Global Event Delegation
   document.addEventListener('click', (e) => {
     const rowerBtn = e.target.closest('.rower-btn');
@@ -2041,6 +2311,14 @@
       const rower = rowerBtn.dataset.rower;
       const day = rowerBtn.dataset.day || 'Saturday';
       openRowerTimelineModal(rower, day);
+      return;
+    }
+
+    const boatBtn = e.target.closest('.boat-btn');
+    if (boatBtn) {
+      e.stopPropagation();
+      const boat = boatBtn.dataset.boat;
+      openBoatTimelineModal(boat);
       return;
     }
 
@@ -2115,6 +2393,7 @@
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       closeRowerModal();
+      closeBoatModal();
       hideTurnaroundPopover();
     }
   });
@@ -2127,7 +2406,7 @@
     if (modalBackdrop) {
       modalBackdrop.addEventListener('click', (e) => {
         if (e.target === modalBackdrop) {
-          closeRowerModal();
+          closeModal();
         }
       });
     }
