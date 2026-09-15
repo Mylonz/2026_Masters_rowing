@@ -24,6 +24,14 @@
     "assigned_to": null
   },
   {
+    "id": "buckets",
+    "item": "buckets",
+    "quantity": "n",
+    "category": "Team Camp",
+    "notes": "Team base",
+    "assigned_to": null
+  },
+    {
     "id": "marquee",
     "item": "Marquee",
     "quantity": "1",
