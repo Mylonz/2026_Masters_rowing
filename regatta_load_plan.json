@@ -129,9 +129,9 @@
             "bay_number": 1,
             "side": "Port",
             "position": "Port Outer",
-            "boat_name": "STAR single",
-            "details": "Guest Club Boat",
-            "slot_type": "guest"
+            "boat_name": "(Empty)",
+            "details": "Clearance / Spare",
+            "slot_type": "empty"
           },
           {
             "bay_number": 2,
@@ -145,9 +145,9 @@
             "bay_number": 3,
             "side": "Starboard",
             "position": "Starboard Inner",
-            "boat_name": "STAR double",
-            "details": "Guest Club Boat",
-            "slot_type": "guest"
+            "boat_name": "(Empty)",
+            "details": "Clearance / Spare",
+            "slot_type": "empty"
           },
           {
             "bay_number": 4,

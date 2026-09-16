@@ -33,7 +33,7 @@ Google Spreadsheet (Source of Truth)
 ### Official Google Spreadsheet
 * **Link:** [WRC 2026 Nats Spreadsheet (Official Source of Truth)](https://docs.google.com/spreadsheets/d/1Vt7A1fwQDqtUF1455LZgacA4fy5tr2AUYojgEgrrlEM/edit?gid=1295452530#gid=1295452530)
 * **Tab `v2` (`gid=1295452530`):** Contains Saturday and Sunday race blocks, times, events, categories, coxswains, crew rosters, assigned boats, and oar sets.
-* **Tab `Load Plan` (`gid=1504778411`):** Contains the 4-tier trailer grid (`I2:L5`), guest club boats (Star Single/Double), return-trip quad slot, sweep/scull allocations, and Town/Waimarino shed gear inventories.
+* **Tab `Load Plan` (`gid=1504778411`):** Contains the 4-tier trailer grid (`I2:L5`), return-trip quad slot, sweep/scull allocations, and Town/Waimarino shed gear inventories.
 
 ---
 
