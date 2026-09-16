@@ -175,20 +175,35 @@
       "boat_name": "Tuhua",
       "seats": 1,
       "riggers_required": "Scull",
-      "notes": "Races exclusively in 1X (Races 6, 44).",
+      "rigger_tape": {
+        "flange": "Yellow",
+        "centre": "TBD",
+        "gate": "TBD"
+      },
+      "notes": "Races exclusively in 1X (Races 6, 44). Single scull.",
       "requires_re_rig": false
     },
     {
       "boat_name": "Matiu",
       "seats": 2,
       "riggers_required": "Scull",
-      "notes": "Races in 2X (Races 1, 26, 34, 73, 86). High usage.",
+      "rigger_tape": {
+        "flange": "Green",
+        "centre": "Blue",
+        "gate": "Red"
+      },
+      "notes": "Races in 2X (Races 1, 26, 34, 73, 86). High usage double.",
       "requires_re_rig": false
     },
     {
       "boat_name": "Moa",
       "seats": 2,
       "riggers_required": "Scull",
+      "rigger_tape": {
+        "flange": "Green",
+        "centre": "Yellow",
+        "gate": "Green"
+      },
       "notes": "Races in 2X (Races 34, 93).",
       "requires_re_rig": false
     },
@@ -196,6 +211,11 @@
       "boat_name": "Makaro",
       "seats": 2,
       "riggers_required": "Both (Scull & Sweep)",
+      "rigger_tape": {
+        "flange": "Green",
+        "centre": "Black",
+        "gate": "White"
+      },
       "notes": "Re-rigged twice:\n\n              1. Race 73: 2X (Scull)\n\n              2. Re-rig to pair for Race 90: 2- (Sweep)\n\n              3. Re-rig back to double for Race 101: 2X (Scull)",
       "requires_re_rig": true
     },
@@ -203,6 +223,11 @@
       "boat_name": "Island Bay",
       "seats": 2,
       "riggers_required": "Both (Sweep & Scull)",
+      "rigger_tape": {
+        "flange": "Green",
+        "centre": "White",
+        "gate": "Blue"
+      },
       "notes": "Races in 2- (Race 90). Pack scull riggers as backup spares in case of issues with other doubles.",
       "requires_re_rig": false
     },
@@ -210,6 +235,11 @@
       "boat_name": "Hawkins",
       "seats": 4,
       "riggers_required": "Both (Scull & Sweep)",
+      "rigger_tape": {
+        "flange": "Red",
+        "centre": "Black",
+        "gate": "Green"
+      },
       "notes": "Re-rigged on Saturday:\n\n              1. Races 3, 28, 38: 4X- (Scull)\n\n              2. Re-rig into coxless four for Race 65: 4- (Sweep)\n\n              3. Sunday Race 110: 4X- (Scull)",
       "requires_re_rig": true
     },
@@ -217,6 +247,11 @@
       "boat_name": "Mahanga / Mahunga",
       "seats": 4,
       "riggers_required": "Scull",
+      "rigger_tape": {
+        "flange": "Red",
+        "centre": "Black",
+        "gate": "Red"
+      },
       "notes": "Races in 4X- (Races 3, 125). Short four.",
       "requires_re_rig": false
     },
@@ -224,6 +259,11 @@
       "boat_name": "Laurie-Counsell",
       "seats": 4,
       "riggers_required": "Scull",
+      "rigger_tape": {
+        "flange": "Red",
+        "centre": "Black",
+        "gate": "Black"
+      },
       "notes": "Races in 4X+ (Race 19). Coxed quad. Short four.",
       "requires_re_rig": false
     },
@@ -231,6 +271,11 @@
       "boat_name": "Tarakena",
       "seats": 4,
       "riggers_required": "Scull (+ Sweep)",
+      "rigger_tape": {
+        "flange": "Red",
+        "centre": "Blue",
+        "gate": "Red"
+      },
       "notes": "Races in 4X- (Races 14, 78, 125). Pack sweep riggers as optional spares if desired.",
       "requires_re_rig": false
     },
@@ -238,6 +283,11 @@
       "boat_name": "Princess",
       "seats": 8,
       "riggers_required": "Sweep",
+      "rigger_tape": {
+        "flange": "Blue",
+        "centre": "Yellow",
+        "gate": "Yellow"
+      },
       "notes": "Races in 8+ (Races 29, 111). Full 8-sweep rigger set.",
       "requires_re_rig": false
     },
@@ -245,6 +295,11 @@
       "boat_name": "Poneke",
       "seats": 8,
       "riggers_required": "Sweep",
+      "rigger_tape": {
+        "flange": "Blue",
+        "centre": "White",
+        "gate": "Yellow"
+      },
       "notes": "Races in 8+ (Races 53, 111). Full 8-sweep rigger set.",
       "requires_re_rig": false
     }
@@ -309,14 +364,44 @@
   "pre_regatta_maintenance_checklists": {
     "waimarino_shed": [
       {
-        "id": "w-princess",
-        "item": "Princess (8+)",
-        "tasks": "Check 8 seats & bearings; split-hull joint pins & bolts; rudder lines & fin; 8 sweep riggers & pins; heel ties <= 7 cm."
+        "id": "w-princess-hull",
+        "item": "Princess (8+) Hull & Steering",
+        "tasks": "Check 8 seats & bearings; split-hull joint pins & bolts; rudder lines, steering fin & shoes; heel ties <= 7 cm."
       },
       {
-        "id": "w-hawkins",
-        "item": "Hawkins (4X- / 4-)",
-        "tasks": "Inspect scull riggers AND sweep riggers (for Race 65); verify slide tracks, foot stretchers, and slide stops."
+        "id": "w-princess-riggers",
+        "item": "Princess (8+) Sweep Riggers (8x)",
+        "rigger_tape": {
+          "flange": "Blue",
+          "centre": "Yellow",
+          "gate": "Yellow"
+        },
+        "tasks": "8 sweep riggers [Blue · Yellow · Yellow]; inspect pins, top nuts, backstays & pitch bushings."
+      },
+      {
+        "id": "w-hawkins-hull",
+        "item": "Hawkins (4X- / 4-) Hull & Hardware",
+        "tasks": "Verify slide tracks, 4 seat bearings, foot stretchers, slide stops & heel ties <= 7 cm."
+      },
+      {
+        "id": "w-hawkins-scull-riggers",
+        "item": "Hawkins (4X-) Scull Riggers (4x)",
+        "rigger_tape": {
+          "flange": "Red",
+          "centre": "Black",
+          "gate": "Green"
+        },
+        "tasks": "Full 4-seat sculling rigger set [Red · Black · Green]; check pins, top nuts & height washers."
+      },
+      {
+        "id": "w-hawkins-sweep-riggers",
+        "item": "Hawkins (4-) Sweep Riggers (4x)",
+        "rigger_tape": {
+          "flange": "Red",
+          "centre": "Black",
+          "gate": "Green"
+        },
+        "tasks": "Full 4-seat sweep rigger set [Red · Black · Green]; essential for Race 65 coxless four re-rig."
       },
       {
         "id": "w-bww",
@@ -336,44 +421,159 @@
     ],
     "town_shed": [
       {
-        "id": "t-poneke",
-        "item": "Poneke (8+)",
-        "tasks": "Seat bearings & slides; split-hull bolts; rudder lines, T-bar & fin; heel ties <= 7 cm; 8 sweep riggers."
+        "id": "t-poneke-hull",
+        "item": "Poneke (8+) Hull & Steering",
+        "tasks": "Seat bearings & slides; split-hull bolts; rudder lines, T-bar & fin; heel ties <= 7 cm."
       },
       {
-        "id": "t-tarakena",
-        "item": "Tarakena (4X-)",
-        "tasks": "Quad scull riggers & top nuts; seat slide bearings; foot stretchers."
+        "id": "t-poneke-riggers",
+        "item": "Poneke (8+) Sweep Riggers (8x)",
+        "rigger_tape": {
+          "flange": "Blue",
+          "centre": "White",
+          "gate": "Yellow"
+        },
+        "tasks": "8 sweep riggers [Blue · White · Yellow]; check pins, top nuts, backstays & rigger bolts."
       },
       {
-        "id": "t-mahunga",
-        "item": "Mahunga (4X-)",
-        "tasks": "Short four hull; inspect slides, track alignment, scull riggers, and pins."
+        "id": "t-tarakena-hull",
+        "item": "Tarakena (4X-) Hull & Hardware",
+        "tasks": "Quad hull; seat slide bearings, foot stretchers, shoes, heel ties <= 7 cm."
       },
       {
-        "id": "t-laurie",
-        "item": "Laurie-Counsell (4X+)",
-        "tasks": "Coxed quad; check rudder cables, coxswain seat, scull riggers, and heel ties."
+        "id": "t-tarakena-scull-riggers",
+        "item": "Tarakena (4X-) Scull Riggers (4x)",
+        "rigger_tape": {
+          "flange": "Red",
+          "centre": "Blue",
+          "gate": "Red"
+        },
+        "tasks": "4 quad scull riggers [Red · Blue · Red]; check pins, top nuts & pitch bushings."
       },
       {
-        "id": "t-makaro",
-        "item": "Makaro (2X / 2-)",
-        "tasks": "Pack & inspect both scull riggers and sweep riggers; check shoes & steering fin."
+        "id": "t-mahunga-hull",
+        "item": "Mahunga (4X-) Hull & Hardware",
+        "tasks": "Short four hull; inspect slides, track alignment, foot stretchers, and heel ties."
       },
       {
-        "id": "t-Island Bay",
-        "item": "Island Bay (2- / 2X)",
-        "tasks": "Pair sweep riggers AND pack scull riggers (backup spares for doubles); check pins, slides, and foot stretchers."
+        "id": "t-mahunga-scull-riggers",
+        "item": "Mahunga (4X-) Scull Riggers (4x)",
+        "rigger_tape": {
+          "flange": "Red",
+          "centre": "Black",
+          "gate": "Red"
+        },
+        "tasks": "4 quad scull riggers [Red · Black · Red]; inspect pins, top nuts & backstays."
       },
       {
-        "id": "t-matiu",
-        "item": "Matiu (2X)",
-        "tasks": "High-usage double; clean slide rails, inspect bearings and gate swivels."
+        "id": "t-laurie-hull",
+        "item": "Laurie-Counsell (4X+) Hull & Cox Box",
+        "tasks": "Coxed quad hull; check rudder cables, coxswain seat, foot stretchers, and heel ties."
       },
       {
-        "id": "t-tuhua",
-        "item": "Tuhua (1X)",
-        "tasks": "Single scull riggers, pin pitch, slide stops, and heel ties."
+        "id": "t-laurie-scull-riggers",
+        "item": "Laurie-Counsell (4X+) Scull Riggers (4x)",
+        "rigger_tape": {
+          "flange": "Red",
+          "centre": "Black",
+          "gate": "Black"
+        },
+        "tasks": "4 quad scull riggers [Red · Black · Black]; check pins, swivels & top nuts."
+      },
+      {
+        "id": "t-makaro-hull",
+        "item": "Makaro (2X / 2-) Hull & Hardware",
+        "tasks": "Check shoes, heel ties <= 7 cm, slide rails, and steering fin."
+      },
+      {
+        "id": "t-makaro-scull-riggers",
+        "item": "Makaro (2X) Scull Riggers (2x)",
+        "rigger_tape": {
+          "flange": "Green",
+          "centre": "Black",
+          "gate": "White"
+        },
+        "tasks": "2 double scull riggers [Green · Black · White]; check pins, pitch bushings & gate swivels."
+      },
+      {
+        "id": "t-makaro-sweep-riggers",
+        "item": "Makaro (2-) Sweep Riggers (2x)",
+        "rigger_tape": {
+          "flange": "Green",
+          "centre": "Black",
+          "gate": "White"
+        },
+        "tasks": "2 pair sweep riggers [Green · Black · White]; required for Race 90 pair re-rig."
+      },
+      {
+        "id": "t-island-bay-hull",
+        "item": "Island Bay (2- / 2X) Hull & Hardware",
+        "tasks": "Check slide rails, seat bearings, foot stretchers & heel ties <= 7 cm."
+      },
+      {
+        "id": "t-island-bay-sweep-riggers",
+        "item": "Island Bay (2-) Sweep Riggers (2x)",
+        "rigger_tape": {
+          "flange": "Green",
+          "centre": "White",
+          "gate": "Blue"
+        },
+        "tasks": "2 pair sweep riggers [Green · White · Blue]; primary rig for Race 90."
+      },
+      {
+        "id": "t-island-bay-scull-riggers",
+        "item": "Island Bay (2X) Scull Riggers (2x)",
+        "rigger_tape": {
+          "flange": "Green",
+          "centre": "White",
+          "gate": "Blue"
+        },
+        "tasks": "2 double scull riggers [Green · White · Blue]; pack as backup spares for other doubles."
+      },
+      {
+        "id": "t-matiu-hull",
+        "item": "Matiu (2X) Hull & Hardware",
+        "tasks": "High-usage double; clean slide rails, inspect seat bearings & heel ties."
+      },
+      {
+        "id": "t-matiu-scull-riggers",
+        "item": "Matiu (2X) Scull Riggers (2x)",
+        "rigger_tape": {
+          "flange": "Green",
+          "centre": "Blue",
+          "gate": "Red"
+        },
+        "tasks": "2 double scull riggers [Green · Blue · Red]; inspect gate swivels, pins & top nuts."
+      },
+      {
+        "id": "t-moa-hull",
+        "item": "Moa (2X) Hull & Hardware",
+        "tasks": "Inspect slide rails, seat bearings, foot stretchers & heel ties."
+      },
+      {
+        "id": "t-moa-scull-riggers",
+        "item": "Moa (2X) Scull Riggers (2x)",
+        "rigger_tape": {
+          "flange": "Green",
+          "centre": "Yellow",
+          "gate": "Green"
+        },
+        "tasks": "2 double scull riggers [Green · Yellow · Green]; inspect pins & top nuts."
+      },
+      {
+        "id": "t-tuhua-hull",
+        "item": "Tuhua (1X) Hull & Hardware",
+        "tasks": "Single scull hull; inspect slide stops, track alignment, shoes & heel ties."
+      },
+      {
+        "id": "t-tuhua-scull-riggers",
+        "item": "Tuhua (1X) Scull Riggers (1x)",
+        "rigger_tape": {
+          "flange": "Yellow",
+          "centre": "TBD",
+          "gate": "TBD"
+        },
+        "tasks": "1 single scull rigger set [Yellow (1X) · Tape TBD]; check pin pitch, height washers & top nuts."
       },
       {
         "id": "t-byww",

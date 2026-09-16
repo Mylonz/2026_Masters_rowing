@@ -352,6 +352,61 @@
       padding: 3px 4px;
       font-size: 0.65rem;
     }
+    .stripe-r {
+      background-color: #dc2626; /* Red */
+      color: #ffffff;
+      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+      font-weight: 800;
+    }
+    .stripe-tbd {
+      background-color: #e2e8f0; /* Gray for unassigned/TBD */
+      color: #64748b;
+      font-weight: 700;
+    }
+    /* Rigger Tape Badges */
+    .rigger-badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+      border: 1px solid rgba(0, 0, 0, 0.22);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      line-height: 1;
+      vertical-align: middle;
+      letter-spacing: 0.3px;
+      background-color: #ffffff;
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+    .rigger-stripe {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3px 5px;
+      min-width: 18px;
+      height: 20px;
+      text-align: center;
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+    .rigger-stripe + .rigger-stripe {
+      border-left: 1px solid rgba(0, 0, 0, 0.2);
+    }
+    .rigger-tape-cell {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 3px;
+      align-items: flex-start;
+    }
+    .tape-text {
+      font-size: 0.75rem;
+      color: #4a5568;
+      font-weight: 600;
+      white-space: nowrap;
+    }
     .oar-legend-bar {
       display: flex;
       flex-wrap: wrap;
@@ -615,7 +670,17 @@
   <!-- SECTION 2: FLEET SPECIFICATIONS & RE-RIGGING SCHEDULE -->
   <section>
     <h2>Fleet Boat & Rigging Specifications</h2>
-    <p>Boats, seat size, and riggers required based on scheduled events and re-rigging requirements:</p>
+    <p>Boats, seat size, riggers required, and tape identification based on scheduled events and re-rigging requirements:</p>
+
+    <!-- RIGGER TAPE ID KEY -->
+    <div class="oar-legend-bar">
+      <span class="oar-legend-label">Rigger Tape ID Guide:</span>
+      <span><strong>1. Flange:</strong> Boat Class (<span class="rigger-badge"><span class="rigger-stripe stripe-b">B</span></span> 8+, <span class="rigger-badge"><span class="rigger-stripe stripe-r">R</span></span> 4x/4-, <span class="rigger-badge"><span class="rigger-stripe stripe-g">G</span></span> 2x/2-, <span class="rigger-badge"><span class="rigger-stripe stripe-y">Y</span></span> 1x)</span>
+      <span>&bull;</span>
+      <span><strong>2. Centre:</strong> Boat Stripe</span>
+      <span>&bull;</span>
+      <span><strong>3. Gate:</strong> Gate Stripe</span>
+    </div>
 
     <div class="table-container">
       <table>
@@ -624,6 +689,7 @@
             <th>Boat Name</th>
             <th>Size</th>
             <th>Riggers Required</th>
+            <th>Rigger Tape ID<br><small style="font-weight: normal; font-size: 0.72rem; color: #718096;">Flange · Centre · Gate</small></th>
             <th>Operational Notes &amp; Re-Rig Schedule</th>
           </tr>
         </thead>
@@ -864,6 +930,41 @@
       }).join('');
     }
 
+    // Helper to render Rigger Tape Badges
+    function renderRiggerTapeBadge(tape) {
+      if (!tape) return { badgeHtml: '—', textLabel: '—', fullHtml: '<span style="color: #a0aec0;">—</span>' };
+      const colorMap = {
+        'Blue': { code: 'B', name: 'Blue', cls: 'stripe-b' },
+        'Green': { code: 'G', name: 'Green', cls: 'stripe-g' },
+        'Red': { code: 'R', name: 'Red', cls: 'stripe-r' },
+        'Yellow': { code: 'Y', name: 'Yellow', cls: 'stripe-y' },
+        'White': { code: 'W', name: 'White', cls: 'stripe-w' },
+        'Black': { code: 'Blk', name: 'Black', cls: 'stripe-blk' }
+      };
+
+      let f = tape.flange || (Array.isArray(tape) ? tape[0] : null);
+      let c = tape.centre || (Array.isArray(tape) ? tape[1] : null);
+      let g = tape.gate || (Array.isArray(tape) ? tape[2] : null);
+
+      const formatStripe = (val, label) => {
+        if (!val || val === 'TBD' || val === '—' || val === '-') {
+          return `<span class="rigger-stripe stripe-tbd" title="${label}: TBD">—</span>`;
+        }
+        const info = colorMap[val] || { code: val.charAt(0), name: val, cls: 'stripe-tbd' };
+        return `<span class="rigger-stripe ${info.cls}" title="${label}: ${info.name}">${info.code}</span>`;
+      };
+
+      const badgeHtml = `<span class="rigger-badge" title="Flange: ${f || 'TBD'} • Centre: ${c || 'TBD'} • Gate: ${g || 'TBD'}">${formatStripe(f, 'Flange')}${formatStripe(c, 'Centre')}${formatStripe(g, 'Gate')}</span>`;
+      const labelParts = [f, c, g].map(v => (!v || v === 'TBD' || v === '—') ? 'TBD' : v);
+      const textLabel = labelParts.join(' · ');
+
+      return {
+        badgeHtml,
+        textLabel,
+        fullHtml: `<div class="rigger-tape-cell">${badgeHtml}<span class="tape-text">${textLabel}</span></div>`
+      };
+    }
+
     // 2. Fleet Specifications
     const fleetTbody = document.getElementById('fleet-specs-tbody');
     if (fleetTbody && Array.isArray(data.fleet_specifications)) {
@@ -871,6 +972,7 @@
         const boatName = b.boat_name || b.boat || '';
         const seats = b.seats || b.boat_type || '';
         const riggers = b.riggers_required || b.riggers || '';
+        const tapeRender = renderRiggerTapeBadge(b.rigger_tape);
         const notes = b.notes || (b.shed_location ? `Shed: ${b.shed_location}` : '');
         const isRerig = Boolean(b.requires_re_rig || (b.sweep && b.scull));
         return `
@@ -878,6 +980,7 @@
             <td><strong>${escapeHtml(boatName)}</strong></td>
             <td>${escapeHtml(seats)}</td>
             <td>${isRerig ? `<strong>${escapeHtml(riggers)}</strong>` : escapeHtml(riggers)}</td>
+            <td>${tapeRender.fullHtml}</td>
             <td>${formatNotes(notes)}</td>
           </tr>
         `;
@@ -939,11 +1042,12 @@
             `;
           }
           const id = item.id || `${prefix}_${idx}`;
+          const tapeBadge = item.rigger_tape ? ` ${renderRiggerTapeBadge(item.rigger_tape).badgeHtml}` : '';
           return `
             <div class="check-item">
               <input type="checkbox" id="${id}">
               <label class="check-label" for="${id}">
-                <strong>${formatOarAssigned(item.item)}:</strong> ${escapeHtml(item.tasks || '')}
+                <strong>${formatOarAssigned(item.item)}</strong>${tapeBadge}: ${escapeHtml(item.tasks || '')}
               </label>
             </div>
           `;

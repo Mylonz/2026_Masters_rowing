@@ -302,9 +302,9 @@ Rules:
 1. Output MUST be valid JSON matching the exact structure above.
 2. trailer_load_configuration must be an OBJECT with 'tiers' array (4 tiers), 'oar_racks' object, and 'loading_notes' array.
 3. Each tier must contain 'bays' array of 4 bay objects (bay_number 1 to 4, side, position, boat_name, details, slot_type).
-4. fleet_specifications must be array of boat objects (boat_name, seats, riggers_required, notes, requires_re_rig).
+4. fleet_specifications must be array of boat objects (boat_name, seats, riggers_required, rigger_tape, notes, requires_re_rig). Preserve rigger_tape colors (flange, centre, gate) for each boat.
 5. oar_loading_plan must contain 'sweep_oars' and 'sculling_oars' with total_summary and allocations array (oar_set, quantity, assignments).
-6. pre_regatta_maintenance_checklists must contain 'waimarino_shed' and 'town_shed' arrays of objects with id, item, tasks.
+6. pre_regatta_maintenance_checklists must contain 'waimarino_shed' and 'town_shed' arrays of objects with id, item, tasks, and rigger_tape where applicable. Ensure each set of riggers has its own check item with its tape ID colors.
 7. safety_and_spares must contain 'safety_mandates' and 'spares_box_checklist'.
 8. Use Island Bay for the 2- (not Whanganui).
 9. Island Bay takes Both (Sweep & Scull) riggers (pack scull riggers as backup spares for other doubles). Ensure town_shed checklist includes scull riggers for Island Bay.
@@ -314,6 +314,13 @@ Input CSV Data:
 """
 
     result = call_gemini(api_key, prompt)
+
+    # Reconcile fleet specifications to preserve rigger_tape if missing from LLM response
+    current_fleet_map = {b.get("boat_name"): b for b in current_data.get("fleet_specifications", [])}
+    for b in result.get("fleet_specifications", []):
+        old_b = current_fleet_map.get(b.get("boat_name"))
+        if old_b and "rigger_tape" in old_b and "rigger_tape" not in b:
+            b["rigger_tape"] = old_b["rigger_tape"]
 
     diffs = diff_load_plan(current_data, result)
 
