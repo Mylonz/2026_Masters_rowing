@@ -236,7 +236,7 @@ SPECIAL REGATTA HEATS & PROGRESSIONS HANDLING:
     - rerig_required: false, rerig_note: null
 
 - Event 38 (Saturday Mx A-C 4X-):
-  * Division 1 at 12:05 (Hawkins).
+  * Division 2 at 12:10 (Hawkins).
 
 - Event 125 (Sunday W Mst D 4X-):
   * Heat 1 (14:02): Mahanga, oars BWW x 4; BYWW x 4 (Ange, Jolanda, Jacinda, Paula).

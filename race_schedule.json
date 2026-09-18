@@ -195,14 +195,14 @@
     {
       "day": "Saturday",
       "block": 3,
-      "time": "12:05",
+      "time": "12:10",
       "event_number": 38,
-      "event_class": "Mx A-C 4X- (Division 1)",
+      "event_class": "Mx A-C 4X- (Division 2)",
       "boat": "Hawkins",
       "oars_assigned": "BGWW",
       "cox": null,
       "crew": "Mike, Ellie, Jacinda, Myles",
-      "notes": "Mixed Quad (4X-) Division 1",
+      "notes": "Mixed Quad (4X-) Division 2",
       "rerig_required": true,
       "rerig_note": "RE-RIG: Re-rig Hawkins from Quad (4X- Scull) to Four (4- Sweep) for Event 65 (15:10)"
     },
