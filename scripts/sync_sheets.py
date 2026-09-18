@@ -201,6 +201,7 @@ Rules:
    - day: 'Saturday' or 'Sunday'
    - block: integer
    - time: string (e.g. '8:30')
+   - hands_on_time: string (e.g. '8:00', always exactly 30 minutes prior to race start time)
    - event_number: integer
    - event_class: string (e.g. 'W Mst C 2X (Final)')
    - boat: string
@@ -278,6 +279,16 @@ Input CSV Data:
     rerigs = compute_rerigs(result.get("races", []))
     if "metadata" in result:
         result["metadata"]["total_rerigs"] = rerigs
+
+    # Ensure hands_on_time is always computed deterministically (30m prior)
+    for r in result.get("races", []):
+        if r.get("time") and not r.get("hands_on_time"):
+            try:
+                parts = str(r["time"]).split(":")
+                mins = int(parts[0]) * 60 + int(parts[1]) - 30
+                r["hands_on_time"] = f"{mins // 60}:{mins % 60:02d}"
+            except Exception:
+                pass
 
     diffs = diff_schedule(current_data, result)
 

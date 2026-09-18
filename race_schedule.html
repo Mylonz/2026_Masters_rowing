@@ -257,9 +257,38 @@
     }
     /* Row styling */
     .time-cell {
-      font-weight: 700;
-      color: var(--primary);
       white-space: nowrap;
+    }
+    .race-time {
+      font-weight: 800;
+      color: var(--primary);
+      font-size: 0.95rem;
+      line-height: 1.2;
+    }
+    .hands-on-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      margin-top: 3px;
+      font-size: 0.70rem;
+      font-weight: 600;
+      color: #334155;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      padding: 1px 5px;
+      border-radius: 4px;
+      line-height: 1.25;
+      letter-spacing: 0.2px;
+    }
+    .hands-on-icon {
+      font-size: 0.75rem;
+      line-height: 1;
+    }
+    .hands-on-sub {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-top: 3px;
     }
     .event-badge {
       display: inline-block;
@@ -1275,7 +1304,7 @@
         <thead>
           <tr>
             <th style="width: 70px;">Block</th>
-            <th style="width: 100px;">Time</th>
+            <th style="width: 110px;">Time</th>
             <th style="width: 80px;">Event</th>
             <th style="width: 160px;">Event Class</th>
             <th style="width: 110px;">Boat</th>
@@ -1303,7 +1332,7 @@
         <thead>
           <tr>
             <th style="width: 70px;">Block</th>
-            <th style="width: 100px;">Time</th>
+            <th style="width: 110px;">Time</th>
             <th style="width: 80px;">Event</th>
             <th style="width: 160px;">Event Class</th>
             <th style="width: 110px;">Boat</th>
@@ -1386,6 +1415,22 @@
     if (!timeStr) return 0;
     const parts = String(timeStr).trim().split(':');
     return parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
+  }
+
+  function computeHandsOnTime(timeStr, offsetMinutes = 30) {
+    if (!timeStr) return '';
+    const totalMins = parseTimeToMinutes(timeStr);
+    const handsOnMins = totalMins - offsetMinutes;
+    if (handsOnMins < 0) return '';
+    const h = Math.floor(handsOnMins / 60);
+    const m = handsOnMins % 60;
+    return `${h}:${m < 10 ? '0' : ''}${m}`;
+  }
+
+  function getHandsOnTime(race) {
+    if (race && race.hands_on_time) return race.hands_on_time;
+    if (race && race.time) return computeHandsOnTime(race.time, 30);
+    return '';
   }
 
   function extractRowersFromRace(race, rowerNames) {
@@ -1600,10 +1645,15 @@
       notesHtml = escapeHtml(race.notes || '').replace(/\n/g, '<br>');
     }
 
+    const handsOn = getHandsOnTime(race);
+
     return `
       <tr class="race-row ${dayClass}${rerigClass}${turnaroundClass}${tightClass}${criticalClass}"${specialStyle}>
         <td>${escapeHtml(race.block)}</td>
-        <td class="time-cell">${escapeHtml(race.time)}</td>
+        <td class="time-cell">
+          <div class="race-time">${escapeHtml(race.time)}</div>
+          ${handsOn ? `<div class="hands-on-badge" title="Hands on boat: 30 minutes before race start (${escapeHtml(race.time)})"><span class="hands-on-icon">👐</span> ${escapeHtml(handsOn)} Hands On</div>` : ''}
+        </td>
         <td><span class="event-badge">${escapeHtml(race.event_number)}</span></td>
         <td><strong>${escapeHtml(eventClass)}</strong></td>
         <td class="boat-badge"><button type="button" class="boat-btn" data-boat="${escapeHtml(race.boat)}" title="View ${escapeHtml(race.boat)}'s race schedule">${escapeHtml(race.boat)}</button></td>
@@ -2029,6 +2079,7 @@
       const r = activeRaces[i];
       const isCox = r.cox && r.cox.toLowerCase().includes(rower.toLowerCase());
       const eventClass = r.event_class || r.event_name || '';
+      const handsOn = getHandsOnTime(r);
 
       trackHtml += `
         <div class="timeline-item">
@@ -2037,6 +2088,7 @@
             <div class="timeline-card-header">
               <div>
                 <span class="timeline-time">${escapeHtml(r.time)}</span>
+                ${handsOn ? `<span class="hands-on-badge" style="margin-left: 6px;" title="Hands on boat: 30m prior to race start"><span class="hands-on-icon">👐</span> ${escapeHtml(handsOn)} Hands On</span>` : ''}
                 <span class="event-badge" style="margin-left: 6px;">Event ${escapeHtml(r.event_number)}</span>
                 <span class="timeline-block-badge">Block ${escapeHtml(r.block)}</span>
               </div>
@@ -2054,23 +2106,37 @@
 
       if (i < raceIntervals.length) {
         const gap = raceIntervals[i];
+        const nextRace = activeRaces[i + 1];
+        const nextHandsOn = getHandsOnTime(nextRace);
+        const gapToHandsOn = gap - 30;
         let intervalClass = 'timeline-interval-normal';
         let icon = '☕';
-        let textDesc = `${formatIntervalFull(gap)} rest until Event ${escapeHtml(activeRaces[i + 1].event_number)} (${escapeHtml(activeRaces[i + 1].time)})`;
+        let textDesc = `${formatIntervalFull(gap)} rest until Event ${escapeHtml(nextRace.event_number)} (${escapeHtml(nextRace.time)})`;
+        let handsOnDesc = nextHandsOn ? ` • Hands On: <strong>${escapeHtml(nextHandsOn)}</strong>` : '';
+
         if (gap < 40) {
           intervalClass = 'timeline-interval-critical';
           icon = '🚨';
-          textDesc = `<strong>CRITICAL TURNAROUND:</strong> ${gap} mins rest until Event ${escapeHtml(activeRaces[i + 1].event_number)} (${escapeHtml(activeRaces[i + 1].time)})`;
+          textDesc = `<strong>CRITICAL TURNAROUND:</strong> ${gap} mins until Event ${escapeHtml(nextRace.event_number)} (${escapeHtml(nextRace.time)})`;
+          if (nextHandsOn) {
+            handsOnDesc = `<span class="hands-on-sub" style="color: #991b1b;">⚠️ Only <strong>${gapToHandsOn > 0 ? `${gapToHandsOn}m` : '0m'}</strong> from race start to next Hands On (${escapeHtml(nextHandsOn)})!</span>`;
+          }
         } else if (gap < 60) {
           intervalClass = 'timeline-interval-warning';
           icon = '⏱️';
-          textDesc = `<strong>TIGHT TURNAROUND:</strong> ${gap} mins rest until Event ${escapeHtml(activeRaces[i + 1].event_number)} (${escapeHtml(activeRaces[i + 1].time)})`;
+          textDesc = `<strong>TIGHT TURNAROUND:</strong> ${gap} mins until Event ${escapeHtml(nextRace.event_number)} (${escapeHtml(nextRace.time)})`;
+          if (nextHandsOn) {
+            handsOnDesc = `<span class="hands-on-sub" style="color: #92400e;">⏱️ <strong>${gapToHandsOn}m</strong> from race start to next Hands On (${escapeHtml(nextHandsOn)})</span>`;
+          }
         }
 
         trackHtml += `
           <div class="timeline-interval ${intervalClass}">
             <span class="interval-icon">${icon}</span>
-            <span>${textDesc}</span>
+            <div>
+              <div>${textDesc}${gap >= 60 ? handsOnDesc : ''}</div>
+              ${gap < 60 ? handsOnDesc : ''}
+            </div>
           </div>
         `;
       }
@@ -2243,6 +2309,7 @@
     for (let i = 0; i < activeRaces.length; i++) {
       const r = activeRaces[i];
       const eventClass = r.event_class || r.event_name || '';
+      const handsOn = getHandsOnTime(r);
 
       trackHtml += `
         <div class="timeline-item">
@@ -2251,6 +2318,7 @@
             <div class="timeline-card-header">
               <div>
                 <span class="timeline-time">${escapeHtml(r.time)}</span>
+                ${handsOn ? `<span class="hands-on-badge" style="margin-left: 6px;" title="Hands on boat: 30m prior to race start"><span class="hands-on-icon">👐</span> ${escapeHtml(handsOn)} Hands On</span>` : ''}
                 <span class="event-badge" style="margin-left: 6px;">Event ${escapeHtml(r.event_number)}</span>
                 <span class="timeline-block-badge">Block ${escapeHtml(r.block)}</span>
               </div>
@@ -2267,26 +2335,30 @@
 
       if (i < raceIntervals.length) {
         const gap = raceIntervals[i];
+        const nextRace = activeRaces[i + 1];
+        const nextHandsOn = getHandsOnTime(nextRace);
         let intervalClass = 'timeline-interval-normal';
         let icon = '⏱️';
-        let textDesc = `${formatIntervalFull(gap)} until Event ${escapeHtml(activeRaces[i + 1].event_number)} (${escapeHtml(activeRaces[i + 1].time)})`;
+        let textDesc = `${formatIntervalFull(gap)} until Event ${escapeHtml(nextRace.event_number)} (${escapeHtml(nextRace.time)})`;
         
         // Check for rig change
-        const hasRigChange = detectRigChange(activeRaces[i], activeRaces[i + 1]);
+        const hasRigChange = detectRigChange(activeRaces[i], nextRace);
         
         if (gap < 30) {
           intervalClass = 'timeline-interval-critical';
           icon = '🚨';
-          textDesc = `<strong>CRITICAL TURNAROUND:</strong> ${gap} mins until Event ${escapeHtml(activeRaces[i + 1].event_number)} (${escapeHtml(activeRaces[i + 1].time)})`;
+          textDesc = `<strong>CRITICAL TURNAROUND:</strong> ${gap} mins until Event ${escapeHtml(nextRace.event_number)} (${escapeHtml(nextRace.time)})`;
         } else if (gap < 60) {
           intervalClass = 'timeline-interval-warning';
           icon = '⏱️';
-          textDesc = `<strong>TIGHT TURNAROUND:</strong> ${gap} mins until Event ${escapeHtml(activeRaces[i + 1].event_number)} (${escapeHtml(activeRaces[i + 1].time)})`;
+          textDesc = `<strong>TIGHT TURNAROUND:</strong> ${gap} mins until Event ${escapeHtml(nextRace.event_number)} (${escapeHtml(nextRace.time)})`;
         }
         
         // Add rig change warning if applicable
         if (hasRigChange) {
-          textDesc += ` • <strong>⚠️ RIG CHANGE REQUIRED</strong>`;
+          textDesc += ` • <strong>⚠️ RIG CHANGE REQUIRED</strong>${nextHandsOn ? ` (Must be complete for Hands On: <strong>${escapeHtml(nextHandsOn)}</strong>)` : ''}`;
+        } else if (nextHandsOn) {
+          textDesc += ` • Next Hands On: <strong>${escapeHtml(nextHandsOn)}</strong>`;
         }
 
         trackHtml += `

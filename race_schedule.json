@@ -50,7 +50,8 @@
       "crew": "Ellie, Jacinda",
       "notes": "Scull (2X)",
       "rerig_required": false,
-      "rerig_note": null
+      "rerig_note": null,
+      "hands_on_time": "8:00"
     },
     {
       "day": "Saturday",
@@ -64,7 +65,8 @@
       "crew": "Jo-Anne, Liane, JoY, Maria S",
       "notes": "Quad (4X-)\n\u23f1\ufe0f SHORE CATCH (08:55): Shore crew meets Mahanga at recovery pontoon and carries up to racks so Liane & Maria S have 15m seated recovery for Ev 14.",
       "rerig_required": false,
-      "rerig_note": null
+      "rerig_note": null,
+      "hands_on_time": "8:15"
     },
     {
       "day": "Saturday",
@@ -78,7 +80,8 @@
       "crew": "Vivienne, Jolanda, Maria C, Lynda J",
       "notes": "Quad (4X-)\n\u23f1\ufe0f SHORE CATCH (08:55): Shore crew meets Hawkins at recovery pontoon and carries up to racks so Vivienne has 15m seated recovery for Ev 14.",
       "rerig_required": false,
-      "rerig_note": null
+      "rerig_note": null,
+      "hands_on_time": "8:15"
     },
     {
       "day": "Saturday",
@@ -92,7 +95,8 @@
       "crew": "Claire",
       "notes": "Single (1X)",
       "rerig_required": false,
-      "rerig_note": null
+      "rerig_note": null,
+      "hands_on_time": "8:25"
     },
     {
       "day": "Saturday",
@@ -106,7 +110,8 @@
       "crew": "Deb, Liane, Maria S, Vivienne",
       "notes": "Quad (4X-)\n\u23f1\ufe0f TIMED LAUNCH (09:05): Shore crew + Deb carry Tarakena down to pontoon at 9:05 for 9:08 launch (Vivienne, Liane & Maria S walk down empty-handed after 15m rest).\n\u23f1\ufe0f SHORE CATCH (09:30): Shore crew catches Tarakena at recovery pontoon to protect Deb for Event 19 (10:10).",
       "rerig_required": false,
-      "rerig_note": null
+      "rerig_note": null,
+      "hands_on_time": "8:55"
     },
     {
       "day": "Saturday",
@@ -120,7 +125,8 @@
       "crew": "COX: Isaac, JoY, Deb, Paula, Jolanda",
       "notes": "Novice Coxed Quad (4X+)",
       "rerig_required": false,
-      "rerig_note": null
+      "rerig_note": null,
+      "hands_on_time": "9:40"
     },
     {
       "day": "Saturday",
@@ -134,7 +140,8 @@
       "crew": "Jo-Anne, Richard",
       "notes": "Mixed Double (2X)",
       "rerig_required": false,
-      "rerig_note": null
+      "rerig_note": null,
+      "hands_on_time": "10:10"
     },
     {
       "day": "Saturday",
@@ -148,7 +155,8 @@
       "crew": "Myles, Derek, Lynda J, Deidre",
       "notes": "Mixed Quad (4X-) Division 2",
       "rerig_required": false,
-      "rerig_note": null
+      "rerig_note": null,
+      "hands_on_time": "10:25"
     },
     {
       "day": "Saturday",
@@ -162,7 +170,8 @@
       "crew": "COX: Isaac, Ange, Ellie, Liz, Claire, Jolanda, Jacinda, Deb, Maria S",
       "notes": "Eight (8+)",
       "rerig_required": false,
-      "rerig_note": null
+      "rerig_note": null,
+      "hands_on_time": "10:35"
     },
     {
       "day": "Saturday",
@@ -176,7 +185,8 @@
       "crew": "Ange, Vivienne",
       "notes": "Double (2X) Heat 1",
       "rerig_required": false,
-      "rerig_note": null
+      "rerig_note": null,
+      "hands_on_time": "11:10"
     },
     {
       "day": "Saturday",
@@ -190,7 +200,8 @@
       "crew": "Liz, Claire",
       "notes": "Double (2X) Heat 2",
       "rerig_required": false,
-      "rerig_note": null
+      "rerig_note": null,
+      "hands_on_time": "11:15"
     },
     {
       "day": "Saturday",
@@ -204,7 +215,8 @@
       "crew": "Mike, Ellie, Jacinda, Myles",
       "notes": "Mixed Quad (4X-) Division 2",
       "rerig_required": true,
-      "rerig_note": "RE-RIG: Re-rig Hawkins from Quad (4X- Scull) to Four (4- Sweep) for Event 65 (15:10)"
+      "rerig_note": "RE-RIG: Re-rig Hawkins from Quad (4X- Scull) to Four (4- Sweep) for Event 65 (15:10)",
+      "hands_on_time": "11:40"
     },
     {
       "day": "Saturday",
@@ -218,7 +230,8 @@
       "crew": "Moa: Ange, Vivienne\nMatiu: Liz, Claire",
       "notes": "Final: Either or both crews race subject to qualification from 11:40/11:45 heats",
       "rerig_required": false,
-      "rerig_note": null
+      "rerig_note": null,
+      "hands_on_time": "12:00"
     },
     {
       "day": "Saturday",
@@ -232,7 +245,8 @@
       "crew": "Ellie",
       "notes": "Single (1X)",
       "rerig_required": false,
-      "rerig_note": null
+      "rerig_note": null,
+      "hands_on_time": "12:35"
     },
     {
       "day": "Saturday",
@@ -246,7 +260,8 @@
       "crew": "COX: Isaac, Mike, Myles, Richard, Derek, Lynda J, Maria C, Jo-Anne, Deidre",
       "notes": "Mixed Eight (8+)",
       "rerig_required": false,
-      "rerig_note": null
+      "rerig_note": null,
+      "hands_on_time": "13:25"
     },
     {
       "day": "Saturday",
@@ -260,7 +275,8 @@
       "crew": "Derek, Myles, Maria C, Liz",
       "notes": "Mixed Coxless Four (4-)",
       "rerig_required": true,
-      "rerig_note": "OVERNIGHT RE-RIG: Re-rig Hawkins from Four (4- Sweep) to Quad (4X- Scull) for Sunday Event 78 (9:06)"
+      "rerig_note": "OVERNIGHT RE-RIG: Re-rig Hawkins from Four (4- Sweep) to Quad (4X- Scull) for Sunday Event 78 (9:06)",
+      "hands_on_time": "14:40"
     },
     {
       "day": "Saturday",
@@ -274,7 +290,8 @@
       "crew": "Mike, Avon RC",
       "notes": "Novice Double (2X) Final - racing with Avon RC",
       "rerig_required": false,
-      "rerig_note": null
+      "rerig_note": null,
+      "hands_on_time": "15:05"
     },
     {
       "day": "Sunday",
@@ -288,7 +305,8 @@
       "crew": "Derek, Deidre",
       "notes": "Mixed Double (2X)",
       "rerig_required": true,
-      "rerig_note": "RE-RIG: Re-rig Makaro from Double (2X Scull) to Pair (2- Sweep) for Event 90 (10:28)"
+      "rerig_note": "RE-RIG: Re-rig Makaro from Double (2X Scull) to Pair (2- Sweep) for Event 90 (10:28)",
+      "hands_on_time": "8:12"
     },
     {
       "day": "Sunday",
@@ -302,7 +320,8 @@
       "crew": "Myles, Paula",
       "notes": "Mixed Double (2X) - Division TBC (Divisions run 08:30-08:48)",
       "rerig_required": false,
-      "rerig_note": null
+      "rerig_note": null,
+      "hands_on_time": "8:24"
     },
     {
       "day": "Sunday",
@@ -316,7 +335,8 @@
       "crew": "Ellie, Ange, Liz, Jacinda",
       "notes": "Quad (4X-) Straight Final",
       "rerig_required": false,
-      "rerig_note": null
+      "rerig_note": null,
+      "hands_on_time": "8:36"
     },
     {
       "day": "Sunday",
@@ -330,7 +350,8 @@
       "crew": "Jacinda, Paula",
       "notes": "Novice Double (2X) Heat 1 (10:16) or Heat 2 (10:22)",
       "rerig_required": false,
-      "rerig_note": null
+      "rerig_note": null,
+      "hands_on_time": "9:46"
     },
     {
       "day": "Sunday",
@@ -344,7 +365,8 @@
       "crew": "Ellie, Maria C",
       "notes": "Pair (2-)",
       "rerig_required": false,
-      "rerig_note": null
+      "rerig_note": null,
+      "hands_on_time": "9:58"
     },
     {
       "day": "Sunday",
@@ -358,7 +380,8 @@
       "crew": "Liz, Lynda J",
       "notes": "Pair (2-)",
       "rerig_required": true,
-      "rerig_note": "RE-RIG: Re-rig Makaro from Pair (2- Sweep) to Double (2X Scull) for Event 101 (11:44)"
+      "rerig_note": "RE-RIG: Re-rig Makaro from Pair (2- Sweep) to Double (2X Scull) for Event 101 (11:44)",
+      "hands_on_time": "9:58"
     },
     {
       "day": "Sunday",
@@ -372,7 +395,8 @@
       "crew": "Vivienne, Liane",
       "notes": "Double (2X)",
       "rerig_required": false,
-      "rerig_note": null
+      "rerig_note": null,
+      "hands_on_time": "10:10"
     },
     {
       "day": "Sunday",
@@ -386,7 +410,8 @@
       "crew": "Jacinda, Paula",
       "notes": "Novice Double (2X) Final - subject to qualification from heat",
       "rerig_required": false,
-      "rerig_note": null
+      "rerig_note": null,
+      "hands_on_time": "10:46"
     },
     {
       "day": "Sunday",
@@ -400,7 +425,8 @@
       "crew": "Myles, Derek",
       "notes": "Double (2X)",
       "rerig_required": false,
-      "rerig_note": null
+      "rerig_note": null,
+      "hands_on_time": "11:14"
     },
     {
       "day": "Sunday",
@@ -414,7 +440,8 @@
       "crew": "COX: Isaac, Claire, Deidre, Jo-Anne, Liz, Jacinda, Maria C, Vivienne, Lynda J",
       "notes": "Eight (8+)",
       "rerig_required": false,
-      "rerig_note": null
+      "rerig_note": null,
+      "hands_on_time": "12:02"
     },
     {
       "day": "Sunday",
@@ -428,7 +455,8 @@
       "crew": "COX: Millzy, Paula, Deb, Liane, Maria S, JoY, Jolanda, Ellie, Ange",
       "notes": "Eight (8+)",
       "rerig_required": false,
-      "rerig_note": null
+      "rerig_note": null,
+      "hands_on_time": "12:02"
     },
     {
       "day": "Sunday",
@@ -442,7 +470,8 @@
       "crew": "Myles, Derek, Richard, Mike",
       "notes": "Quad (4X-)",
       "rerig_required": false,
-      "rerig_note": null
+      "rerig_note": null,
+      "hands_on_time": "12:14"
     },
     {
       "day": "Sunday",
@@ -456,7 +485,8 @@
       "crew": "Ange, Jolanda, Jacinda, Paula",
       "notes": "Quad (4X-) Heat 1",
       "rerig_required": false,
-      "rerig_note": null
+      "rerig_note": null,
+      "hands_on_time": "13:32"
     },
     {
       "day": "Sunday",
@@ -470,7 +500,8 @@
       "crew": "Liz, Deb, Deidre, Claire",
       "notes": "Quad (4X-) Heat 2",
       "rerig_required": false,
-      "rerig_note": null
+      "rerig_note": null,
+      "hands_on_time": "13:38"
     },
     {
       "day": "Sunday",
@@ -484,7 +515,8 @@
       "crew": "Mahanga: Ange, Jolanda, Jacinda, Paula\nHawkins: Liz, Deb, Deidre, Claire",
       "notes": "Final: Either or both crews race subject to qualification from 14:02/14:08 heats",
       "rerig_required": false,
-      "rerig_note": null
+      "rerig_note": null,
+      "hands_on_time": "14:08"
     }
   ]
 }

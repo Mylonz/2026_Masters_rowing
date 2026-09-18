@@ -104,6 +104,12 @@ Oar codes (`BGW`, `BYWW`, `BBlkW`, `BWW`, `BGY`) are rendered as tape stripe bad
 * **W** = White (`#ffffff` with slate borders and high-contrast dark text)
 * **Blk** = Black (`#0f172a`)
 
+### 5. Hands-On Launch Times & Marshalling Windows
+To ensure crews make official launch and marshalling calls on time:
+* Every race calculates a **Hands-On time** (default: **30 minutes prior to race start**).
+* Displayed directly in the main schedule under the race start time (`👐 08:00 Hands On`).
+* Integrated into the **Rower & Boat Timeline modals**, displaying the true recovery window between consecutive races and alerting boat captains when re-rigs must be completed before hands-on.
+
 ---
 
 ## 💻 Local Development & Testing
