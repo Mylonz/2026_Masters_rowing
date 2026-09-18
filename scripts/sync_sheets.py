@@ -217,11 +217,10 @@ Rules:
 5. Preserve existing re-rig warnings and notes where applicable.
 6. If the 'Oars' column is blank or empty in the CSV, set 'oars_assigned' to 'TBC' unless explicitly specified in the special rules below. Do not assume or invent oar allocations (e.g., do not invent 'Avon RC oars').
 7. STABILITY: Do NOT rephrase or cosmetically edit 'notes', 'event_class', or other fields for races already present in the reference JSON unless there is a genuine, material change in the CSV source data. Keep existing phrasing intact.
-8. If a race has entered crew members but the boat column is blank, set boat to 'TBC' (e.g. Saturday Event 5 at 8:50 M Mst F 2X for Richard, Mike). Do not omit the race.
+8. If a race has entered crew members but the boat column is blank, set boat to 'TBC'. Do not omit the race.
+9. Note: Event 5 (M Mst F 2X) has been scratched/withdrawn and should NOT be included.
 
 SPECIAL REGATTA HEATS & PROGRESSIONS HANDLING:
-- Event 5 (Saturday M Mst F 2X):
-  * Straight Final at 8:50 (TBC boat).
 
 - Event 34 (Saturday W Mst D 2X):
   * Heat 1 (11:40): Ange, Vivienne in Moa (oars: BYWW (Pinks)).
