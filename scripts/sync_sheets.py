@@ -212,6 +212,8 @@ Rules:
    - rerig_required: boolean
    - rerig_note: string or null
    - lane: integer or null (e.g. 2, 4, or null if unassigned)
+   - race_letter: string or null (e.g. 'A', 'U', or null if unassigned)
+   - race_code: string or null (e.g. 'A2', 'U7', or null if unassigned)
 4. COXSWAIN HANDLING:
    - The CSV column 'Cox' specifies the coxswain (e.g., Isaac, Millzy).
    - In 'crew', for any coxed race (like 4X+ or 8+ in events 19, 29, 53, 111), always prefix the crew string with 'COX: <Name>, ' (e.g. 'COX: Isaac, JoY, Deb, Paula, Jolanda').
@@ -278,6 +280,10 @@ Input CSV Data:
                 r["event_class"] = old.get("event_class")
                 if "lane" in old and "lane" not in r:
                     r["lane"] = old.get("lane")
+                if "race_letter" in old and "race_letter" not in r:
+                    r["race_letter"] = old.get("race_letter")
+                if "race_code" in old and "race_code" not in r:
+                    r["race_code"] = old.get("race_code")
 
     rerigs = compute_rerigs(result.get("races", []))
     if "metadata" in result:

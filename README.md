@@ -110,11 +110,11 @@ To ensure crews make official launch and marshalling calls on time:
 * Displayed directly in the main schedule under the race start time (`👐 08:00 Hands On`).
 * Integrated into the **Rower & Boat Timeline modals**, displaying the true recovery window between consecutive races and alerting boat captains when re-rigs must be completed before hands-on.
 
-### 6. Official Lane Draws & Start Badges
-Official lane assignments from the regatta day sheets are tracked and badged:
-* Displayed in the schedule table directly beneath the event badge (`Lane 4`).
-* Integrated into both **Rower & Boat Timeline modals** (header badges, sequence chips `(L4)`, and boat details).
-* Supports unassigned heats/finals (`null` lanes remain clean until official draws are released).
+### 6. Official Race Alpha Codes & Lane Draws
+Official race letters and lane assignments from the regatta day sheets are tracked and combined into compact marshalling codes:
+* Displayed side-by-side with the event number in the schedule table (e.g. `1 A2` for Event 1 Race A Lane 2, `26 U7` for Event 26 Race U Lane 7).
+* Integrated into both **Rower & Boat Timeline modals** (header badges, sequence chips `(A2)`, and boat details).
+* Supports unassigned / pending heats and finals gracefully.
 
 ---
 

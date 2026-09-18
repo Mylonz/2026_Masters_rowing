@@ -301,17 +301,18 @@
       background: #edf2f7;
       color: #2d3748;
     }
-    .lane-badge {
+    .race-code-badge {
       display: inline-block;
-      margin-top: 3px;
+      margin-left: 4px;
+      padding: 2px 6px;
+      border-radius: 4px;
       font-size: 0.72rem;
-      font-weight: 700;
+      font-weight: 800;
       color: #1e3a8a;
       background: #dbeafe;
       border: 1px solid #bfdbfe;
-      padding: 1px 6px;
-      border-radius: 4px;
-      line-height: 1.25;
+      letter-spacing: 0.4px;
+      vertical-align: middle;
       white-space: nowrap;
     }
     .boat-badge {
@@ -1320,7 +1321,7 @@
           <tr>
             <th style="width: 70px;">Block</th>
             <th style="width: 80px;">Time</th>
-            <th style="width: 85px;">Event / Lane</th>
+            <th style="width: 95px;">Event / Code</th>
             <th style="width: 160px;">Event Class</th>
             <th style="width: 110px;">Boat</th>
             <th style="width: 180px;">Oars Assigned</th>
@@ -1348,7 +1349,7 @@
           <tr>
             <th style="width: 70px;">Block</th>
             <th style="width: 80px;">Time</th>
-            <th style="width: 85px;">Event / Lane</th>
+            <th style="width: 95px;">Event / Code</th>
             <th style="width: 160px;">Event Class</th>
             <th style="width: 110px;">Boat</th>
             <th style="width: 180px;">Oars Assigned</th>
@@ -1680,7 +1681,7 @@
         <td class="time-cell">${escapeHtml(race.time)}</td>
         <td>
           <span class="event-badge">${escapeHtml(race.event_number)}</span>
-          ${race.lane ? `<div class="lane-badge" title="Official Lane Draw: Lane ${escapeHtml(race.lane)}">Lane ${escapeHtml(race.lane)}</div>` : ''}
+          ${race.race_code ? `<span class="race-code-badge" title="Race ${escapeHtml(race.race_letter || '')}${race.lane ? `, Lane ${escapeHtml(race.lane)}` : ''}">${escapeHtml(race.race_code)}</span>` : ''}
         </td>
         <td><strong>${escapeHtml(eventClass)}</strong></td>
         <td class="boat-badge"><button type="button" class="boat-btn" data-boat="${escapeHtml(race.boat)}" title="View ${escapeHtml(race.boat)}'s race schedule">${escapeHtml(race.boat)}</button></td>
@@ -2078,7 +2079,7 @@
     let chipsHtml = `<div class="timeline-summary-chips"><span class="summary-label">Sequence:</span>`;
     for (let i = 0; i < activeRaces.length; i++) {
       const r = activeRaces[i];
-      chipsHtml += `<span class="chip-race">${escapeHtml(r.time)} Ev ${escapeHtml(r.event_number)}${r.lane ? ` (L${escapeHtml(r.lane)})` : ''}</span>`;
+      chipsHtml += `<span class="chip-race">${escapeHtml(r.time)} Ev ${escapeHtml(r.event_number)}${r.race_code ? ` (${escapeHtml(r.race_code)})` : ''}</span>`;
       if (i < raceIntervals.length) {
         const gap = raceIntervals[i];
         let gapCls = 'chip-gap-normal';
@@ -2117,14 +2118,14 @@
                 <span class="timeline-time">${escapeHtml(r.time)}</span>
                 ${handsOn ? `<span class="hands-on-badge" style="margin-left: 6px;" title="Hands on boat: 30m prior to race start"><span class="hands-on-icon">👐</span> ${escapeHtml(handsOn)} Hands On</span>` : ''}
                 <span class="event-badge" style="margin-left: 6px;">Event ${escapeHtml(r.event_number)}</span>
-                ${r.lane ? `<span class="lane-badge" style="margin-left: 6px;" title="Official Lane Draw: Lane ${escapeHtml(r.lane)}">Lane ${escapeHtml(r.lane)}</span>` : ''}
+                ${r.race_code ? `<span class="race-code-badge" title="Race ${escapeHtml(r.race_letter || '')}${r.lane ? `, Lane ${escapeHtml(r.lane)}` : ''}">${escapeHtml(r.race_code)}</span>` : ''}
                 <span class="timeline-block-badge">Block ${escapeHtml(r.block)}</span>
               </div>
               ${isCox ? '<span class="cox-tag">COX</span>' : ''}
             </div>
             <div class="timeline-event-title">${escapeHtml(eventClass)}</div>
             <div class="timeline-details">
-              <div><strong>Boat:</strong> <span class="boat-badge">${escapeHtml(r.boat)}</span>${r.lane ? ` • <strong>Lane:</strong> <span class="lane-badge" style="margin: 0 0 0 2px;">${escapeHtml(r.lane)}</span>` : ''} • <strong>Oars:</strong> ${formatOarAssigned(r.oars_assigned)}</div>
+              <div><strong>Boat:</strong> <span class="boat-badge">${escapeHtml(r.boat)}</span>${r.race_code ? ` • <strong>Race/Lane:</strong> <span class="race-code-badge" style="margin: 0 0 0 2px;">${escapeHtml(r.race_code)}</span>` : ''} • <strong>Oars:</strong> ${formatOarAssigned(r.oars_assigned)}</div>
               <div><strong>Crew:</strong> ${escapeHtml(r.crew || '')}</div>
               ${r.notes ? `<div class="timeline-race-notes"><em>${escapeHtml(r.notes).replace(/\n/g, '<br>')}</em></div>` : ''}
             </div>
@@ -2311,7 +2312,7 @@
     let chipsHtml = `<div class="timeline-summary-chips"><span class="summary-label">Schedule:</span>`;
     for (let i = 0; i < activeRaces.length; i++) {
       const r = activeRaces[i];
-      chipsHtml += `<span class="chip-race">${escapeHtml(r.time)} Ev ${escapeHtml(r.event_number)}${r.lane ? ` (L${escapeHtml(r.lane)})` : ''}</span>`;
+      chipsHtml += `<span class="chip-race">${escapeHtml(r.time)} Ev ${escapeHtml(r.event_number)}${r.race_code ? ` (${escapeHtml(r.race_code)})` : ''}</span>`;
       if (i < raceIntervals.length) {
         const gap = raceIntervals[i];
         let gapCls = 'chip-gap-normal';
@@ -2348,13 +2349,13 @@
                 <span class="timeline-time">${escapeHtml(r.time)}</span>
                 ${handsOn ? `<span class="hands-on-badge" style="margin-left: 6px;" title="Hands on boat: 30m prior to race start"><span class="hands-on-icon">👐</span> ${escapeHtml(handsOn)} Hands On</span>` : ''}
                 <span class="event-badge" style="margin-left: 6px;">Event ${escapeHtml(r.event_number)}</span>
-                ${r.lane ? `<span class="lane-badge" style="margin-left: 6px;" title="Official Lane Draw: Lane ${escapeHtml(r.lane)}">Lane ${escapeHtml(r.lane)}</span>` : ''}
+                ${r.race_code ? `<span class="race-code-badge" title="Race ${escapeHtml(r.race_letter || '')}${r.lane ? `, Lane ${escapeHtml(r.lane)}` : ''}">${escapeHtml(r.race_code)}</span>` : ''}
                 <span class="timeline-block-badge">Block ${escapeHtml(r.block)}</span>
               </div>
             </div>
             <div class="timeline-event-title">${escapeHtml(eventClass)}</div>
             <div class="timeline-details">
-              <div><strong>Crew:</strong> ${formatCrew(r.crew || '', r.cox, r.rower_turnarounds, r.day)}${r.lane ? ` • <strong>Lane:</strong> <span class="lane-badge" style="margin: 0 0 0 2px;">${escapeHtml(r.lane)}</span>` : ''}</div>
+              <div><strong>Crew:</strong> ${formatCrew(r.crew || '', r.cox, r.rower_turnarounds, r.day)}${r.race_code ? ` • <strong>Race/Lane:</strong> <span class="race-code-badge" style="margin: 0 0 0 2px;">${escapeHtml(r.race_code)}</span>` : ''}</div>
               <div><strong>Oars:</strong> ${formatOarAssigned(r.oars_assigned)}</div>
               ${r.notes ? `<div class="timeline-race-notes"><em>${escapeHtml(r.notes).replace(/\n/g, '<br>')}</em></div>` : ''}
             </div>

@@ -52,7 +52,9 @@
       "rerig_required": false,
       "rerig_note": null,
       "hands_on_time": "8:00",
-      "lane": 2
+      "lane": 2,
+      "race_letter": "A",
+      "race_code": "A2"
     },
     {
       "day": "Saturday",
@@ -68,7 +70,9 @@
       "rerig_required": false,
       "rerig_note": null,
       "hands_on_time": "8:15",
-      "lane": 5
+      "lane": 5,
+      "race_letter": "D",
+      "race_code": "D5"
     },
     {
       "day": "Saturday",
@@ -84,7 +88,9 @@
       "rerig_required": false,
       "rerig_note": null,
       "hands_on_time": "8:15",
-      "lane": 3
+      "lane": 3,
+      "race_letter": "D",
+      "race_code": "D3"
     },
     {
       "day": "Saturday",
@@ -100,7 +106,9 @@
       "rerig_required": false,
       "rerig_note": null,
       "hands_on_time": "8:25",
-      "lane": 4
+      "lane": 4,
+      "race_letter": "F",
+      "race_code": "F4"
     },
     {
       "day": "Saturday",
@@ -116,7 +124,9 @@
       "rerig_required": false,
       "rerig_note": null,
       "hands_on_time": "8:55",
-      "lane": 6
+      "lane": 6,
+      "race_letter": "L",
+      "race_code": "L6"
     },
     {
       "day": "Saturday",
@@ -132,7 +142,9 @@
       "rerig_required": false,
       "rerig_note": null,
       "hands_on_time": "9:40",
-      "lane": 4
+      "lane": 4,
+      "race_letter": "O",
+      "race_code": "O4"
     },
     {
       "day": "Saturday",
@@ -148,7 +160,9 @@
       "rerig_required": false,
       "rerig_note": null,
       "hands_on_time": "10:10",
-      "lane": 7
+      "lane": 7,
+      "race_letter": "U",
+      "race_code": "U7"
     },
     {
       "day": "Saturday",
@@ -164,7 +178,9 @@
       "rerig_required": false,
       "rerig_note": null,
       "hands_on_time": "10:25",
-      "lane": 6
+      "lane": 6,
+      "race_letter": "X",
+      "race_code": "X6"
     },
     {
       "day": "Saturday",
@@ -180,7 +196,9 @@
       "rerig_required": false,
       "rerig_note": null,
       "hands_on_time": "10:35",
-      "lane": 5
+      "lane": 5,
+      "race_letter": "Z",
+      "race_code": "Z5"
     },
     {
       "day": "Saturday",
@@ -196,7 +214,9 @@
       "rerig_required": false,
       "rerig_note": null,
       "hands_on_time": "11:10",
-      "lane": 6
+      "lane": 6,
+      "race_letter": "A",
+      "race_code": "A6"
     },
     {
       "day": "Saturday",
@@ -212,7 +232,9 @@
       "rerig_required": false,
       "rerig_note": null,
       "hands_on_time": "11:15",
-      "lane": 5
+      "lane": 5,
+      "race_letter": "B",
+      "race_code": "B5"
     },
     {
       "day": "Saturday",
@@ -228,7 +250,9 @@
       "rerig_required": true,
       "rerig_note": "RE-RIG: Re-rig Hawkins from Quad (4X- Scull) to Four (4- Sweep) for Event 65 (15:10)",
       "hands_on_time": "11:40",
-      "lane": 1
+      "lane": 1,
+      "race_letter": "F",
+      "race_code": "F1"
     },
     {
       "day": "Saturday",
@@ -244,7 +268,9 @@
       "rerig_required": false,
       "rerig_note": null,
       "hands_on_time": "12:00",
-      "lane": null
+      "lane": null,
+      "race_letter": "H",
+      "race_code": "H"
     },
     {
       "day": "Saturday",
@@ -260,7 +286,9 @@
       "rerig_required": false,
       "rerig_note": null,
       "hands_on_time": "12:35",
-      "lane": 3
+      "lane": 3,
+      "race_letter": "I",
+      "race_code": "I3"
     },
     {
       "day": "Saturday",
@@ -276,7 +304,9 @@
       "rerig_required": false,
       "rerig_note": null,
       "hands_on_time": "13:25",
-      "lane": 3
+      "lane": 3,
+      "race_letter": "S",
+      "race_code": "S3"
     },
     {
       "day": "Saturday",
@@ -292,7 +322,9 @@
       "rerig_required": true,
       "rerig_note": "OVERNIGHT RE-RIG: Re-rig Hawkins from Four (4- Sweep) to Quad (4X- Scull) for Sunday Event 78 (9:06)",
       "hands_on_time": "14:40",
-      "lane": 4
+      "lane": 4,
+      "race_letter": "A",
+      "race_code": "A4"
     },
     {
       "day": "Saturday",
@@ -308,7 +340,9 @@
       "rerig_required": false,
       "rerig_note": null,
       "hands_on_time": "15:05",
-      "lane": 4
+      "lane": 4,
+      "race_letter": "F",
+      "race_code": "F4"
     },
     {
       "day": "Sunday",
@@ -324,7 +358,9 @@
       "rerig_required": true,
       "rerig_note": "RE-RIG: Re-rig Makaro from Double (2X Scull) to Pair (2- Sweep) for Event 90 (10:28)",
       "hands_on_time": "8:12",
-      "lane": null
+      "lane": null,
+      "race_letter": "C",
+      "race_code": "C"
     },
     {
       "day": "Sunday",
@@ -340,7 +376,9 @@
       "rerig_required": false,
       "rerig_note": null,
       "hands_on_time": "8:24",
-      "lane": null
+      "lane": null,
+      "race_letter": null,
+      "race_code": null
     },
     {
       "day": "Sunday",
@@ -356,7 +394,9 @@
       "rerig_required": false,
       "rerig_note": null,
       "hands_on_time": "8:36",
-      "lane": null
+      "lane": null,
+      "race_letter": "G",
+      "race_code": "G"
     },
     {
       "day": "Sunday",
@@ -372,7 +412,9 @@
       "rerig_required": false,
       "rerig_note": null,
       "hands_on_time": "9:46",
-      "lane": null
+      "lane": null,
+      "race_letter": "N",
+      "race_code": "N"
     },
     {
       "day": "Sunday",
@@ -388,7 +430,9 @@
       "rerig_required": false,
       "rerig_note": null,
       "hands_on_time": "9:58",
-      "lane": null
+      "lane": null,
+      "race_letter": "P",
+      "race_code": "P"
     },
     {
       "day": "Sunday",
@@ -404,7 +448,9 @@
       "rerig_required": true,
       "rerig_note": "RE-RIG: Re-rig Makaro from Pair (2- Sweep) to Double (2X Scull) for Event 101 (11:44)",
       "hands_on_time": "9:58",
-      "lane": null
+      "lane": null,
+      "race_letter": "P",
+      "race_code": "P"
     },
     {
       "day": "Sunday",
@@ -420,7 +466,9 @@
       "rerig_required": false,
       "rerig_note": null,
       "hands_on_time": "10:10",
-      "lane": null
+      "lane": null,
+      "race_letter": "R",
+      "race_code": "R"
     },
     {
       "day": "Sunday",
@@ -436,7 +484,9 @@
       "rerig_required": false,
       "rerig_note": null,
       "hands_on_time": "10:46",
-      "lane": null
+      "lane": null,
+      "race_letter": "X",
+      "race_code": "X"
     },
     {
       "day": "Sunday",
@@ -452,7 +502,9 @@
       "rerig_required": false,
       "rerig_note": null,
       "hands_on_time": "11:14",
-      "lane": null
+      "lane": null,
+      "race_letter": "Y",
+      "race_code": "Y"
     },
     {
       "day": "Sunday",
@@ -468,7 +520,9 @@
       "rerig_required": false,
       "rerig_note": null,
       "hands_on_time": "12:02",
-      "lane": null
+      "lane": null,
+      "race_letter": "G",
+      "race_code": "G"
     },
     {
       "day": "Sunday",
@@ -484,7 +538,9 @@
       "rerig_required": false,
       "rerig_note": null,
       "hands_on_time": "12:02",
-      "lane": null
+      "lane": null,
+      "race_letter": "G",
+      "race_code": "G"
     },
     {
       "day": "Sunday",
@@ -500,7 +556,9 @@
       "rerig_required": false,
       "rerig_note": null,
       "hands_on_time": "12:14",
-      "lane": null
+      "lane": null,
+      "race_letter": "I",
+      "race_code": "I"
     },
     {
       "day": "Sunday",
@@ -516,7 +574,9 @@
       "rerig_required": false,
       "rerig_note": null,
       "hands_on_time": "13:32",
-      "lane": null
+      "lane": null,
+      "race_letter": "O",
+      "race_code": "O"
     },
     {
       "day": "Sunday",
@@ -532,7 +592,9 @@
       "rerig_required": false,
       "rerig_note": null,
       "hands_on_time": "13:38",
-      "lane": null
+      "lane": null,
+      "race_letter": "P",
+      "race_code": "P"
     },
     {
       "day": "Sunday",
@@ -548,7 +610,9 @@
       "rerig_required": false,
       "rerig_note": null,
       "hands_on_time": "14:08",
-      "lane": null
+      "lane": null,
+      "race_letter": "S",
+      "race_code": "S"
     }
   ]
 }
