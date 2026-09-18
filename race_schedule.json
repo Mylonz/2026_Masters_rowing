@@ -51,7 +51,8 @@
       "notes": "Scull (2X)",
       "rerig_required": false,
       "rerig_note": null,
-      "hands_on_time": "8:00"
+      "hands_on_time": "8:00",
+      "lane": 2
     },
     {
       "day": "Saturday",
@@ -66,7 +67,8 @@
       "notes": "Quad (4X-)\n\u23f1\ufe0f SHORE CATCH (08:55): Shore crew meets Mahanga at recovery pontoon and carries up to racks so Liane & Maria S have 15m seated recovery for Ev 14.",
       "rerig_required": false,
       "rerig_note": null,
-      "hands_on_time": "8:15"
+      "hands_on_time": "8:15",
+      "lane": 5
     },
     {
       "day": "Saturday",
@@ -81,7 +83,8 @@
       "notes": "Quad (4X-)\n\u23f1\ufe0f SHORE CATCH (08:55): Shore crew meets Hawkins at recovery pontoon and carries up to racks so Vivienne has 15m seated recovery for Ev 14.",
       "rerig_required": false,
       "rerig_note": null,
-      "hands_on_time": "8:15"
+      "hands_on_time": "8:15",
+      "lane": 3
     },
     {
       "day": "Saturday",
@@ -96,7 +99,8 @@
       "notes": "Single (1X)",
       "rerig_required": false,
       "rerig_note": null,
-      "hands_on_time": "8:25"
+      "hands_on_time": "8:25",
+      "lane": 4
     },
     {
       "day": "Saturday",
@@ -108,10 +112,11 @@
       "oars_assigned": "BGWW (Yellow) (BYWW Pink x 1)",
       "cox": null,
       "crew": "Deb, Liane, Maria S, Vivienne",
-      "notes": "Quad (4X-)\n⏱️ TIMED LAUNCH (09:05): Shore crew + Deb carry Tarakena down to pontoon at 9:05 for 9:08 launch (Vivienne, Liane & Maria S walk down empty-handed after 15m rest).\n⏱️ SHORE CATCH (09:30): Mike & Millzy catch Tarakena at recovery pontoon to protect Deb for Event 19 (10:10).",
+      "notes": "Quad (4X-)\n\u23f1\ufe0f TIMED LAUNCH (09:05): Shore crew + Deb carry Tarakena down to pontoon at 9:05 for 9:08 launch (Vivienne, Liane & Maria S walk down empty-handed after 15m rest).\n\u23f1\ufe0f SHORE CATCH (09:30): Mike & Millzy catch Tarakena at recovery pontoon to protect Deb for Event 19 (10:10).",
       "rerig_required": false,
       "rerig_note": null,
-      "hands_on_time": "8:55"
+      "hands_on_time": "8:55",
+      "lane": 6
     },
     {
       "day": "Saturday",
@@ -126,7 +131,8 @@
       "notes": "Novice Coxed Quad (4X+)",
       "rerig_required": false,
       "rerig_note": null,
-      "hands_on_time": "9:40"
+      "hands_on_time": "9:40",
+      "lane": 4
     },
     {
       "day": "Saturday",
@@ -141,7 +147,8 @@
       "notes": "Mixed Double (2X)",
       "rerig_required": false,
       "rerig_note": null,
-      "hands_on_time": "10:10"
+      "hands_on_time": "10:10",
+      "lane": 7
     },
     {
       "day": "Saturday",
@@ -156,7 +163,8 @@
       "notes": "Mixed Quad (4X-) Division 2",
       "rerig_required": false,
       "rerig_note": null,
-      "hands_on_time": "10:25"
+      "hands_on_time": "10:25",
+      "lane": 6
     },
     {
       "day": "Saturday",
@@ -171,7 +179,8 @@
       "notes": "Eight (8+)",
       "rerig_required": false,
       "rerig_note": null,
-      "hands_on_time": "10:35"
+      "hands_on_time": "10:35",
+      "lane": 5
     },
     {
       "day": "Saturday",
@@ -186,7 +195,8 @@
       "notes": "Double (2X) Heat 1",
       "rerig_required": false,
       "rerig_note": null,
-      "hands_on_time": "11:10"
+      "hands_on_time": "11:10",
+      "lane": 6
     },
     {
       "day": "Saturday",
@@ -201,7 +211,8 @@
       "notes": "Double (2X) Heat 2",
       "rerig_required": false,
       "rerig_note": null,
-      "hands_on_time": "11:15"
+      "hands_on_time": "11:15",
+      "lane": 5
     },
     {
       "day": "Saturday",
@@ -216,7 +227,8 @@
       "notes": "Mixed Quad (4X-) Division 2",
       "rerig_required": true,
       "rerig_note": "RE-RIG: Re-rig Hawkins from Quad (4X- Scull) to Four (4- Sweep) for Event 65 (15:10)",
-      "hands_on_time": "11:40"
+      "hands_on_time": "11:40",
+      "lane": 1
     },
     {
       "day": "Saturday",
@@ -231,7 +243,8 @@
       "notes": "Final: Either or both crews race subject to qualification from 11:40/11:45 heats",
       "rerig_required": false,
       "rerig_note": null,
-      "hands_on_time": "12:00"
+      "hands_on_time": "12:00",
+      "lane": null
     },
     {
       "day": "Saturday",
@@ -246,7 +259,8 @@
       "notes": "Single (1X)",
       "rerig_required": false,
       "rerig_note": null,
-      "hands_on_time": "12:35"
+      "hands_on_time": "12:35",
+      "lane": 3
     },
     {
       "day": "Saturday",
@@ -261,7 +275,8 @@
       "notes": "Mixed Eight (8+)",
       "rerig_required": false,
       "rerig_note": null,
-      "hands_on_time": "13:25"
+      "hands_on_time": "13:25",
+      "lane": 3
     },
     {
       "day": "Saturday",
@@ -276,7 +291,8 @@
       "notes": "Mixed Coxless Four (4-)",
       "rerig_required": true,
       "rerig_note": "OVERNIGHT RE-RIG: Re-rig Hawkins from Four (4- Sweep) to Quad (4X- Scull) for Sunday Event 78 (9:06)",
-      "hands_on_time": "14:40"
+      "hands_on_time": "14:40",
+      "lane": 4
     },
     {
       "day": "Saturday",
@@ -291,7 +307,8 @@
       "notes": "Novice Double (2X) Final - racing with Avon RC",
       "rerig_required": false,
       "rerig_note": null,
-      "hands_on_time": "15:05"
+      "hands_on_time": "15:05",
+      "lane": 4
     },
     {
       "day": "Sunday",
@@ -306,7 +323,8 @@
       "notes": "Mixed Double (2X)",
       "rerig_required": true,
       "rerig_note": "RE-RIG: Re-rig Makaro from Double (2X Scull) to Pair (2- Sweep) for Event 90 (10:28)",
-      "hands_on_time": "8:12"
+      "hands_on_time": "8:12",
+      "lane": null
     },
     {
       "day": "Sunday",
@@ -321,7 +339,8 @@
       "notes": "Mixed Double (2X) - Division TBC (Divisions run 08:30-08:48)",
       "rerig_required": false,
       "rerig_note": null,
-      "hands_on_time": "8:24"
+      "hands_on_time": "8:24",
+      "lane": null
     },
     {
       "day": "Sunday",
@@ -336,7 +355,8 @@
       "notes": "Quad (4X-) Straight Final",
       "rerig_required": false,
       "rerig_note": null,
-      "hands_on_time": "8:36"
+      "hands_on_time": "8:36",
+      "lane": null
     },
     {
       "day": "Sunday",
@@ -351,7 +371,8 @@
       "notes": "Novice Double (2X) Heat 1 (10:16) or Heat 2 (10:22)",
       "rerig_required": false,
       "rerig_note": null,
-      "hands_on_time": "9:46"
+      "hands_on_time": "9:46",
+      "lane": null
     },
     {
       "day": "Sunday",
@@ -366,7 +387,8 @@
       "notes": "Pair (2-)",
       "rerig_required": false,
       "rerig_note": null,
-      "hands_on_time": "9:58"
+      "hands_on_time": "9:58",
+      "lane": null
     },
     {
       "day": "Sunday",
@@ -381,7 +403,8 @@
       "notes": "Pair (2-)",
       "rerig_required": true,
       "rerig_note": "RE-RIG: Re-rig Makaro from Pair (2- Sweep) to Double (2X Scull) for Event 101 (11:44)",
-      "hands_on_time": "9:58"
+      "hands_on_time": "9:58",
+      "lane": null
     },
     {
       "day": "Sunday",
@@ -396,7 +419,8 @@
       "notes": "Double (2X)",
       "rerig_required": false,
       "rerig_note": null,
-      "hands_on_time": "10:10"
+      "hands_on_time": "10:10",
+      "lane": null
     },
     {
       "day": "Sunday",
@@ -411,7 +435,8 @@
       "notes": "Novice Double (2X) Final - subject to qualification from heat",
       "rerig_required": false,
       "rerig_note": null,
-      "hands_on_time": "10:46"
+      "hands_on_time": "10:46",
+      "lane": null
     },
     {
       "day": "Sunday",
@@ -426,7 +451,8 @@
       "notes": "Double (2X)",
       "rerig_required": false,
       "rerig_note": null,
-      "hands_on_time": "11:14"
+      "hands_on_time": "11:14",
+      "lane": null
     },
     {
       "day": "Sunday",
@@ -441,7 +467,8 @@
       "notes": "Eight (8+)",
       "rerig_required": false,
       "rerig_note": null,
-      "hands_on_time": "12:02"
+      "hands_on_time": "12:02",
+      "lane": null
     },
     {
       "day": "Sunday",
@@ -456,7 +483,8 @@
       "notes": "Eight (8+)",
       "rerig_required": false,
       "rerig_note": null,
-      "hands_on_time": "12:02"
+      "hands_on_time": "12:02",
+      "lane": null
     },
     {
       "day": "Sunday",
@@ -471,7 +499,8 @@
       "notes": "Quad (4X-)",
       "rerig_required": false,
       "rerig_note": null,
-      "hands_on_time": "12:14"
+      "hands_on_time": "12:14",
+      "lane": null
     },
     {
       "day": "Sunday",
@@ -486,7 +515,8 @@
       "notes": "Quad (4X-) Heat 1",
       "rerig_required": false,
       "rerig_note": null,
-      "hands_on_time": "13:32"
+      "hands_on_time": "13:32",
+      "lane": null
     },
     {
       "day": "Sunday",
@@ -501,7 +531,8 @@
       "notes": "Quad (4X-) Heat 2",
       "rerig_required": false,
       "rerig_note": null,
-      "hands_on_time": "13:38"
+      "hands_on_time": "13:38",
+      "lane": null
     },
     {
       "day": "Sunday",
@@ -516,7 +547,8 @@
       "notes": "Final: Either or both crews race subject to qualification from 14:02/14:08 heats",
       "rerig_required": false,
       "rerig_note": null,
-      "hands_on_time": "14:08"
+      "hands_on_time": "14:08",
+      "lane": null
     }
   ]
 }
