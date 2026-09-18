@@ -4,10 +4,10 @@
     "title": "Race Schedule",
     "venue": null,
     "dates": "Saturday & Sunday",
-    "total_entries": 31,
-    "total_races_entered": 31,
+    "total_entries": 30,
+    "total_races_entered": 30,
     "saturday_entries": 17,
-    "sunday_entries": 14,
+    "sunday_entries": 13,
     "total_club_boats": 11,
     "total_guest_boats": 1,
     "total_oar_sets": 7,
@@ -62,7 +62,7 @@
       "oars_assigned": "BGW (Yellow)",
       "cox": null,
       "crew": "Jo-Anne, Liane, JoY, Maria S",
-      "notes": "Quad (4X-)\n⏱️ SHORE CATCH (08:55): Shore crew meets Mahanga at recovery pontoon and carries up to racks so Liane & Maria S have 15m seated recovery for Ev 14.",
+      "notes": "Quad (4X-)\n\u23f1\ufe0f SHORE CATCH (08:55): Shore crew meets Mahanga at recovery pontoon and carries up to racks so Liane & Maria S have 15m seated recovery for Ev 14.",
       "rerig_required": false,
       "rerig_note": null
     },
@@ -76,7 +76,7 @@
       "oars_assigned": "BWW (Yellow x 3) (BYWW Pink x 1)",
       "cox": null,
       "crew": "Vivienne, Jolanda, Maria C, Lynda J",
-      "notes": "Quad (4X-)\n⏱️ SHORE CATCH (08:55): Shore crew meets Hawkins at recovery pontoon and carries up to racks so Vivienne has 15m seated recovery for Ev 14.",
+      "notes": "Quad (4X-)\n\u23f1\ufe0f SHORE CATCH (08:55): Shore crew meets Hawkins at recovery pontoon and carries up to racks so Vivienne has 15m seated recovery for Ev 14.",
       "rerig_required": false,
       "rerig_note": null
     },
@@ -85,19 +85,19 @@
       "block": 1,
       "time": "8:50",
       "event_number": 5,
-      "event_class": "M Mst F 2X (Heat)",
+      "event_class": "M Mst F 2X (Final)",
       "boat": "TBC",
       "oars_assigned": "TBC",
       "cox": null,
       "crew": "Richard, Mike",
-      "notes": "Double (2X) Heat",
+      "notes": "Double (2X) Final",
       "rerig_required": false,
       "rerig_note": null
     },
     {
       "day": "Saturday",
       "block": 1,
-      "time": "9:00",
+      "time": "8:55",
       "event_number": 6,
       "event_class": "W Mst D 1X (Final)",
       "boat": "Tuhua",
@@ -111,21 +111,21 @@
     {
       "day": "Saturday",
       "block": 1,
-      "time": "9:30",
+      "time": "9:25",
       "event_number": 14,
       "event_class": "W Mst E 4X- (Final)",
       "boat": "Tarakena",
       "oars_assigned": "BGWW (Yellow) (BYWW Pink x 1)",
       "cox": null,
       "crew": "Deb, Liane, Maria S, Vivienne",
-      "notes": "Quad (4X-)\n⏱️ TIMED LAUNCH (09:10): Shore crew + Deb carry Tarakena down to pontoon at 9:10 for 9:13 launch (Vivienne, Liane & Maria S walk down empty-handed after 15m rest).\n⏱️ SHORE CATCH (09:35): Shore crew catches Tarakena at recovery pontoon to protect Deb for Event 19 (10:20).",
+      "notes": "Quad (4X-)\n\u23f1\ufe0f TIMED LAUNCH (09:05): Shore crew + Deb carry Tarakena down to pontoon at 9:05 for 9:08 launch (Vivienne, Liane & Maria S walk down empty-handed after 15m rest).\n\u23f1\ufe0f SHORE CATCH (09:30): Shore crew catches Tarakena at recovery pontoon to protect Deb for Event 19 (10:10).",
       "rerig_required": false,
       "rerig_note": null
     },
     {
       "day": "Saturday",
       "block": 2,
-      "time": "10:20",
+      "time": "10:10",
       "event_number": 19,
       "event_class": "W MNw 4X+ (Final)",
       "boat": "Laurie-Counsell",
@@ -139,7 +139,7 @@
     {
       "day": "Saturday",
       "block": 2,
-      "time": "10:50",
+      "time": "10:40",
       "event_number": 26,
       "event_class": "Mx G-M 2X (Final)",
       "boat": "Matiu",
@@ -167,7 +167,7 @@
     {
       "day": "Saturday",
       "block": 2,
-      "time": "11:15",
+      "time": "11:05",
       "event_number": 29,
       "event_class": "W A-C 8+ (Final)",
       "boat": "Princess",
@@ -181,7 +181,7 @@
     {
       "day": "Saturday",
       "block": 3,
-      "time": "11:55",
+      "time": "11:40",
       "event_number": 34,
       "event_class": "W Mst D 2X (Heat 1)",
       "boat": "Moa",
@@ -195,7 +195,7 @@
     {
       "day": "Saturday",
       "block": 3,
-      "time": "12:00",
+      "time": "11:45",
       "event_number": 34,
       "event_class": "W Mst D 2X (Heat 2)",
       "boat": "Matiu",
@@ -209,14 +209,14 @@
     {
       "day": "Saturday",
       "block": 3,
-      "time": "12:15",
+      "time": "12:05",
       "event_number": 38,
       "event_class": "Mx A-C 4X- (Division)",
       "boat": "Hawkins",
       "oars_assigned": "BGWW",
       "cox": null,
       "crew": "Mike, Ellie, Jacinda, Myles",
-      "notes": "Mixed Quad (4X-)",
+      "notes": "Mixed Quad (4X-) - Division 1 (12:05) or Division 2 (12:10)",
       "rerig_required": true,
       "rerig_note": "RE-RIG: Re-rig Hawkins from Quad (4X- Scull) to Four (4- Sweep) for Event 65 (15:10)"
     },
@@ -230,7 +230,7 @@
       "oars_assigned": "Moa: BYWW (Pinks)\nMatiu: BYWW x 1, BWW x 1",
       "cox": null,
       "crew": "Moa: Ange, Vivienne\nMatiu: Liz, Claire",
-      "notes": "Final: Either or both crews race subject to qualification from 11:55/12:00 heats",
+      "notes": "Final: Either or both crews race subject to qualification from 11:40/11:45 heats",
       "rerig_required": false,
       "rerig_note": null
     },
@@ -251,7 +251,7 @@
     {
       "day": "Saturday",
       "block": 4,
-      "time": "14:00",
+      "time": "13:55",
       "event_number": 53,
       "event_class": "Mx D-F 8+ (Final)",
       "boat": "Poneke",
@@ -274,12 +274,12 @@
       "crew": "Derek, Myles, Maria C, Liz",
       "notes": "Mixed Coxless Four (4-)",
       "rerig_required": true,
-      "rerig_note": "OVERNIGHT RE-RIG: Re-rig Hawkins from Four (4- Sweep) to Quad (4X- Scull) for Sunday Event 78 (8:30)"
+      "rerig_note": "OVERNIGHT RE-RIG: Re-rig Hawkins from Four (4- Sweep) to Quad (4X- Scull) for Sunday Event 78 (9:06)"
     },
     {
       "day": "Saturday",
       "block": 5,
-      "time": "15:30",
+      "time": "15:35",
       "event_number": 69,
       "event_class": "M MNv 2X (Final)",
       "boat": "Avon Boat?",
@@ -287,20 +287,6 @@
       "cox": null,
       "crew": "Mike, Avon RC",
       "notes": "Novice Double (2X) Final - racing with Avon RC",
-      "rerig_required": false,
-      "rerig_note": null
-    },
-    {
-      "day": "Sunday",
-      "block": 6,
-      "time": "8:30",
-      "event_number": 78,
-      "event_class": "W Mst C 4X- (Heat)",
-      "boat": "Hawkins",
-      "oars_assigned": "BGY",
-      "cox": null,
-      "crew": "Ellie, Ange, Liz, Jacinda",
-      "notes": "Quad (4X-) Heat",
       "rerig_required": false,
       "rerig_note": null
     },
@@ -316,7 +302,7 @@
       "crew": "Derek, Deidre",
       "notes": "Mixed Double (2X)",
       "rerig_required": true,
-      "rerig_note": "RE-RIG: Re-rig Makaro from Double (2X Scull) to Pair (2- Sweep) for Event 90 (10:26)"
+      "rerig_note": "RE-RIG: Re-rig Makaro from Double (2X Scull) to Pair (2- Sweep) for Event 90 (10:28)"
     },
     {
       "day": "Sunday",
@@ -328,42 +314,42 @@
       "oars_assigned": "BYWW x 1; BGW x 1",
       "cox": null,
       "crew": "Myles, Paula",
-      "notes": "Mixed Double (2X)",
+      "notes": "Mixed Double (2X) - Division TBC (Divisions run 08:30-08:48)",
       "rerig_required": false,
       "rerig_note": null
     },
     {
       "day": "Sunday",
       "block": 6,
-      "time": "9:30",
+      "time": "9:06",
       "event_number": 78,
       "event_class": "W Mst C 4X- (Final)",
       "boat": "Hawkins",
       "oars_assigned": "BGY",
       "cox": null,
       "crew": "Ellie, Ange, Liz, Jacinda",
-      "notes": "Quad (4X-) Final - subject to qualification from heat",
+      "notes": "Quad (4X-) Straight Final",
       "rerig_required": false,
       "rerig_note": null
     },
     {
       "day": "Sunday",
       "block": 7,
-      "time": "10:14",
+      "time": "10:16",
       "event_number": 86,
       "event_class": "W MNw 2X (Heat)",
       "boat": "Matiu",
       "oars_assigned": "BYWW",
       "cox": null,
       "crew": "Jacinda, Paula",
-      "notes": "Novice Double (2X) Heat",
+      "notes": "Novice Double (2X) Heat 1 (10:16) or Heat 2 (10:22)",
       "rerig_required": false,
       "rerig_note": null
     },
     {
       "day": "Sunday",
       "block": 7,
-      "time": "10:26",
+      "time": "10:28",
       "event_number": 90,
       "event_class": "W Mst D 2- (Final)",
       "boat": "Island Bay",
@@ -377,7 +363,7 @@
     {
       "day": "Sunday",
       "block": 7,
-      "time": "10:26",
+      "time": "10:28",
       "event_number": 90,
       "event_class": "W Mst D 2- (Final)",
       "boat": "Makaro",
@@ -386,12 +372,12 @@
       "crew": "Liz, Lynda J",
       "notes": "Pair (2-)",
       "rerig_required": true,
-      "rerig_note": "RE-RIG: Re-rig Makaro from Pair (2- Sweep) to Double (2X Scull) for Event 101 (11:43)"
+      "rerig_note": "RE-RIG: Re-rig Makaro from Pair (2- Sweep) to Double (2X Scull) for Event 101 (11:44)"
     },
     {
       "day": "Sunday",
       "block": 7,
-      "time": "10:38",
+      "time": "10:40",
       "event_number": 93,
       "event_class": "W Mst F 2X (Final)",
       "boat": "Moa",
@@ -405,7 +391,7 @@
     {
       "day": "Sunday",
       "block": 7,
-      "time": "11:14",
+      "time": "11:16",
       "event_number": 86,
       "event_class": "W MNw 2X (Final)",
       "boat": "Matiu",
@@ -419,7 +405,7 @@
     {
       "day": "Sunday",
       "block": 8,
-      "time": "11:43",
+      "time": "11:44",
       "event_number": 101,
       "event_class": "M Mst E 2X (Final)",
       "boat": "Makaro",
@@ -433,7 +419,7 @@
     {
       "day": "Sunday",
       "block": 8,
-      "time": "12:31",
+      "time": "12:32",
       "event_number": 111,
       "event_class": "W D-F 8+ (Final)",
       "boat": "Poneke",
@@ -447,7 +433,7 @@
     {
       "day": "Sunday",
       "block": 8,
-      "time": "12:31",
+      "time": "12:32",
       "event_number": 111,
       "event_class": "W D-F 8+ (Final)",
       "boat": "Princess",
@@ -461,7 +447,7 @@
     {
       "day": "Sunday",
       "block": 8,
-      "time": "12:43",
+      "time": "12:44",
       "event_number": 110,
       "event_class": "M Mst F 4X- (Final)",
       "boat": "Tarakaena",
@@ -475,7 +461,7 @@
     {
       "day": "Sunday",
       "block": 10,
-      "time": "13:53",
+      "time": "14:02",
       "event_number": 125,
       "event_class": "W Mst D 4X- (Heat 1)",
       "boat": "Mahanga",
@@ -489,7 +475,7 @@
     {
       "day": "Sunday",
       "block": 10,
-      "time": "13:59",
+      "time": "14:08",
       "event_number": 125,
       "event_class": "W Mst D 4X- (Heat 2)",
       "boat": "Hawkins",
@@ -503,14 +489,14 @@
     {
       "day": "Sunday",
       "block": 10,
-      "time": "14:29",
+      "time": "14:38",
       "event_number": 125,
       "event_class": "W Mst D 4X- (Final)",
       "boat": "Mahanga & Hawkins",
       "oars_assigned": "Mahanga: BWW x 4, BYWW x 4\nHawkins: BWW x 4, BYWW x 4",
       "cox": null,
       "crew": "Mahanga: Ange, Jolanda, Jacinda, Paula\nHawkins: Liz, Deb, Deidre, Claire",
-      "notes": "Final: Either or both crews race subject to qualification from 13:53/13:59 heats",
+      "notes": "Final: Either or both crews race subject to qualification from 14:02/14:08 heats",
       "rerig_required": false,
       "rerig_note": null
     }

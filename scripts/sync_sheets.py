@@ -220,33 +220,36 @@ Rules:
 8. If a race has entered crew members but the boat column is blank, set boat to 'TBC' (e.g. Saturday Event 5 at 8:50 M Mst F 2X for Richard, Mike). Do not omit the race.
 
 SPECIAL REGATTA HEATS & PROGRESSIONS HANDLING:
+- Event 5 (Saturday M Mst F 2X):
+  * Straight Final at 8:50 (TBC boat).
+
 - Event 34 (Saturday W Mst D 2X):
-  * Heat 1 (11:55): Ange, Vivienne in Moa (oars: BYWW (Pinks)).
-  * Heat 2 (12:00): Liz, Claire in Matiu (oars: BYWW x 1; BWW x 1) (note: row in CSV has blank event number, but it is Event 34 Heat 2).
+  * Heat 1 (11:40): Ange, Vivienne in Moa (oars: BYWW (Pinks)).
+  * Heat 2 (11:45): Liz, Claire in Matiu (oars: BYWW x 1; BWW x 1) (note: row in CSV has blank event number, but it is Event 34 Heat 2).
   * Final (12:30): In the sheet, boat/oar columns are left blank because either or both crews may qualify. You MUST include a distinct entry for the 12:30 Final:
     - day: "Saturday", block: 3, time: "12:30", event_number: 34, event_class: "W Mst D 2X (Final)"
     - boat: "Moa & Matiu"
     - oars_assigned: "Moa: BYWW (Pinks)\\nMatiu: BYWW x 1, BWW x 1"
     - crew: "Moa: Ange, Vivienne\\nMatiu: Liz, Claire"
-    - notes: "Final: Either or both crews race subject to qualification from 11:55/12:00 heats"
+    - notes: "Final: Either or both crews race subject to qualification from 11:40/11:45 heats"
     - rerig_required: false, rerig_note: null
 
 - Event 125 (Sunday W Mst D 4X-):
-  * Heat 1 (13:53): Mahanga, oars BWW x 4; BYWW x 4 (Ange, Jolanda, Jacinda, Paula).
-  * Heat 2 (13:59): Hawkins, oars BWW x 4; BYWW x 4 (Liz, Deb, Deidre, Claire).
-  * Final (14:29): In the sheet, boat/oar columns are left blank because either or both crews may qualify. Include the Final at 14:29:
-    - day: "Sunday", block: 8, time: "14:29", event_number: 125, event_class: "W Mst D 4X- (Final)"
+  * Heat 1 (14:02): Mahanga, oars BWW x 4; BYWW x 4 (Ange, Jolanda, Jacinda, Paula).
+  * Heat 2 (14:08): Hawkins, oars BWW x 4; BYWW x 4 (Liz, Deb, Deidre, Claire).
+  * Final (14:38): In the sheet, boat/oar columns are left blank because either or both crews may qualify. Include the Final at 14:38:
+    - day: "Sunday", block: 10, time: "14:38", event_number: 125, event_class: "W Mst D 4X- (Final)"
     - boat: "Mahanga & Hawkins"
     - oars_assigned: "Mahanga: BWW x 4, BYWW x 4\\nHawkins: BWW x 4, BYWW x 4"
     - crew: "Mahanga: Ange, Jolanda, Jacinda, Paula\\nHawkins: Liz, Deb, Deidre, Claire"
-    - notes: "Final: Either or both crews race subject to qualification from 13:53/13:59 heats"
+    - notes: "Final: Either or both crews race subject to qualification from 14:02/14:08 heats"
     - rerig_required: false, rerig_note: null
 
 - Event 86 (Sunday W MNw 2X):
-  * Include Heat at 10:14 / 10:20 (Matiu) and Final at 11:14 (Matiu).
+  * Include Heat at 10:16 / 10:22 (Matiu) and Final at 11:16 (Matiu).
 
 - Event 78 (Sunday W Mst C 4X-):
-  * Include Heat at 8:30 (Hawkins) and Final at 9:30 (Hawkins).
+  * Straight Final at 9:06 (Hawkins). No heats.
 
 Input CSV Data:
 {csv_data}
