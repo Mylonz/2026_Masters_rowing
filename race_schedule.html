@@ -257,28 +257,30 @@
     }
     /* Row styling */
     .time-cell {
+      font-weight: 700;
+      color: var(--primary);
       white-space: nowrap;
     }
-    .race-time {
-      font-weight: 800;
-      color: var(--primary);
-      font-size: 0.95rem;
-      line-height: 1.2;
+    .boat-type-text {
+      font-weight: 600;
+      color: #1e293b;
     }
     .hands-on-badge {
       display: inline-flex;
       align-items: center;
       gap: 3px;
-      margin-top: 3px;
+      margin-left: 6px;
       font-size: 0.70rem;
       font-weight: 600;
       color: #334155;
       background: #f1f5f9;
       border: 1px solid #cbd5e1;
-      padding: 1px 5px;
+      padding: 1px 6px;
       border-radius: 4px;
       line-height: 1.25;
       letter-spacing: 0.2px;
+      vertical-align: middle;
+      white-space: nowrap;
     }
     .hands-on-icon {
       font-size: 0.75rem;
@@ -1304,13 +1306,13 @@
         <thead>
           <tr>
             <th style="width: 70px;">Block</th>
-            <th style="width: 110px;">Time</th>
+            <th style="width: 80px;">Time</th>
             <th style="width: 80px;">Event</th>
             <th style="width: 160px;">Event Class</th>
             <th style="width: 110px;">Boat</th>
             <th style="width: 180px;">Oars Assigned</th>
             <th>Crew / Participants</th>
-            <th style="width: 220px;">Rigging / Special Notes</th>
+            <th style="width: 260px;">Rigging / Special Notes</th>
           </tr>
         </thead>
         <tbody id="sat-table-body">
@@ -1332,13 +1334,13 @@
         <thead>
           <tr>
             <th style="width: 70px;">Block</th>
-            <th style="width: 110px;">Time</th>
+            <th style="width: 80px;">Time</th>
             <th style="width: 80px;">Event</th>
             <th style="width: 160px;">Event Class</th>
             <th style="width: 110px;">Boat</th>
             <th style="width: 180px;">Oars Assigned</th>
             <th>Crew / Participants</th>
-            <th style="width: 220px;">Rigging / Special Notes</th>
+            <th style="width: 260px;">Rigging / Special Notes</th>
           </tr>
         </thead>
         <tbody id="sun-table-body">
@@ -1623,37 +1625,46 @@
     const isTurnaround = race.notes && (race.notes.includes('SHORE CATCH') || race.notes.includes('TIMED LAUNCH') || race.notes.includes('⏱️'));
     const turnaroundClass = isTurnaround && !race.rerig_required ? ' turnaround-row turnaround-alert' : (isTurnaround ? ' turnaround-row' : '');
 
+    const handsOn = getHandsOnTime(race);
+    const handsOnPill = handsOn
+      ? `<span class="hands-on-badge" title="Hands on boat: 30 minutes before race start (${escapeHtml(race.time)})"><span class="hands-on-icon">👐</span> ${escapeHtml(handsOn)} Hands On</span>`
+      : '';
+
+    const noteLines = (race.notes || '').split('\n');
+    const boatTypeLine = noteLines[0] || '';
+    const otherNoteLines = noteLines.slice(1).join('\n');
+    const headerLineHtml = boatTypeLine
+      ? `<span class="boat-type-text">${escapeHtml(boatTypeLine)}</span> ${handsOnPill}`
+      : handsOnPill;
+
     let notesHtml = '';
     if (race.rerig_required) {
       notesHtml = `
+        <div>${headerLineHtml}</div>
         <span class="rerig-badge">⚠️ Re-Rig Required</span>
         ${rerigNote ? `<span class="rerig-text">${escapeHtml(rerigNote)}</span>` : ''}
-        ${race.notes ? `<span>${escapeHtml(race.notes).replace(/\n/g, '<br>')}</span>` : ''}
+        ${otherNoteLines ? `<span>${escapeHtml(otherNoteLines).replace(/\n/g, '<br>')}</span>` : ''}
       `;
     } else if (isTurnaround) {
-      const parts = (race.notes || '').split('\n');
-      const baseNote = parts[0] || '';
-      const actionNotes = parts.slice(1).join('<br>');
+      const actionNotes = otherNoteLines.replace(/\n/g, '<br>');
       notesHtml = `
-        <span>${escapeHtml(baseNote)}</span>
+        <div>${headerLineHtml}</div>
         <div class="turnaround-box">
           <span class="turnaround-badge">⏱️ Shore Support Protocol</span><br>
           ${actionNotes.replace(/⏱️\s*/g, '<strong>⏱️ </strong>')}
         </div>
       `;
     } else {
-      notesHtml = escapeHtml(race.notes || '').replace(/\n/g, '<br>');
+      notesHtml = `
+        <div>${headerLineHtml}</div>
+        ${otherNoteLines ? `<span>${escapeHtml(otherNoteLines).replace(/\n/g, '<br>')}</span>` : ''}
+      `;
     }
-
-    const handsOn = getHandsOnTime(race);
 
     return `
       <tr class="race-row ${dayClass}${rerigClass}${turnaroundClass}${tightClass}${criticalClass}"${specialStyle}>
         <td>${escapeHtml(race.block)}</td>
-        <td class="time-cell">
-          <div class="race-time">${escapeHtml(race.time)}</div>
-          ${handsOn ? `<div class="hands-on-badge" title="Hands on boat: 30 minutes before race start (${escapeHtml(race.time)})"><span class="hands-on-icon">👐</span> ${escapeHtml(handsOn)}</div>` : ''}
-        </td>
+        <td class="time-cell">${escapeHtml(race.time)}</td>
         <td><span class="event-badge">${escapeHtml(race.event_number)}</span></td>
         <td><strong>${escapeHtml(eventClass)}</strong></td>
         <td class="boat-badge"><button type="button" class="boat-btn" data-boat="${escapeHtml(race.boat)}" title="View ${escapeHtml(race.boat)}'s race schedule">${escapeHtml(race.boat)}</button></td>
