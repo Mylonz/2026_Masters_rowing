@@ -221,6 +221,8 @@ Rules:
 9. Note: Event 5 (M Mst F 2X) has been scratched/withdrawn and should NOT be included.
 
 SPECIAL REGATTA HEATS & PROGRESSIONS HANDLING:
+- Event 28 (Saturday Mx D-F 4X-):
+  * Division 2 at 10:55 (Hawkins).
 
 - Event 34 (Saturday W Mst D 2X):
   * Heat 1 (11:40): Ange, Vivienne in Moa (oars: BYWW (Pinks)).
@@ -232,6 +234,9 @@ SPECIAL REGATTA HEATS & PROGRESSIONS HANDLING:
     - crew: "Moa: Ange, Vivienne\\nMatiu: Liz, Claire"
     - notes: "Final: Either or both crews race subject to qualification from 11:40/11:45 heats"
     - rerig_required: false, rerig_note: null
+
+- Event 38 (Saturday Mx A-C 4X-):
+  * Division 1 at 12:05 (Hawkins).
 
 - Event 125 (Sunday W Mst D 4X-):
   * Heat 1 (14:02): Mahanga, oars BWW x 4; BYWW x 4 (Ange, Jolanda, Jacinda, Paula).
