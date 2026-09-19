@@ -1250,7 +1250,6 @@
       <button class="filter-btn" data-filter="sat" onclick="filterSchedule('sat')">Saturday Only (13)</button>
       <button class="filter-btn" data-filter="sun" onclick="filterSchedule('sun')">Sunday Only (11)</button>
       <button class="filter-btn btn-rerig" data-filter="rerig" onclick="filterSchedule('rerig')">⚠️ Re-Rig Alerts Only (3)</button>
-      <button class="filter-btn btn-turnaround" data-filter="turnaround" onclick="filterSchedule('turnaround')">⏱️ Shore Support Only</button>
       <button class="filter-btn btn-tight" data-filter="tight" onclick="filterSchedule('tight')">⏱️ Tight Turnarounds (&lt;60m)</button>
     </div>
     <button class="btn-print" onclick="window.print()">Print Day Sheet</button>
@@ -1276,43 +1275,6 @@
     <div class="day-header day-sat">
       <span>Saturday — Race Schedule</span>
       <span style="font-size: 0.9rem; font-weight: 500;">Events 1 – 69</span>
-    </div>
-
-    <!-- SHORE SUPPORT & BOAT TRANSITION ROSTER -->
-    <div class="shore-roster-card">
-      <div class="shore-roster-header">
-        <span class="shore-roster-title">⏱️ Saturday Morning Shore Support &amp; Boat Transition Protocol (08:50 – 09:30)</span>
-        <span class="shore-roster-badge">Crew Recovery Priority</span>
-      </div>
-      <p class="shore-roster-intro">
-        <strong>Goal:</strong> Guarantee <strong>recovery rest</strong> at camp for Vivienne, Liane &amp; Maria S between Event 3 (08:45) and Event 14 (09:25), and protect Deb for Event 19 (10:10).
-      </p>
-      <div class="shore-steps-grid">
-        <div class="shore-step">
-          <div class="shore-step-time">08:50 — Muster</div>
-          <div class="shore-step-content">
-            <strong>Assemble Shore Team:</strong> Mike, Millzy, Myles, Derek assemble near recovery pontoon.
-          </div>
-        </div>
-        <div class="shore-step">
-          <div class="shore-step-time">08:55 — Catch Boats</div>
-          <div class="shore-step-content">
-            <strong>Catch Hawkins &amp; Mahanga:</strong> Meet boats at recovery pontoon. Carry both up to racks. <em>Vivienne, Liane &amp; Maria S walk straight to camp chairs for rest.</em>
-          </div>
-        </div>
-        <div class="shore-step">
-          <div class="shore-step-time">09:05 — Timed Launch</div>
-          <div class="shore-step-content">
-            <strong>Launch Tarakena:</strong> Shore Team + Deb carry Tarakena to pontoon. Crew pushes off at 09:08. <em>At 09:10, Myles &amp; Derek stand down to prep for Ev 28 (Hands-On: 10:25).</em>
-          </div>
-        </div>
-        <div class="shore-step">
-          <div class="shore-step-time">09:30 — Catch &amp; Prep</div>
-          <div class="shore-step-content">
-            <strong>Catch Tarakena:</strong> Mike &amp; Millzy meet Tarakena at recovery pontoon and carry to racks. Deb goes straight to camp to prep for Event 19 (10:10).
-          </div>
-        </div>
-      </div>
     </div>
 
     <div class="table-card">
@@ -1723,7 +1685,10 @@
     if (btnSat) btnSat.textContent = `Saturday Only (${satRaces.length})`;
     if (btnSun) btnSun.textContent = `Sunday Only (${sunRaces.length})`;
     if (btnRerig) btnRerig.textContent = `⚠️ Re-Rig Alerts Only (${rerigCount})`;
-    if (btnTurnaround) btnTurnaround.textContent = `⏱️ Shore Support Only (${turnaroundCount})`;
+    if (btnTurnaround) {
+      btnTurnaround.style.display = turnaroundCount > 0 ? 'inline-block' : 'none';
+      btnTurnaround.textContent = `⏱️ Shore Support Only (${turnaroundCount})`;
+    }
     if (btnTight) btnTight.textContent = `⏱️ Tight Turnarounds (<60m) (${tightCount})`;
 
     satBody.innerHTML = satRaces.map(renderRaceRow).join('') +
