@@ -1246,9 +1246,9 @@
     </div>
 
     <div class="filter-group">
-      <button class="filter-btn active" data-filter="all" onclick="filterSchedule('all')">Show All Races (24)</button>
+      <button class="filter-btn" data-filter="all" onclick="filterSchedule('all')">Show All Races (24)</button>
       <button class="filter-btn" data-filter="sat" onclick="filterSchedule('sat')">Saturday Only (13)</button>
-      <button class="filter-btn" data-filter="sun" onclick="filterSchedule('sun')">Sunday Only (11)</button>
+      <button class="filter-btn active" data-filter="sun" onclick="filterSchedule('sun')">Sunday Only (11)</button>
       <button class="filter-btn btn-rerig" data-filter="rerig" onclick="filterSchedule('rerig')">⚠️ Re-Rig Alerts Only (3)</button>
       <button class="filter-btn btn-tight" data-filter="tight" onclick="filterSchedule('tight')">⏱️ Tight Turnarounds (&lt;60m)</button>
     </div>
@@ -1371,14 +1371,14 @@
 </div>
 
   <script>
-  let activeDay = 'all';
+  let activeDay = 'sun';
   let searchTerm = '';
   let raceData = null;
   let currentPopoverTarget = null;
   let currentModalRower = null;
-  let currentModalDay = 'Saturday';
+  let currentModalDay = 'Sunday';
   let currentModalBoat = null;
-  let currentModalBoatDay = 'Saturday';
+  let currentModalBoatDay = 'Sunday';
 
   function escapeHtml(str) {
     if (str == null) return '';
@@ -2189,7 +2189,7 @@
   function openBoatTimelineModal(boatName) {
     if (!raceData || !raceData.races) return;
     currentModalBoat = boatName;
-    currentModalBoatDay = 'Saturday'; // Default to Saturday
+    currentModalBoatDay = (activeDay === 'sat') ? 'Saturday' : 'Sunday';
 
     const backdrop = document.getElementById('rower-modal-backdrop');
     if (!backdrop) return;
