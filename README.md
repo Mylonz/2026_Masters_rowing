@@ -83,8 +83,8 @@ Rather than relying on human notes in the spreadsheet (which are often prone to 
 * **Discipline Detection:** Evaluates whether each race requires **Sculling** (`1X`, `2X`, `4X-`, `4X+`) or **Sweep** (`2-`, `4-`, `8+`).
 * **Consecutive Transition Detection:** Whenever a boat's configuration changes between race $i$ and race $i+1$, it automatically flags the departing race with `rerig_required: true`.
 * **Automatic Targeting:** Generates precise alert text with target event number, day, time, and turnaround window (including overnight re-rig flags):
-  * **Hawkins:** Re-rig from `4X-` to `4-` after Event 38 (12:10) for Event 65 (15:10), then an **overnight re-rig** back to `4X-` for Sunday Event 78 (09:06).
-  * **Makaro:** Re-rig from `2X` to `2-` after Event 73 (08:42) for Event 90 (10:28), then re-rig back to `2X` for Event 101 (11:44).
+  * **Hawkins:** Re-rig from `4X-` to `4-` after Event 38 (12:10) for Event 65 (15:10), then an **overnight re-rig** back to `4X-` for Sunday Event 78 (08:30).
+  * **Makaro:** Re-rig from `2X` to `2-` after Event 73 (08:10) for Event 90 (09:45), then re-rig back to `2X` for Event 101 (11:00).
 
 ### 2. Multi-Heat Progression & Finals Handling
 For events where progression is conditional on heat results (such as **Event 34** and **Event 125**), the sync engine:

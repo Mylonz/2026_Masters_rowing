@@ -243,21 +243,21 @@ SPECIAL REGATTA HEATS & PROGRESSIONS HANDLING:
   * Division 2 at 12:10 (Hawkins).
 
 - Event 125 (Sunday W Mst D 4X-):
-  * Heat 1 (14:02): Mahanga, oars BWW x 4; BYWW x 4 (Ange, Jolanda, Jacinda, Paula).
-  * Heat 2 (14:08): Hawkins, oars BWW x 4; BYWW x 4 (Liz, Deb, Deidre, Claire).
-  * Final (14:38): In the sheet, boat/oar columns are left blank because either or both crews may qualify. Include the Final at 14:38:
-    - day: "Sunday", block: 10, time: "14:38", event_number: 125, event_class: "W Mst D 4X- (Final)"
+  * Heat 1 (13:10): Mahanga, oars BWW x 4; BYWW x 4 (Ange, Jolanda, Jacinda, Paula).
+  * Heat 2 (13:15): Hawkins, oars BWW x 4; BYWW x 4 (Liz, Deb, Deidre, Claire).
+  * Final (13:45): In the sheet, boat/oar columns are left blank because either or both crews may qualify. Include the Final at 13:45:
+    - day: "Sunday", block: 10, time: "13:45", event_number: 125, event_class: "W Mst D 4X- (Final)"
     - boat: "Mahanga & Hawkins"
     - oars_assigned: "Mahanga: BWW x 4, BYWW x 4\\nHawkins: BWW x 4, BYWW x 4"
     - crew: "Mahanga: Ange, Jolanda, Jacinda, Paula\\nHawkins: Liz, Deb, Deidre, Claire"
-    - notes: "Final: Either or both crews race subject to qualification from 14:02/14:08 heats"
+    - notes: "Final: Either or both crews race subject to qualification from 13:10/13:15 heats"
     - rerig_required: false, rerig_note: null
 
 - Event 86 (Sunday W MNw 2X):
-  * Include Heat at 10:16 / 10:22 (Matiu) and Final at 11:16 (Matiu).
+  * Include Heat at 09:35 / 09:40 (Matiu) and Final at 10:25 (Matiu).
 
 - Event 78 (Sunday W Mst C 4X-):
-  * Straight Final at 9:06 (Hawkins). No heats.
+  * Straight Final at 08:30 (Hawkins). No heats.
 
 Input CSV Data:
 {csv_data}
